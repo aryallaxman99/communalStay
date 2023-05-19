@@ -19,7 +19,7 @@ mongoose.connection.on("error", (err) => {
 });
 
 mongoose.connection.on("disconnected", () => {
-  console.log("MOngoose Disconnected");
+  console.log("Mongoose Disconnected");
 });
 
 process.on("SIGNIT", async () => {

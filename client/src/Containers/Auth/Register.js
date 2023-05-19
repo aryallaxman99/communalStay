@@ -7,7 +7,7 @@ const Register = () => {
   const passwordRule = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
 
   const onSubmit = (values, actions) => {
-    axios.post("/register", { values });
+    axios.post("/auth/register", { values });
     actions.resetForm();
   };
 
@@ -31,7 +31,7 @@ const Register = () => {
       validationSchema: registerSchema,
       onSubmit,
     });
-  console.log(errors);
+
   return (
     <div className="mt-4 grow flex items-center justify-around">
       <div className="mb-40">
