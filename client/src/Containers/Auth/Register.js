@@ -2,12 +2,22 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import * as Yup from "yup";
 import { useFormik } from "formik";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Input from "../../widgets/input/Input";
+import Button from "../../widgets/button/Button";
 
 const Register = () => {
   const passwordRule = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
 
-  const onSubmit = (values, actions) => {
-    axios.post("/auth/register", { values });
+  const onSubmit = async (values, actions) => {
+    await axios.post("/auth/register", { values }).then((res) => {
+      if (res.data.msg === "user registered") {
+        toast.success(res.data.msg);
+      } else {
+        toast.error(res.data.msg);
+      }
+    });
     actions.resetForm();
   };
 
@@ -34,11 +44,11 @@ const Register = () => {
 
   return (
     <div className="mt-4 grow flex items-center justify-around">
-      <div className="mb-40">
-        <h1 className="text-4xl text-center mb-4">Sign Up</h1>
-        <h2 className="text-xl text-center mb-4">Welcome to CommunialStay</h2>
+      <div>
+        <h1 className="text-center mb-4">Sign Up</h1>
+        <h4 className="text-center mb-4">Welcome to CommunialStay</h4>
         <form onSubmit={handleSubmit} className="max-w-md mx-auto">
-          <input
+          <Input
             id="firstName"
             type="text"
             placeholder="First name"
@@ -46,12 +56,13 @@ const Register = () => {
             onChange={handleChange}
             onBlur={handleBlur}
           />
+
           {errors.firstName && touched.firstName ? (
-            <div className="text-red-500 px-4 py-2 sm:px-8 sm:py-3">
+            <div className="text-red-500 text-xs px-4 py-2 sm:px-8 sm:py-3">
               {errors.firstName}
             </div>
           ) : null}
-          <input
+          <Input
             id="lastName"
             type="text"
             placeholder="Last name"
@@ -60,11 +71,11 @@ const Register = () => {
             onBlur={handleBlur}
           />
           {errors.lastName && touched.lastName ? (
-            <div className="text-red-500 px-4 py-2 sm:px-8 sm:py-3">
+            <div className="text-red-500 text-xs px-4 py-2 sm:px-8 sm:py-3">
               {errors.lastName}
             </div>
           ) : null}
-          <input
+          <Input
             id="email"
             type="email"
             placeholder="Email"
@@ -73,11 +84,11 @@ const Register = () => {
             onBlur={handleBlur}
           />
           {errors.email && touched.email ? (
-            <div className="text-red-500 px-4 py-2 sm:px-8 sm:py-3">
+            <div className="text-red-500 text-xs px-4 py-2 sm:px-8 sm:py-3">
               {errors.email}
             </div>
           ) : null}
-          <input
+          <Input
             id="password"
             type="password"
             placeholder="Password"
@@ -86,13 +97,14 @@ const Register = () => {
             onBlur={handleBlur}
           />
           {errors.password && touched.password ? (
-            <div className="text-red-500 px-4 py-2 sm:px-8 sm:py-3">
+            <div className="text-red-500 text-xs px-4 py-2 sm:px-8 sm:py-3">
               {errors.password}
             </div>
           ) : null}
-          <button type="submit" className="primary">
+          <Button type="submit" className="primary">
             SignUp
-          </button>
+          </Button>
+          <ToastContainer position="top-center" />
           <div className="text-center py-2" text-gray-500>
             Already have an account?
             <Link className="underline text-black" to={"/login"}>
