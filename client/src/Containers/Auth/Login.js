@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import * as Yup from "yup";
 import { useFormik } from "formik";
@@ -9,6 +9,7 @@ import Button from "../../widgets/button/Button";
 import requests from "../../Requests";
 
 const Login = () => {
+  const nevigate = useNavigate();
   const passwordRule = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
 
   const onSubmit = async (values, actions) => {
@@ -16,6 +17,7 @@ const Login = () => {
       if (res.data.response === true) {
         toast.success(res.data.msg);
         actions.resetForm();
+        nevigate("/");
       } else {
         toast.error(res.data.msg);
       }
@@ -38,6 +40,7 @@ const Login = () => {
       validationSchema: loginSchema,
       onSubmit,
     });
+
   return (
     <div className="mt-4 grow flex items-center justify-around">
       <div className="mb-40">

@@ -1,4 +1,6 @@
+import "dotenv/config";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 import user from "../models/UserModel.js";
 
@@ -38,7 +40,17 @@ const userLogin = async (req, res, next) => {
         doesEmailExists.password
       );
       if (isValidPassword) {
-        res.json({ msg: "loged in", response: true });
+        jwt.sign(
+          { email: doesEmailExists.email, id: doesEmailExists._id },
+          process.env.ACCESS_TOKEN_SECRET,
+          {},
+          (err, token) => {
+            if (err) throw err;
+            res
+              .cookie("token", token)
+              .json({ msg: "loged in", response: true });
+          }
+        );
       } else {
         res.json({ msg: "Invalid email or password", response: false });
       }
