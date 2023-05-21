@@ -14,16 +14,39 @@ const userRegister = async (req, res, next) => {
 
       const response = await user.create(data);
       if (response) {
-        res.json({ msg: "user registered" });
+        res.json({ msg: "user registered", response: true });
       } else {
-        res.json({ msg: "something went wrong" });
+        res.json({ msg: "something went wrong", response: false });
       }
     } else {
-      res.json({ msg: "email already exists" });
+      res.json({ msg: "email already exists", response: false });
     }
   } catch (error) {
     next(error);
   }
 };
 
-export default { userRegister };
+const userLogin = async (req, res, next) => {
+  try {
+    const data = await req.body.values;
+    const doesEmailExists = await user.findOne({
+      email: data.email,
+    });
+    if (doesEmailExists) {
+      const isValidPassword = bcrypt.compareSync(
+        data.password,
+        doesEmailExists.password
+      );
+      if (isValidPassword) {
+        res.json({ msg: "loged in", response: true });
+      } else {
+        res.json({ msg: "Invalid email or password", response: false });
+      }
+    } else {
+      res.json({ msg: "Invalid email or password", response: false });
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+export default { userRegister, userLogin };

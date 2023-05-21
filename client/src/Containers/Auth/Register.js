@@ -4,6 +4,7 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import requests from "../../Requests";
 import Input from "../../widgets/input/Input";
 import Button from "../../widgets/button/Button";
 
@@ -11,14 +12,14 @@ const Register = () => {
   const passwordRule = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
 
   const onSubmit = async (values, actions) => {
-    await axios.post("/auth/register", { values }).then((res) => {
-      if (res.data.msg === "user registered") {
+    await axios.post(requests.userRegister, { values }).then((res) => {
+      if (res.data.response === true) {
         toast.success(res.data.msg);
+        actions.resetForm();
       } else {
         toast.error(res.data.msg);
       }
     });
-    actions.resetForm();
   };
 
   const registerSchema = Yup.object().shape({
@@ -44,8 +45,8 @@ const Register = () => {
 
   return (
     <div className="mt-4 grow flex items-center justify-around">
-      <div>
-        <h1 className="text-center mb-4">Sign Up</h1>
+      <div className="mb-30">
+        <h2 className="text-center mb-4">Sign Up</h2>
         <h4 className="text-center mb-4">Welcome to CommunialStay</h4>
         <form onSubmit={handleSubmit} className="max-w-md mx-auto">
           <Input

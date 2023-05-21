@@ -1,15 +1,81 @@
 import { Link } from "react-router-dom";
+import axios from "axios";
+import * as Yup from "yup";
+import { useFormik } from "formik";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Input from "../../widgets/input/Input";
+import Button from "../../widgets/button/Button";
+import requests from "../../Requests";
 
 const Login = () => {
+  const passwordRule = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
+
+  const onSubmit = async (values, actions) => {
+    axios.post(requests.userLogin, { values }).then((res) => {
+      if (res.data.response === true) {
+        toast.success(res.data.msg);
+        actions.resetForm();
+      } else {
+        toast.error(res.data.msg);
+      }
+    });
+  };
+
+  const loginSchema = Yup.object().shape({
+    email: Yup.string().email("Invalid email").required("Required"),
+    password: Yup.string().required("Required").min(6).matches(passwordRule, {
+      message: "Please create a strong password",
+    }),
+  });
+
+  const { values, errors, handleBlur, handleChange, handleSubmit, touched } =
+    useFormik({
+      initialValues: {
+        email: "",
+        password: "",
+      },
+      validationSchema: loginSchema,
+      onSubmit,
+    });
   return (
     <div className="mt-4 grow flex items-center justify-around">
       <div className="mb-40">
-        <h1 className="text-4xl text-center mb-4">Login</h1>
-        <h2 className="text-xl text-center mb-4">Welcome to CommunialStay</h2>
-        <form className="max-w-md mx-auto">
-          <input type="email" placeholder="Email" />
-          <input type="password" placeholder="Password" />
-          <button className="primary">Login</button>
+        <h2 className="text-center mb-4">Login</h2>
+        <h4 className="text-center mb-4">Welcome to CommunialStay</h4>
+        <form onSubmit={handleSubmit} className="max-w-md mx-auto">
+          <Input
+            id="email"
+            type="email"
+            placeholder="Email"
+            value={values.email}
+            onChange={handleChange}
+            onBlur={handleBlur}
+          />
+          {errors.email && touched.email ? (
+            <div className="text-red-500 text-xs px-4 py-2 sm:px-8 sm:py-3">
+              {errors.email}
+            </div>
+          ) : null}
+
+          <Input
+            id="password"
+            type="password"
+            placeholder="Password"
+            value={values.password}
+            onChange={handleChange}
+            onBlur={handleBlur}
+          />
+
+          {errors.password && touched.password ? (
+            <div className="text-red-500 text-xs px-4 py-2 sm:px-8 sm:py-3">
+              {errors.password}
+            </div>
+          ) : null}
+          <Button type="submit" className="primary">
+            Login
+          </Button>
+          <ToastContainer />
           <div className="text-center py-2" text-gray-500>
             Don't have account yet?
             <Link className="underline text-black" to={"/register"}>
