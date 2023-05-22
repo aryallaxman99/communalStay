@@ -3,23 +3,25 @@ import axios from "axios";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { ToastContainer, toast } from "react-toastify";
+import { useDispatch } from "react-redux";
 import "react-toastify/dist/ReactToastify.css";
 import Input from "../../widgets/input/Input";
 import Button from "../../widgets/button/Button";
 import requests from "../../Requests";
+import { setUserDetails } from "../../reducers/userSlice";
 
 const Login = () => {
-  const nevigate = useNavigate();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const passwordRule = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
 
   const onSubmit = async (values, actions) => {
     axios.post(requests.userLogin, { values }).then((res) => {
-      if (res.data.response === true) {
-        toast.success(res.data.msg);
+      toast[res.data.type](res.data.msg);
+      if (res.data.status === true) {
+        dispatch(setUserDetails(res.data.userDetails));
         actions.resetForm();
-        nevigate("/");
-      } else {
-        toast.error(res.data.msg);
+        navigate("/");
       }
     });
   };
@@ -78,7 +80,7 @@ const Login = () => {
           <Button type="submit" className="primary">
             Login
           </Button>
-          <ToastContainer />
+          <ToastContainer position="top-center" />
           <div className="text-center py-2" text-gray-500>
             Don't have account yet?
             <Link className="underline text-black" to={"/register"}>

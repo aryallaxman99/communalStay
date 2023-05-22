@@ -13,11 +13,9 @@ const Register = () => {
 
   const onSubmit = async (values, actions) => {
     await axios.post(requests.userRegister, { values }).then((res) => {
+      toast[res.data.type](res.data.msg);
       if (res.data.response === true) {
-        toast.success(res.data.msg);
         actions.resetForm();
-      } else {
-        toast.error(res.data.msg);
       }
     });
   };

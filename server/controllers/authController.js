@@ -16,12 +16,16 @@ const userRegister = async (req, res, next) => {
 
       const response = await user.create(data);
       if (response) {
-        res.json({ msg: "user registered", response: true });
+        res.json({ msg: "user registered", response: true, type: "success" });
       } else {
-        res.json({ msg: "something went wrong", response: false });
+        res.json({
+          msg: "something went wrong",
+          response: false,
+          type: "warning",
+        });
       }
     } else {
-      res.json({ msg: "email already exists", response: false });
+      res.json({ msg: "email already exists", response: false, type: "error" });
     }
   } catch (error) {
     next(error);
@@ -39,6 +43,8 @@ const userLogin = async (req, res, next) => {
         data.password,
         doesEmailExists.password
       );
+
+      const { password, __v, ...refactoredData } = doesEmailExists.toObject();
       if (isValidPassword) {
         jwt.sign(
           { email: doesEmailExists.email, id: doesEmailExists._id },
@@ -46,16 +52,27 @@ const userLogin = async (req, res, next) => {
           {},
           (err, token) => {
             if (err) throw err;
-            res
-              .cookie("token", token)
-              .json({ msg: "loged in", response: true });
+            res.cookie("token", token).json({
+              msg: "loged in",
+              userDetails: refactoredData,
+              status: true,
+              type: "success",
+            });
           }
         );
       } else {
-        res.json({ msg: "Invalid email or password", response: false });
+        res.json({
+          msg: "Invalid email or password",
+          status: false,
+          type: "error",
+        });
       }
     } else {
-      res.json({ msg: "Invalid email or password", response: false });
+      res.json({
+        msg: "Invalid email or password",
+        status: false,
+        type: "error",
+      });
     }
   } catch (error) {
     next(error);
