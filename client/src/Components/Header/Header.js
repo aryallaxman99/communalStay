@@ -1,6 +1,9 @@
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 const Header = () => {
+  const { firstName } = useSelector((state) => state.user);
+
   return (
     <div>
       <header className="flex justify-between">
@@ -76,6 +79,7 @@ const Header = () => {
               />
             </svg>
           </div>
+          {firstName && <div>{firstName}</div>}
         </Link>
       </header>
     </div>

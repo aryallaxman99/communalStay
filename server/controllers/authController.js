@@ -3,6 +3,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 import user from "../models/UserModel.js";
+import jwtHelper from "../helpers/jwtHelper.js";
 
 const userRegister = async (req, res, next) => {
   try {
@@ -46,20 +47,17 @@ const userLogin = async (req, res, next) => {
 
       const { password, __v, ...refactoredData } = doesEmailExists.toObject();
       if (isValidPassword) {
-        jwt.sign(
-          { email: doesEmailExists.email, id: doesEmailExists._id },
-          process.env.ACCESS_TOKEN_SECRET,
-          {},
-          (err, token) => {
-            if (err) throw err;
-            res.cookie("token", token).json({
-              msg: "loged in",
-              userDetails: refactoredData,
-              status: true,
-              type: "success",
-            });
-          }
-        );
+        const accessToken = await jwtHelper.signAccessToken([
+          doesEmailExists.email,
+          doesEmailExists.id,
+        ]);
+        res.json({
+          msg: "loged in",
+          token: accessToken,
+          userDetails: refactoredData,
+          status: true,
+          type: "success",
+        });
       } else {
         res.json({
           msg: "Invalid email or password",
@@ -78,4 +76,13 @@ const userLogin = async (req, res, next) => {
     next(error);
   }
 };
-export default { userRegister, userLogin };
+
+const userProfile = async (req, res, next) => {
+  try {
+    const { token } = await req.cookies;
+    res.json({ token });
+  } catch (error) {
+    next(error);
+  }
+};
+export default { userRegister, userLogin, userProfile };
