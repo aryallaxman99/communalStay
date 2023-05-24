@@ -1,13 +1,15 @@
 import Jwt from "jsonwebtoken";
 
-const signAccessToken = (userDetail) => {
-  return new Promise((resolve, reject) => {
-    const payload = {};
+const signAccessToken = (email, id) => {
+  return new Promise((resolve) => {
+    const payload = {
+      email: email,
+      id: id,
+    };
 
     const secret = process.env.ACCESS_TOKEN_SECRET;
     const options = {
       issuer: "local",
-      audience: userDetail,
     };
 
     Jwt.sign(payload, secret, options, (err, token) => {
@@ -20,10 +22,16 @@ const signAccessToken = (userDetail) => {
   });
 };
 
-const verifyAccessToken = (req, res, next) => {
-  Jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, userInfo) => {
-    if (err) throw err;
-    res.json(userInfo);
+const verifyAccessToken = (bearerToken) => {
+  return new Promise((resolve) => {
+    const token = bearerToken.split(" ")[1];
+    Jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, userInfo) => {
+      if (err) {
+        console.log(err);
+      } else {
+        resolve(userInfo);
+      }
+    });
   });
 };
 

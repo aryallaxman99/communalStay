@@ -1,7 +1,5 @@
 import "dotenv/config";
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
-
 import user from "../models/UserModel.js";
 import jwtHelper from "../helpers/jwtHelper.js";
 
@@ -47,10 +45,10 @@ const userLogin = async (req, res, next) => {
 
       const { password, __v, ...refactoredData } = doesEmailExists.toObject();
       if (isValidPassword) {
-        const accessToken = await jwtHelper.signAccessToken([
+        const accessToken = await jwtHelper.signAccessToken(
           doesEmailExists.email,
-          doesEmailExists.id,
-        ]);
+          doesEmailExists.id
+        );
         res.json({
           msg: "loged in",
           token: accessToken,
@@ -79,8 +77,9 @@ const userLogin = async (req, res, next) => {
 
 const userProfile = async (req, res, next) => {
   try {
-    const { token } = await req.cookies;
-    res.json({ token });
+    jwtHelper
+      .verifyAccessToken(req.headers["authorization"])
+      .then((data) => res.json(data));
   } catch (error) {
     next(error);
   }
