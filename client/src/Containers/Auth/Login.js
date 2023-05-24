@@ -9,7 +9,6 @@ import Input from "../../widgets/input/Input";
 import Button from "../../widgets/button/Button";
 import requests from "../../Requests";
 import { setUserDetails } from "../../reducers/userSlice";
-// import Cookie from "../../cookie";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -20,7 +19,6 @@ const Login = () => {
     axios.post(requests.userLogin, { values }).then((res) => {
       toast[res.data.type](res.data.msg);
       if (res.data.status === true) {
-        // <Cookie token={res.data.token} />;
         dispatch(setUserDetails(res.data.userDetails));
         actions.resetForm();
         navigate("/");
