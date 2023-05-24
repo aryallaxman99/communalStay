@@ -5,6 +5,7 @@ import Login from "./Containers/Auth/Login";
 import IndexPage from "./Containers/IndexPage";
 import Register from "./Containers/Auth/Register";
 import { UserContextProvider } from "./UserContext";
+import { Error } from "./Containers/Error/Error";
 const App = () => {
   return (
     <UserContextProvider>
@@ -13,6 +14,7 @@ const App = () => {
           <Route index element={<IndexPage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="*" element={<Error />} />
         </Route>
       </Routes>
     </UserContextProvider>
