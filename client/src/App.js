@@ -17,6 +17,7 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/account/:subpage?" element={<UserDashboard />} />
+          <Route path="/account/:subpage/:action" element={<UserDashboard />} />
         </Route>
       </Routes>
     </UserContextProvider>
