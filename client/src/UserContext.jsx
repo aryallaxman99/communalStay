@@ -11,6 +11,7 @@ export const UserContextProvider = ({ children }) => {
   const userDetails = useSelector((state) => state.user);
   const accessToken = useSelector((state) => state.token);
   const dispatch = useDispatch();
+
   useEffect(() => {
     if (accessToken.token) {
       axios
@@ -27,5 +28,6 @@ export const UserContextProvider = ({ children }) => {
         });
     }
   }, []);
+
   return <UserContext.Provider>{children}</UserContext.Provider>;
 };

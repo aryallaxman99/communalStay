@@ -49,7 +49,7 @@ const userLogin = async (req, res, next) => {
           doesEmailExists.email,
           doesEmailExists.id
         );
-        res.json({
+        res.cookie("token", accessToken).json({
           msg: "loged in",
           token: accessToken,
           userDetails: refactoredData,
