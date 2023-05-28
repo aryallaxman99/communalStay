@@ -40,7 +40,7 @@ const Places = () => {
       {action !== "new" && (
         <div className="text-center">
           <Link
-            className="bg-primary text-white py-2 px-6 rounded-full inline-flex gap-2"
+            className="bg-secondary text-white py-2 px-6 rounded-full inline-flex gap-2"
             to={"/account/places/new"}
           >
             <svg
@@ -96,7 +96,7 @@ const Places = () => {
                 <Button
                   type="button"
                   onClick={addPhotoByLink}
-                  className="primary grow px-4"
+                  className="bg-secondary grow px-4"
                 >
                   Add photos
                 </Button>
@@ -197,7 +197,7 @@ const Places = () => {
                 />
               </div>
             </div>
-            <Button type="submit" className="primary">
+            <Button type="submit" className="bg-secondary">
               Save
             </Button>
           </form>

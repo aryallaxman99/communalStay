@@ -79,7 +79,7 @@ const Login = () => {
               {errors.password}
             </div>
           ) : null}
-          <Button type="submit" className="primary">
+          <Button type="submit" className="mt-1 bg-secondary">
             Login
           </Button>
           <ToastContainer position="top-center" />

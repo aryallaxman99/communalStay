@@ -100,7 +100,7 @@ const Register = () => {
               {errors.password}
             </div>
           ) : null}
-          <Button type="submit" className="primary">
+          <Button type="submit" className="mt-1 bg-secondary">
             SignUp
           </Button>
           <ToastContainer position="top-center" />

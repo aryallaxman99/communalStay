@@ -28,7 +28,7 @@ const UserDashboard = () => {
   const linkClasses = (type = null) => {
     let classes = "inline-flex gap-1 py-2  px-6 rounded-full";
     if (type === subpage) {
-      return (classes = `${classes} text-white bg-secondary`);
+      return (classes = `${classes} text-white bg-primary`);
     } else {
       return (classes = `${classes} bg-gray-300`);
     }
@@ -93,7 +93,7 @@ const UserDashboard = () => {
           <h6>
             Hello {user.firstName} {user.lastName}
           </h6>
-          <Button className="bg-primary max-w-sm mt-2" onClick={logout}>
+          <Button className="bg-secondary max-w-sm mt-2" onClick={logout}>
             Logout
           </Button>
         </div>
