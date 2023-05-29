@@ -3,7 +3,7 @@ import download from "image-downloader";
 import path from "path";
 
 const __dirname = url.fileURLToPath(new URL(".", import.meta.url));
-const photoDownload = async (req, res) => {
+const uploadPhotoViaLink = async (req, res) => {
   const imageName = `CS_at_${Date.now()}.jpg`;
   await download
     .image({
@@ -17,4 +17,7 @@ const photoDownload = async (req, res) => {
   res.json({ imageName });
 };
 
-export default photoDownload;
+const uploadPhoto = (req, res) => {
+  console.log(req.body);
+};
+export default { uploadPhotoViaLink, uploadPhoto };

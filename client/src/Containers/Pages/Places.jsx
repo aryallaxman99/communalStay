@@ -10,11 +10,21 @@ import requests from "../../Requests";
 const Places = () => {
   const { action } = useParams();
   const [photo, setPhoto] = useState([]);
-
   const [photoLink, setPhotoLink] = useState("");
   const addPhotoByLink = async () => {
-    const { data } = await axios.post(requests.photoUpload, { photoLink });
+    const { data } = await axios.post(requests.photoUploadViaLink, {
+      photoLink,
+    });
     setPhoto([...photo, data.imageName]);
+  };
+
+  const uploadPhoto = (event) => {
+    const formData = new FormData();
+    formData.append("photos", event.target.files[0]);
+    // console.log(formData.get("photos"));
+    axios.post(requests.photoUpload, formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
   };
   const onSubmit = (values) => {
     values.photo = photo;
@@ -106,15 +116,21 @@ const Places = () => {
                   photo.map((items) => (
                     <div>
                       <img
+                        alt=""
                         className="rounded-2xl"
                         src={`http://localhost:8000/uploads/${items}`}
                       />
                     </div>
                   ))}
-                <button
+                <label
                   type="button"
-                  className="border justify-center flex gap-2 bg-transparent rounded-2xl p-2 items-center text-2xl text-gray-600 "
+                  className="border cursor-pointer justify-center flex gap-2 bg-transparent rounded-2xl p-2 items-center text-2xl text-gray-600 "
                 >
+                  <Input
+                    type="file"
+                    className="hidden"
+                    onChange={uploadPhoto}
+                  />
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -130,7 +146,7 @@ const Places = () => {
                     />
                   </svg>
                   Upload
-                </button>
+                </label>
               </div>
             </div>
             <h3 className="mt-4">Description</h3>

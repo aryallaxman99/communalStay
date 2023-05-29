@@ -4,7 +4,8 @@ const requests = {
   userRegister: `${baseURL}auth/register`,
   userLogin: `${baseURL}auth/login`,
   userProfile: `${baseURL}auth/profile`,
-  photoUpload: `${baseURL}uploads/download`,
+  photoUploadViaLink: `${baseURL}uploads/upload-via-link`,
+  photoUpload: `${baseURL}uploads/`,
 };
 
 export default requests;
