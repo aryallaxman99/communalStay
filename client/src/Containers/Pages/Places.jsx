@@ -19,12 +19,15 @@ const Places = () => {
   };
 
   const uploadPhoto = (event) => {
-    const formData = new FormData();
-    formData.append("photos", event.target.files[0]);
-    // console.log(formData.get("photos"));
-    axios.post(requests.photoUpload, formData, {
-      headers: { "Content-Type": "multipart/form-data" },
-    });
+    axios
+      .post(
+        requests.photoUpload,
+        { photo: event.target.files[0] },
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      )
+      .then((res) => setPhoto([...photo, res.data.imageName]));
   };
   const onSubmit = (values) => {
     values.photo = photo;

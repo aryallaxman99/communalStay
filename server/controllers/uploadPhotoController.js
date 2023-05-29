@@ -1,6 +1,8 @@
 import * as url from "url";
 import download from "image-downloader";
 import path from "path";
+import fs from "fs";
+import { log } from "console";
 
 const __dirname = url.fileURLToPath(new URL(".", import.meta.url));
 const uploadPhotoViaLink = async (req, res) => {
@@ -18,6 +20,9 @@ const uploadPhotoViaLink = async (req, res) => {
 };
 
 const uploadPhoto = (req, res) => {
-  console.log(req.body);
+  const { path, mimetype, filename } = req.files[0];
+  fs.renameSync(path, `${path}.${mimetype.split("/")[1]}`);
+  const imageName = `${filename}.${mimetype.split("/")[1]}`;
+  res.json({ imageName });
 };
 export default { uploadPhotoViaLink, uploadPhoto };
