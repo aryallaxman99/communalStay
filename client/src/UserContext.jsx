@@ -1,33 +1,33 @@
-import { createContext, useEffect } from "react";
+import { createContext, useEffect, useState } from "react";
 import axios from "axios";
 import requests from "./Requests";
 import { useDispatch, useSelector } from "react-redux";
 import { resetUserDetails } from "./reducers/userSlice";
-import { resetTokenDetails } from "./reducers/tokenSlice";
 
 export const UserContext = createContext({});
 
 export const UserContextProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
   const userDetails = useSelector((state) => state.user);
-  const accessToken = useSelector((state) => state.token);
   const dispatch = useDispatch();
-
   useEffect(() => {
-    if (accessToken.token) {
-      axios
-        .get(requests.userProfile, {
-          headers: {
-            Authorization: `Bearer ${accessToken.token}`,
-          },
-        })
-        .then((data) => {
-          if (data.data.id !== userDetails.id) {
-            dispatch(resetUserDetails());
-            dispatch(resetTokenDetails());
-          }
-        });
+    if (!user) {
+      axios.get(requests.userProfile).then((res) => {
+        if (
+          userDetails.email !== res.data.email ||
+          userDetails.id !== res.data.id
+        ) {
+          dispatch(resetUserDetails());
+        } else {
+          setUser(res.data);
+        }
+      });
     }
   }, []);
 
-  return <UserContext.Provider>{children}</UserContext.Provider>;
+  return (
+    <UserContext.Provider value={{ user, setUser }}>
+      {children}
+    </UserContext.Provider>
+  );
 };

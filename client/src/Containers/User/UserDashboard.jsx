@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import Button from "../../widgets/button/Button";
 import { resetUserDetails } from "../../reducers/userSlice";
-import { resetTokenDetails } from "../../reducers/tokenSlice";
 import Places from "../Pages/Places";
 
 const UserDashboard = () => {
@@ -17,7 +16,6 @@ const UserDashboard = () => {
 
   const logout = () => {
     dispatch(resetUserDetails());
-    dispatch(resetTokenDetails());
     navigate("/");
   };
 

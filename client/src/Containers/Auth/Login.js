@@ -9,7 +9,6 @@ import Input from "../../widgets/input/Input";
 import Button from "../../widgets/button/Button";
 import requests from "../../Requests";
 import { setUserDetails } from "../../reducers/userSlice";
-import { setTokenDetails } from "../../reducers/tokenSlice";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -21,7 +20,6 @@ const Login = () => {
       toast[res.data.type](res.data.msg);
       if (res.data.status === true) {
         dispatch(setUserDetails(res.data.userDetails));
-        dispatch(setTokenDetails({ token: res.data.token }));
         actions.resetForm();
         navigate("/");
       }

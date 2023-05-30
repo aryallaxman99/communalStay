@@ -22,12 +22,11 @@ const signAccessToken = (email, id) => {
   });
 };
 
-const verifyAccessToken = (bearerToken) => {
+const verifyAccessToken = (token) => {
   return new Promise((resolve) => {
-    const token = bearerToken.split(" ")[1];
     Jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, userInfo) => {
       if (err) {
-        console.log(err);
+        resolve(err);
       } else {
         resolve(userInfo);
       }

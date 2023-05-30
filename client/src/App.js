@@ -7,6 +7,10 @@ import Register from "./Containers/Auth/Register";
 import { UserContextProvider } from "./UserContext";
 import { Error } from "./Containers/Pages/Error";
 import UserDashboard from "./Containers/User/UserDashboard";
+import axios from "axios";
+
+axios.defaults.withCredentials = true;
+
 const App = () => {
   return (
     <UserContextProvider>

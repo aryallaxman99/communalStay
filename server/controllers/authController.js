@@ -75,10 +75,10 @@ const userLogin = async (req, res, next) => {
   }
 };
 
-const userProfile = async (req, res, next) => {
+const userProfile = (req, res, next) => {
   try {
     jwtHelper
-      .verifyAccessToken(req.headers["authorization"])
+      .verifyAccessToken(req.cookies.token)
       .then((data) => res.json(data));
   } catch (error) {
     next(error);

@@ -6,6 +6,7 @@ const requests = {
   userProfile: `${baseURL}auth/profile`,
   photoUploadViaLink: `${baseURL}uploads/upload-via-link`,
   photoUpload: `${baseURL}uploads/`,
+  places: `${baseURL}places/`,
 };
 
 export default requests;

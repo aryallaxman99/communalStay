@@ -8,6 +8,7 @@ import * as url from "url";
 import dbConnection from "./database/connect.js";
 import authRoute from "./routes/auth.js";
 import uploadPhoto from "./routes/uploadPhoto.js";
+import places from "./routes/places.js";
 
 const app = express();
 const __dirname = url.fileURLToPath(new URL(".", import.meta.url));
@@ -25,6 +26,7 @@ app.use("/uploads", express.static(__dirname + "/uploads"));
 
 app.use("/auth", authRoute);
 app.use("/uploads", uploadPhoto);
+app.use("/places", places);
 
 app.listen(process.env.PORT, async () => {
   console.log(`server started at port ${process.env.PORT}`);

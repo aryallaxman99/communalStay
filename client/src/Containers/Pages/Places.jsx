@@ -5,12 +5,14 @@ import Button from "../../widgets/button/Button";
 import { useFormik } from "formik";
 import Features from "./Features";
 import { PhotoUploader } from "../../Components/Photo/PhotoUploader";
+import axios from "axios";
+import requests from "../../Requests";
 
 const Places = () => {
   const { action } = useParams();
 
   const onSubmit = (values) => {
-    console.log(values);
+    axios.post(requests.places, values);
   };
 
   const { values, handleBlur, handleChange, handleSubmit } = useFormik({
