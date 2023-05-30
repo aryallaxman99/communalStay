@@ -5,7 +5,7 @@ import Login from "./Containers/Auth/Login";
 import IndexPage from "./Containers/IndexPage";
 import Register from "./Containers/Auth/Register";
 import { UserContextProvider } from "./UserContext";
-import { Error } from "./Containers/Error/Error";
+import { Error } from "./Containers/Pages/Error";
 import UserDashboard from "./Containers/User/UserDashboard";
 const App = () => {
   return (
