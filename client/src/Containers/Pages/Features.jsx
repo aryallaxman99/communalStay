@@ -3,10 +3,14 @@ const Features = ({ values, handleBlur, handleChange }) => {
     <div>
       <label className="border p-4 flex rounded-2xl cursor-pointer gap-2 items-center">
         <input
+          name="wifi"
           type="checkbox"
-          id="features"
-          value={values.features}
-          onChange={handleChange}
+          onChange={(event) =>
+            event.target.checked === true &&
+            values.features.indexOf(event.target.name) === -1
+              ? (values.features = [...values.features, event.target.name])
+              : values.features.splice(event.target.name, 1)
+          }
           onBlur={handleBlur}
         />
         <svg
@@ -27,10 +31,14 @@ const Features = ({ values, handleBlur, handleChange }) => {
       </label>
       <label className="border p-4 flex rounded-2xl cursor-pointer gap-2 items-center">
         <input
+          name="electricity"
           type="checkbox"
-          id="features"
-          value={values.features}
-          onChange={handleChange}
+          onChange={(event) =>
+            event.target.checked === true &&
+            values.features.indexOf(event.target.name) === -1
+              ? (values.features = [...values.features, event.target.name])
+              : values.features.splice(event.target.name, 1)
+          }
           onBlur={handleBlur}
         />
         <svg
@@ -52,10 +60,14 @@ const Features = ({ values, handleBlur, handleChange }) => {
       </label>
       <label className="border p-4 flex rounded-2xl gap-2 cursor-pointer items-center">
         <input
+          name="shower"
           type="checkbox"
-          id="features"
-          value={values.features}
-          onChange={handleChange}
+          onChange={(event) =>
+            event.target.checked === true &&
+            values.features.indexOf(event.target.name) === -1
+              ? (values.features = [...values.features, event.target.name])
+              : values.features.splice(event.target.name, 1)
+          }
           onBlur={handleBlur}
         />
         <svg
@@ -69,10 +81,14 @@ const Features = ({ values, handleBlur, handleChange }) => {
       </label>
       <label className="border p-4 flex rounded-2xl gap-2 cursor-pointer items-center">
         <input
+          name="mountain View"
           type="checkbox"
-          id="features"
-          value={values.features}
-          onChange={handleChange}
+          onChange={(event) =>
+            event.target.checked === true &&
+            values.features.indexOf(event.target.name) === -1
+              ? (values.features = [...values.features, event.target.name])
+              : values.features.splice(event.target.name, 1)
+          }
           onBlur={handleBlur}
         />
         <svg
@@ -86,10 +102,14 @@ const Features = ({ values, handleBlur, handleChange }) => {
       </label>
       <label className="border p-4 flex rounded-2xl gap-2 cursor-pointer items-center">
         <input
+          name="tv"
           type="checkbox"
-          id="features"
-          value={values.features}
-          onChange={handleChange}
+          onChange={(event) =>
+            event.target.checked === true &&
+            values.features.indexOf(event.target.name) === -1
+              ? (values.features = [...values.features, event.target.name])
+              : values.features.splice(event.target.name, 1)
+          }
           onBlur={handleBlur}
         />
         <svg
@@ -110,10 +130,14 @@ const Features = ({ values, handleBlur, handleChange }) => {
       </label>
       <label className="border p-4 flex rounded-2xl gap-2 items-center cursor-pointer">
         <input
+          name="indoor fireplace: gas"
           type="checkbox"
-          id="features"
-          value={values.features}
-          onChange={handleChange}
+          onChange={(event) =>
+            event.target.checked === true &&
+            values.features.indexOf(event.target.name) === -1
+              ? (values.features = [...values.features, event.target.name])
+              : values.features.splice(event.target.name, 1)
+          }
           onBlur={handleBlur}
         />
         <svg

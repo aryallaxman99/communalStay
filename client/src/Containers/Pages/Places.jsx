@@ -39,7 +39,7 @@ const Places = () => {
       title: "",
       address: "",
       descriptions: "",
-      features: "",
+      features: [],
       extraInfo: "",
       checkIn: "",
       checkOut: "",
@@ -117,17 +117,17 @@ const Places = () => {
               <div className="grid gird-cols-3 md:grid-cols-4 lg:grid-cols-6 mt-2 gap-2">
                 {photo.length > 0 &&
                   photo.map((items) => (
-                    <div>
+                    <div className="h-32 flex">
                       <img
                         alt=""
-                        className="rounded-2xl"
+                        className="rounded-2xl "
                         src={`http://localhost:8000/uploads/${items}`}
                       />
                     </div>
                   ))}
                 <label
                   type="button"
-                  className="border cursor-pointer justify-center flex gap-2 bg-transparent rounded-2xl p-2 items-center text-2xl text-gray-600 "
+                  className="h-32 border cursor-pointer justify-center flex gap-2 bg-transparent rounded-2xl p-2 items-center text-2xl text-gray-600 "
                 >
                   <Input
                     type="file"
