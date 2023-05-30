@@ -166,11 +166,7 @@ const Places = () => {
               Select all the features of your place
             </p>
             <div className="grid mt-2 grid-cols-2 gap-2 md:grid-cols-3 lg:grid-cols-6">
-              <Features
-                values={values}
-                handleBlur={handleBlur}
-                handleChange={handleChange}
-              />
+              <Features values={values} handleBlur={handleBlur} />
             </div>
             <h3 className="mt-4">Extra info</h3>
             <p className="text-gray-500 text-sm">
