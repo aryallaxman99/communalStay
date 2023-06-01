@@ -9,7 +9,7 @@ const addPlaces = async (req, res) => {
     const response = await Place.create(data);
     if (response) {
       res.json({
-        msg: "Data registered",
+        msg: "Data added successfully",
         type: "success",
         status: true,
       });
