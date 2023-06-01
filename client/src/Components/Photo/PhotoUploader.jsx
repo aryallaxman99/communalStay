@@ -3,17 +3,22 @@ import axios from "axios";
 import requests from "../../Requests";
 import Input from "../../widgets/input/Input";
 import Button from "../../widgets/button/Button";
+import { ToastContainer, toast } from "react-toastify";
 
 export const PhotoUploader = ({ values }) => {
   const [photo, setPhoto] = useState([]);
-  const [photoLink, setPhotoLink] = useState("");
+  const [photoLink, setPhotoLink] = useState(null);
 
   const addPhotoByLink = async () => {
-    const { data } = await axios.post(requests.photoUploadViaLink, {
-      photoLink,
-    });
-    setPhoto([...photo, data.imageName]);
-    values.photos = [...values.photos, data.imageName];
+    if (!photoLink) {
+      toast.warn("Enter a link");
+    } else {
+      const { data } = await axios.post(requests.photoUploadViaLink, {
+        photoLink,
+      });
+      setPhoto([...photo, data.imageName]);
+      values.photos = [...values.photos, data.imageName];
+    }
   };
 
   const uploadPhoto = (event) => {
@@ -47,6 +52,7 @@ export const PhotoUploader = ({ values }) => {
         >
           Add photos
         </Button>
+        <ToastContainer position="top-center" />
       </div>
       <div className="grid gird-cols-3 md:grid-cols-4 lg:grid-cols-6 mt-2 gap-2">
         {photo.length > 0 &&

@@ -1,34 +1,55 @@
 import React from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { useFormik } from "formik";
+import { ToastContainer, toast } from "react-toastify";
+import * as Yup from "yup";
+import axios from "axios";
+
 import Input from "../../widgets/input/Input";
 import Button from "../../widgets/button/Button";
-import { useFormik } from "formik";
 import Features from "./Features";
 import { PhotoUploader } from "../../Components/Photo/PhotoUploader";
-import axios from "axios";
 import requests from "../../Requests";
 
 const Places = () => {
   const { action } = useParams();
+  const navigate = useNavigate();
 
-  const onSubmit = (values) => {
-    axios.post(requests.places, values);
+  const onSubmit = (values, actions) => {
+    axios.post(requests.places, values).then((res) => {
+      toast[res.data.type](res.data.msg);
+      if (res.data.status === true) {
+        actions.resetForm();
+        navigate("/account/places");
+      }
+    });
   };
 
-  const { values, handleBlur, handleChange, handleSubmit } = useFormik({
-    initialValues: {
-      title: "",
-      address: "",
-      photos: [],
-      descriptions: "",
-      features: [],
-      extraInfo: "",
-      checkIn: "",
-      checkOut: "",
-      maxGuests: "",
-    },
-    onSubmit,
+  const fromSchema = Yup.object().shape({
+    title: Yup.string().required("Required"),
+    address: Yup.string().required("Required"),
+    descriptions: Yup.string().required("Required"),
+    checkIn: Yup.string().required("Required"),
+    checkOut: Yup.string().required("Required"),
+    maxGuests: Yup.string().required("Required"),
   });
+
+  const { values, handleBlur, handleChange, handleSubmit, errors, touched } =
+    useFormik({
+      initialValues: {
+        title: "",
+        address: "",
+        photos: [],
+        descriptions: "",
+        features: [],
+        extraInfo: "",
+        checkIn: "",
+        checkOut: "",
+        maxGuests: "",
+      },
+      validationSchema: fromSchema,
+      onSubmit,
+    });
 
   return (
     <div>
@@ -69,6 +90,11 @@ const Places = () => {
               onChange={handleChange}
               onBlur={handleBlur}
             />
+            {errors.title && touched.title ? (
+              <div className="text-red-500 text-xs px-4 py-2 sm:px-8 sm:py-3">
+                {errors.title}
+              </div>
+            ) : null}
             <h3 className="mt-4">Address</h3>
             <p className="text-gray-500 text-sm">Address to your place</p>
             <Input
@@ -79,6 +105,11 @@ const Places = () => {
               onChange={handleChange}
               onBlur={handleBlur}
             />
+            {errors.address && touched.address ? (
+              <div className="text-red-500 text-xs px-4 py-2 sm:px-8 sm:py-3">
+                {errors.address}
+              </div>
+            ) : null}
             <PhotoUploader values={values} />
             <h3 className="mt-4">Description</h3>
             <p className="text-sm text-gray-500">Description of the place</p>
@@ -89,6 +120,11 @@ const Places = () => {
               onChange={handleChange}
               onBlur={handleBlur}
             />
+            {errors.descriptions && touched.descriptions ? (
+              <div className="text-red-500 text-xs px-4 py-2 sm:px-8 sm:py-3">
+                {errors.descriptions}
+              </div>
+            ) : null}
             <h3 className="mt-4">Features</h3>
             <p className="text-sm text-gray-500">
               Select all the features of your place
@@ -118,6 +154,11 @@ const Places = () => {
                   onBlur={handleBlur}
                   onChange={handleChange}
                 />
+                {errors.checkIn && touched.checkIn ? (
+                  <div className="text-red-500 text-xs px-4 py-2 sm:px-8 sm:py-3">
+                    {errors.checkIn}
+                  </div>
+                ) : null}
               </div>
               <div className="mt-2 -mb-1">
                 <h5>Check Out time</h5>
@@ -128,6 +169,11 @@ const Places = () => {
                   onBlur={handleBlur}
                   onChange={handleChange}
                 />
+                {errors.checkOut && touched.checkOut ? (
+                  <div className="text-red-500 text-xs px-4 py-2 sm:px-8 sm:py-3">
+                    {errors.checkOut}
+                  </div>
+                ) : null}
               </div>
               <div className="mt-2 -mb-1">
                 <h5>Number of guests</h5>
@@ -138,6 +184,11 @@ const Places = () => {
                   onBlur={handleBlur}
                   placeholder="Guests"
                 />
+                {errors.maxGuests && touched.maxGuests ? (
+                  <div className="text-red-500 text-xs px-4 py-2 sm:px-8 sm:py-3">
+                    {errors.maxGuests}
+                  </div>
+                ) : null}
               </div>
             </div>
             <Button type="submit" className="bg-secondary">
@@ -146,6 +197,7 @@ const Places = () => {
           </form>
         </div>
       )}
+      <ToastContainer position="top-center" />
     </div>
   );
 };

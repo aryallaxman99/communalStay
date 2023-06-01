@@ -51,7 +51,6 @@ const userLogin = async (req, res, next) => {
         );
         res.cookie("token", accessToken).json({
           msg: "loged in",
-          token: accessToken,
           userDetails: refactoredData,
           status: true,
           type: "success",
