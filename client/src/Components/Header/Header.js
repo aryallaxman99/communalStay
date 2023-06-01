@@ -92,7 +92,7 @@ const Header = () => {
                       href="/account"
                       className="flex p-2 rounded-md  hover:bg-gray-100"
                     >
-                      Account
+                      Profile
                     </a>
                   </li>
                 </ul>

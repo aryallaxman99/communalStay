@@ -7,6 +7,7 @@ const requests = {
   photoUploadViaLink: `${baseURL}uploads/upload-via-link`,
   photoUpload: `${baseURL}uploads/`,
   places: `${baseURL}places/`,
+  getAllPlaces: `${baseURL}places/all`,
 };
 
 export default requests;

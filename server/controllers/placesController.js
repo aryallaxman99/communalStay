@@ -25,4 +25,14 @@ const addPlaces = async (req, res) => {
   }
 };
 
-export default { addPlaces };
+const getPlaces = async (req, res) => {
+  try {
+    const userInfo = await jwtHelper.verifyAccessToken(req.cookies.token);
+    const data = await Place.find({ owner: userInfo.id });
+    res.json(data);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export default { addPlaces, getPlaces };
