@@ -5,6 +5,7 @@ import axios from "axios";
 import requests from "../../Requests";
 const Places = () => {
   const [placesInfo, setPlacesInfo] = useState("");
+
   useEffect(() => {
     axios.get(requests.getAllPlaces).then(({ data }) => {
       setPlacesInfo(data);
@@ -41,7 +42,7 @@ const Places = () => {
             ? placesInfo.map((items) => (
                 <Link
                   to={`/account/places/${items._id}`}
-                  className="flex gap-4 bg-gray-200 p-2 rounded-2xl"
+                  className="flex mb-4 gap-4 bg-gray-200 p-2 rounded-2xl"
                 >
                   <div className="flex gap-4 w-32 h-32 bg-gray-300 grow shrink-0">
                     {items.photos.length > 0

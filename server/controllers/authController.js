@@ -74,11 +74,14 @@ const userLogin = async (req, res, next) => {
   }
 };
 
-const userProfile = (req, res, next) => {
+const userProfile = async (req, res, next) => {
   try {
-    jwtHelper
-      .verifyAccessToken(req.cookies.token)
-      .then((data) => res.json(data));
+    const response = await jwtHelper.verifyAccessToken(req.cookies.token);
+    res.json({
+      userData: response,
+      message: "Success",
+      status: true,
+    });
   } catch (error) {
     next(error);
   }

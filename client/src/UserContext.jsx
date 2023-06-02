@@ -1,29 +1,22 @@
-import { createContext, useEffect, useState } from "react";
-import axios from "axios";
-import requests from "./Requests";
-import { useDispatch, useSelector } from "react-redux";
-import { resetUserDetails } from "./reducers/userSlice";
+import { createContext } from "react";
+import { useGetUserData } from "./hooks/useGetUserData";
 
 export const UserContext = createContext({});
 
 export const UserContextProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-  const userDetails = useSelector((state) => state.user);
-  const dispatch = useDispatch();
-  useEffect(() => {
-    if (!user) {
-      axios.get(requests.userProfile).then((res) => {
-        if (
-          userDetails.email !== res.data.email ||
-          userDetails.id !== res.data.id
-        ) {
-          dispatch(resetUserDetails());
-        } else {
-          setUser(res.data);
-        }
-      });
-    }
-  }, []);
+  const { loading, error, userData } = useGetUserData();
+
+  if (loading) {
+    return <p>Loading</p>;
+  }
+
+  if (error) {
+    return <p>Error</p>;
+  }
+
+  if (!userData) {
+    return <p>User not found</p>;
+  }
 
   return <UserContext.Provider>{children}</UserContext.Provider>;
 };

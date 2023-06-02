@@ -1,5 +1,4 @@
 import "./App.css";
-import axios from "axios";
 import { Routes, Route } from "react-router-dom";
 import Layout from "./Containers/Layout/Layout";
 import Login from "./Containers/Auth/Login";
@@ -11,8 +10,6 @@ import UserDashboard from "./Containers/User/UserDashboard";
 import Places from "./Containers/Places/Places";
 import PlacesForm from "./Containers/Places/PlacesForm";
 import Account from "./Containers/User/Account";
-
-axios.defaults.withCredentials = true;
 
 const App = () => {
   return (

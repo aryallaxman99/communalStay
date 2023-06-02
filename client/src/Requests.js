@@ -8,6 +8,7 @@ const requests = {
   photoUpload: `${baseURL}uploads/`,
   places: `${baseURL}places/`,
   getAllPlaces: `${baseURL}places/all`,
+  getPlacesById: `${baseURL}places/`,
 };
 
 export default requests;

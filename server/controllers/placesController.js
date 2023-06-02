@@ -35,4 +35,13 @@ const getPlaces = async (req, res) => {
   }
 };
 
-export default { addPlaces, getPlaces };
+const getPlacesById = async (req, res) => {
+  try {
+    const placeInfo = await Place.findById(req.params.id);
+    res.json({ placeInfo });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export default { addPlaces, getPlaces, getPlacesById };

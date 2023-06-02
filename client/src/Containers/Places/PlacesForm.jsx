@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useFormik } from "formik";
 import { ToastContainer, toast } from "react-toastify";
 import * as Yup from "yup";
@@ -9,9 +9,13 @@ import Button from "../../widgets/button/Button";
 import Features from "../Pages/Features";
 import { PhotoUploader } from "../../Components/Photo/PhotoUploader";
 import requests from "../../Requests";
+import { useEffect, useState } from "react";
+import Account from "../User/Account";
 
 const PlacesForm = () => {
+  const { id } = useParams();
   const navigate = useNavigate();
+  const [placeInfo, setPlaceInfo] = useState({});
 
   const onSubmit = (values, actions) => {
     axios.post(requests.places, values).then((res) => {
@@ -34,22 +38,36 @@ const PlacesForm = () => {
 
   const { values, handleBlur, handleChange, handleSubmit, errors, touched } =
     useFormik({
-      initialValues: {
-        title: "",
-        address: "",
-        photos: [],
-        descriptions: "",
-        features: [],
-        extraInfo: "",
-        checkIn: "",
-        checkOut: "",
-        maxGuests: "",
-      },
+      initialValues: placeInfo
+        ? placeInfo
+        : {
+            title: "",
+            address: "",
+            photos: [],
+            descriptions: "",
+            features: [],
+            extraInfo: "",
+            checkIn: "",
+            checkOut: "",
+            maxGuests: "",
+          },
+
       validationSchema: fromSchema,
       onSubmit,
     });
+
+  useEffect(() => {
+    if (id) {
+      axios
+        .get(requests.getPlacesById + id)
+        .then((res) => setPlaceInfo(res.data.placeInfo));
+    }
+  }, [id]);
+
+  console.log(placeInfo);
   return (
     <div>
+      <Account />
       <form onSubmit={handleSubmit}>
         <h3 className="mt-4">Title</h3>
         <p className="text-gray-500 text-sm">Title for your place</p>

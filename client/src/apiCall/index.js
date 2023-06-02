@@ -1,5 +1,4 @@
-// import axios from "../utility/axios"
-import { toast } from "react-hot-toast";
+import { toast } from "react-toastify";
 import http from "./axios";
 
 const getApiResponse = async ({
