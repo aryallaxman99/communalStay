@@ -2,10 +2,7 @@ import React, { createContext } from "react";
 import { useGetUserData } from "./hooks/useGetUserData";
 import Skeleton from "@mui/material/Skeleton";
 import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-
 import CardHeader from "@mui/material/CardHeader";
-import Box from "@mui/material/Box";
 
 export const UserContext = createContext({});
 
@@ -16,7 +13,7 @@ export const UserContextProvider = ({ children }) => {
     return (
       <Card>
         <CardHeader />
-        <Skeleton sx={{ height: 90 }} animation="wave" variant="rectangular" />
+        <Skeleton sx={{ height: 90 }} animation="pulse" variant="rectangular" />
       </Card>
     );
   }

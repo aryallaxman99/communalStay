@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { useFormik } from "formik";
+import { Formik, useFormik } from "formik";
 import { ToastContainer, toast } from "react-toastify";
 import * as Yup from "yup";
 import axios from "axios";
@@ -15,16 +15,26 @@ import Account from "../User/Account";
 const PlacesForm = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [placeInfo, setPlaceInfo] = useState({});
+  const [placeInfo, setPlaceInfo] = useState();
 
   const onSubmit = (values, actions) => {
-    axios.post(requests.places, values).then((res) => {
-      toast[res.data.type](res.data.msg);
-      if (res.data.status === true) {
-        actions.resetForm();
-        navigate("/account/places");
-      }
-    });
+    if (!id) {
+      axios.post(requests.places, values).then((res) => {
+        toast[res.data.type](res.data.msg);
+        if (res.data.status === true) {
+          actions.resetForm();
+          navigate("/account/places");
+        }
+      });
+    } else {
+      axios.put(requests.updatePlaces, values).then((res) => {
+        toast[res.data.type](res.data.msg);
+        if (res.data.status === true) {
+          actions.resetForm();
+          navigate("/account/places");
+        }
+      });
+    }
   };
 
   const fromSchema = Yup.object().shape({
@@ -35,36 +45,35 @@ const PlacesForm = () => {
     checkOut: Yup.string().required("Required"),
     maxGuests: Yup.string().required("Required"),
   });
-
   const { values, handleBlur, handleChange, handleSubmit, errors, touched } =
     useFormik({
-      initialValues: placeInfo
-        ? placeInfo
-        : {
-            title: "",
-            address: "",
-            photos: [],
-            descriptions: "",
-            features: [],
-            extraInfo: "",
-            checkIn: "",
-            checkOut: "",
-            maxGuests: "",
-          },
+      initialValues:
+        placeInfo !== undefined
+          ? placeInfo
+          : {
+              title: "",
+              address: "",
+              photos: [],
+              descriptions: "",
+              features: [],
+              extraInfo: "",
+              checkIn: "",
+              checkOut: "",
+              maxGuests: "",
+            },
 
       validationSchema: fromSchema,
+      enableReinitialize: true,
       onSubmit,
     });
-
   useEffect(() => {
-    if (id) {
-      axios
-        .get(requests.getPlacesById + id)
-        .then((res) => setPlaceInfo(res.data.placeInfo));
+    if (id && !values.title) {
+      axios.get(requests.getPlacesById + id).then((res) => {
+        setPlaceInfo(res.data.placeInfo);
+      });
     }
-  }, [id]);
+  }, []);
 
-  console.log(placeInfo);
   return (
     <div>
       <Account />

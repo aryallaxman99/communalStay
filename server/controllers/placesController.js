@@ -1,7 +1,7 @@
 import Place from "../models/PlaceModel.js";
 import jwtHelper from "../helpers/jwtHelper.js";
 
-const addPlaces = async (req, res) => {
+export const addPlaces = async (req, res) => {
   try {
     const data = req.body;
     const userInfo = await jwtHelper.verifyAccessToken(req.cookies.token);
@@ -25,7 +25,7 @@ const addPlaces = async (req, res) => {
   }
 };
 
-const getPlaces = async (req, res) => {
+export const getPlaces = async (req, res) => {
   try {
     const userInfo = await jwtHelper.verifyAccessToken(req.cookies.token);
     const data = await Place.find({ owner: userInfo.id });
@@ -35,7 +35,7 @@ const getPlaces = async (req, res) => {
   }
 };
 
-const getPlacesById = async (req, res) => {
+export const getPlacesById = async (req, res) => {
   try {
     const placeInfo = await Place.findById(req.params.id);
     res.json({ placeInfo });
@@ -44,4 +44,24 @@ const getPlacesById = async (req, res) => {
   }
 };
 
-export default { addPlaces, getPlaces, getPlacesById };
+export const updatePlace = async (req, res) => {
+  try {
+    const { _id, __v, ...data } = req.body;
+    const response = await Place.findByIdAndUpdate(_id, data);
+    if (response) {
+      res.json({
+        msg: "Data updated successfully",
+        status: true,
+        type: "success",
+      });
+    } else {
+      res.json({
+        msg: "Something went wrong",
+        status: false,
+        type: "error",
+      });
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};

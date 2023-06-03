@@ -9,6 +9,7 @@ const requests = {
   places: `${baseURL}places/`,
   getAllPlaces: `${baseURL}places/all`,
   getPlacesById: `${baseURL}places/`,
+  updatePlaces: `${baseURL}places/update`,
 };
 
 export default requests;

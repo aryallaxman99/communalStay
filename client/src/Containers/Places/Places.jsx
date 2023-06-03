@@ -4,12 +4,11 @@ import Account from "../User/Account";
 import axios from "axios";
 import requests from "../../Requests";
 const Places = () => {
-  const [placesInfo, setPlacesInfo] = useState("");
+  const [placesInfo, setPlacesInfo] = useState([]);
 
   useEffect(() => {
     axios.get(requests.getAllPlaces).then(({ data }) => {
       setPlacesInfo(data);
-      console.log(data);
     });
   }, []);
 

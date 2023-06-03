@@ -5,12 +5,14 @@ const Features = ({ values, handleBlur }) => {
       ? (values.features = [...values.features, event.target.name])
       : values.features.splice(event.target.name, 1);
   };
+
   return (
     <div>
       <label className="border p-4 flex rounded-2xl cursor-pointer gap-2 items-center">
         <input
           name="wifi"
           type="checkbox"
+          defaultChecked={values.features.includes("wifi")}
           onChange={handleChange}
           onBlur={handleBlur}
         />
@@ -34,6 +36,7 @@ const Features = ({ values, handleBlur }) => {
         <input
           name="electricity"
           type="checkbox"
+          defaultChecked={values.features.includes("electricity")}
           onChange={handleChange}
           onBlur={handleBlur}
         />
@@ -58,6 +61,7 @@ const Features = ({ values, handleBlur }) => {
         <input
           name="shower"
           type="checkbox"
+          defaultChecked={values.features.includes("shower")}
           onChange={handleChange}
           onBlur={handleBlur}
         />
@@ -74,6 +78,7 @@ const Features = ({ values, handleBlur }) => {
         <input
           name="mountain View"
           type="checkbox"
+          defaultChecked={values.features.includes("mountain View")}
           onChange={handleChange}
           onBlur={handleBlur}
         />
@@ -90,6 +95,7 @@ const Features = ({ values, handleBlur }) => {
         <input
           name="tv"
           type="checkbox"
+          defaultChecked={values.features.includes("tv")}
           onChange={handleChange}
           onBlur={handleBlur}
         />
@@ -113,6 +119,7 @@ const Features = ({ values, handleBlur }) => {
         <input
           name="indoor fireplace: gas"
           type="checkbox"
+          defaultChecked={values.features.includes("indoor fireplace: gas")}
           onChange={handleChange}
           onBlur={handleBlur}
         />
