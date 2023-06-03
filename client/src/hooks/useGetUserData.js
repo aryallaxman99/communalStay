@@ -6,16 +6,18 @@ export function useGetUserData() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState();
   const [userData, setUserData] = useState();
-
   const getUserData = async () => {
     try {
       setLoading(true);
       setError(false);
-      const { data } = await getApiResponse({
-        url: requests.userProfile,
-        method: "get",
-      });
-      setUserData(data.userData);
+
+      if (document.cookie) {
+        const { data } = await getApiResponse({
+          url: requests.userProfile,
+          method: "get",
+        });
+        setUserData(data.userData);
+      }
     } catch (err) {
       setError(error);
     } finally {

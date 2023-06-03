@@ -5,6 +5,8 @@ const baseUrl =
     ? process.env.REACT_APP_BASE_URL
     : process.env.REACT_APP_PRODUCTION_BASE_URL;
 
+axios.defaults.withCredentials = true;
+
 const http = axios.create({
   baseURL: baseUrl,
   timeout: 10000,

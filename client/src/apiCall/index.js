@@ -26,15 +26,15 @@ const getApiResponse = async ({
     });
 
     if (method !== "get") {
-      if (result.data.message && displaySuccessMessage) {
-        toast.success(result.data.message);
+      if (result.data.msg && displaySuccessMessage) {
+        toast.success(result.data.msg);
       }
     }
 
     return result;
   } catch (error) {
     toast.error(
-      error?.response?.data?.message ||
+      error?.response?.data?.msg ||
         "Something went wrong, please try again later."
     );
     return {
