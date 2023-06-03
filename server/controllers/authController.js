@@ -27,7 +27,7 @@ const userRegister = async (req, res, next) => {
       res.json({ msg: "email already exists", response: false, type: "error" });
     }
   } catch (error) {
-    next(error);
+    console.log(error);
   }
 };
 
@@ -45,16 +45,23 @@ const userLogin = async (req, res, next) => {
 
       const { password, __v, ...refactoredData } = doesEmailExists.toObject();
       if (isValidPassword) {
-        const accessToken = await jwtHelper.signAccessToken(
-          doesEmailExists.email,
-          doesEmailExists.id
-        );
-        res.cookie("token", accessToken).json({
-          msg: "loged in",
-          userDetails: refactoredData,
-          status: true,
-          type: "success",
-        });
+        jwtHelper
+          .signAccessToken(doesEmailExists.email, doesEmailExists.id)
+          .then((token) => {
+            res.cookie("token", token).json({
+              msg: "loged in",
+              userDetails: refactoredData,
+              status: true,
+              type: "success",
+            });
+          })
+          .catch((error) => {
+            res.json({
+              msg: "Internal Server Error",
+              status: false,
+              type: "error",
+            });
+          });
       } else {
         res.json({
           msg: "Invalid email or password",
@@ -70,20 +77,32 @@ const userLogin = async (req, res, next) => {
       });
     }
   } catch (error) {
-    next(error);
+    console.log(error);
   }
 };
 
 const userProfile = async (req, res, next) => {
   try {
-    const response = await jwtHelper.verifyAccessToken(req.cookies.token);
-    res.json({
-      userData: response,
-      message: "Success",
-      status: true,
-    });
+    if (req.cookies.token) {
+      const response = await jwtHelper.verifyAccessToken(req.cookies.token);
+      res.json({
+        userData: response,
+        msg: "Success",
+        status: true,
+      });
+    } else {
+      res.json({
+        msg: "Cookies not found",
+        type: "error",
+        status: false,
+      });
+    }
   } catch (error) {
-    next(error);
+    res.json({
+      msg: "Cookies not valid",
+      type: "error",
+      status: false,
+    });
   }
 };
 export default { userRegister, userLogin, userProfile };
