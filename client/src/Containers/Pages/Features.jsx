@@ -1,21 +1,21 @@
-const Features = ({ values, handleBlur }) => {
+const Features = ({ setFeatures, features }) => {
   const handleChange = (event) => {
-    event.target.checked === true &&
-    values.features.indexOf(event.target.name) === -1
-      ? (values.features = [...values.features, event.target.name])
-      : values.features.splice(event.target.name, 1);
+    const { checked, name } = event.target;
+    checked
+      ? setFeatures([...features, name])
+      : setFeatures([...features.filter((items) => items !== name)]);
   };
 
   return (
     <div>
-      <label className="border p-4 flex rounded-2xl cursor-pointer gap-2 items-center">
+      <label className="mb-1 border p-4 flex rounded-2xl cursor-pointer gap-2 items-center">
         <input
           name="wifi"
           type="checkbox"
-          defaultChecked={values.features.includes("wifi")}
+          checked={features.includes("wifi")}
           onChange={handleChange}
-          onBlur={handleBlur}
         />
+
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -32,13 +32,12 @@ const Features = ({ values, handleBlur }) => {
         </svg>
         <span>Wifi</span>
       </label>
-      <label className="border p-4 flex rounded-2xl cursor-pointer gap-2 items-center">
+      <label className="mb-1 border p-4 flex rounded-2xl cursor-pointer gap-2 items-center">
         <input
           name="electricity"
           type="checkbox"
-          defaultChecked={values.features.includes("electricity")}
+          checked={features.includes("electricity")}
           onChange={handleChange}
-          onBlur={handleBlur}
         />
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -57,13 +56,12 @@ const Features = ({ values, handleBlur }) => {
 
         <span>Electricity</span>
       </label>
-      <label className="border p-4 flex rounded-2xl gap-2 cursor-pointer items-center">
+      <label className="mb-1 border p-4 flex rounded-2xl gap-2 cursor-pointer items-center">
         <input
           name="shower"
           type="checkbox"
-          defaultChecked={values.features.includes("shower")}
+          checked={features.includes("shower")}
           onChange={handleChange}
-          onBlur={handleBlur}
         />
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -74,13 +72,12 @@ const Features = ({ values, handleBlur }) => {
         </svg>
         <span>Shower</span>
       </label>
-      <label className="border p-4 flex rounded-2xl gap-2 cursor-pointer items-center">
+      <label className="mb-1 border p-4 flex rounded-2xl gap-2 cursor-pointer items-center">
         <input
           name="mountain View"
           type="checkbox"
-          defaultChecked={values.features.includes("mountain View")}
+          checked={features.includes("mountain View")}
           onChange={handleChange}
-          onBlur={handleBlur}
         />
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -91,13 +88,12 @@ const Features = ({ values, handleBlur }) => {
         </svg>
         <span>Mountain view</span>
       </label>
-      <label className="border p-4 flex rounded-2xl gap-2 cursor-pointer items-center">
+      <label className="mb-1 border p-4 flex rounded-2xl gap-2 cursor-pointer items-center">
         <input
           name="tv"
           type="checkbox"
-          defaultChecked={values.features.includes("tv")}
+          checked={features.includes("tv")}
           onChange={handleChange}
-          onBlur={handleBlur}
         />
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -119,9 +115,8 @@ const Features = ({ values, handleBlur }) => {
         <input
           name="indoor fireplace: gas"
           type="checkbox"
-          defaultChecked={values.features.includes("indoor fireplace: gas")}
+          checked={features.includes("indoor fireplace: gas")}
           onChange={handleChange}
-          onBlur={handleBlur}
         />
         <svg
           xmlns="http://www.w3.org/2000/svg"

@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+
 import requests from "../../Requests";
 import Input from "../../widgets/input/Input";
 import Button from "../../widgets/button/Button";
-import { ToastContainer, toast } from "react-toastify";
 
-export const PhotoUploader = ({ values }) => {
-  const [photo, setPhoto] = useState([]);
-  const [photoLink, setPhotoLink] = useState(null);
+export const PhotoUploader = ({ photos, setPhotos }) => {
+  const [photoLink, setPhotoLink] = useState("");
 
   const addPhotoByLink = async () => {
     if (!photoLink) {
@@ -16,23 +16,22 @@ export const PhotoUploader = ({ values }) => {
       const { data } = await axios.post(requests.photoUploadViaLink, {
         photoLink,
       });
-      setPhoto([...photo, data.imageName]);
-      values.photos = [...values.photos, data.imageName];
+      setPhotos([...photos, data.imageName]);
     }
+    setPhotoLink("");
   };
 
   const uploadPhoto = (event) => {
     axios
       .post(
         requests.photoUpload,
-        { photo: event.target.files[0] },
+        { photos: event.target.files[0] },
         {
           headers: { "Content-Type": "multipart/form-data" },
         }
       )
       .then((res) => {
-        setPhoto([...photo, res.data.imageName]);
-        values.photos = [...values.photos, res.data.imageName];
+        setPhotos([...photos, res.data.imageName]);
       });
   };
   return (
@@ -55,16 +54,18 @@ export const PhotoUploader = ({ values }) => {
         <ToastContainer position="top-center" />
       </div>
       <div className="grid gird-cols-3 md:grid-cols-4 lg:grid-cols-6 mt-2 gap-2">
-        {photo.length > 0 &&
-          photo.map((items) => (
-            <div className="h-32 flex" key={items}>
-              <img
-                alt=""
-                className="rounded-2xl "
-                src={`http://localhost:8000/uploads/${items}`}
-              />
-            </div>
-          ))}
+        {photos
+          ? photos.length > 0 &&
+            photos.map((items) => (
+              <div className="h-32 flex" key={items}>
+                <img
+                  alt=""
+                  className="rounded-2xl "
+                  src={`http://localhost:8000/uploads/${items}`}
+                />
+              </div>
+            ))
+          : null}
         <label
           type="button"
           className="h-32 border cursor-pointer justify-center flex gap-2 bg-transparent rounded-2xl p-2 items-center text-2xl text-gray-600 "

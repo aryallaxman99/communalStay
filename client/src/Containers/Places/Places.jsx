@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Account from "../User/Account";
 import axios from "axios";
+
 import requests from "../../Requests";
+
 const Places = () => {
   const [placesInfo, setPlacesInfo] = useState([]);
 
@@ -43,15 +45,14 @@ const Places = () => {
                   to={`/account/places/${items._id}`}
                   className="flex mb-4 gap-4 bg-gray-200 p-2 rounded-2xl"
                 >
-                  <div className="flex gap-4 w-32 h-32 bg-gray-300 grow shrink-0">
-                    {items.photos.length > 0
-                      ? items.photos.map((item) => (
-                          <img
-                            src={`http://localhost:8000/uploads/${item}`}
-                            alt=""
-                          />
-                        ))
-                      : null}
+                  <div className="flex gap-4 w-32 h-32 bg-gray-300 shrink-0">
+                    {items.photos.length > 0 ? (
+                      <img
+                        className="object-cover"
+                        src={`http://localhost:8000/uploads/${items.photos[0]}`}
+                        alt=""
+                      />
+                    ) : null}
                   </div>
                   <div className="grow-0 shrink">
                     <h2>{items.title}</h2>

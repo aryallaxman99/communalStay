@@ -46,7 +46,7 @@ export const getPlacesById = async (req, res) => {
 
 export const updatePlace = async (req, res) => {
   try {
-    const { _id, __v, ...data } = req.body;
+    const { _id, ...data } = req.body;
     const response = await Place.findByIdAndUpdate(_id, data);
     if (response) {
       res.json({
