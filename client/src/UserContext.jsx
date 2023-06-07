@@ -7,7 +7,7 @@ import CardHeader from "@mui/material/CardHeader";
 export const UserContext = createContext({});
 
 export const UserContextProvider = ({ children }) => {
-  const { loading, error, userData } = useGetUserData();
+  const { loading, error, userData, cookies } = useGetUserData();
 
   if (loading) {
     return (
@@ -22,7 +22,7 @@ export const UserContextProvider = ({ children }) => {
     return <p>Error</p>;
   }
 
-  if (document.cookie && !userData) {
+  if (cookies.refreshToken && !userData) {
     return <p>User not found</p>;
   }
 

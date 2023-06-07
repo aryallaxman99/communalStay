@@ -45,22 +45,29 @@ const userLogin = async (req, res, next) => {
 
       const { password, __v, ...refactoredData } = doesEmailExists.toObject();
       if (isValidPassword) {
-        jwtHelper
-          .signAccessToken(doesEmailExists.email, doesEmailExists.id)
-          .then((token) => {
-            res.cookie("token", token).json({
-              msg: "loged in",
-              userDetails: refactoredData,
-              status: true,
-              type: "success",
-            });
+        const accessToken = await jwtHelper.signAccessToken(
+          doesEmailExists.email,
+          doesEmailExists.id
+        );
+        const refreshToken = await jwtHelper.signRefreshToken(
+          doesEmailExists.email,
+          doesEmailExists.id
+        );
+
+        res
+          .cookie("accessToken", accessToken, {
+            expires: new Date(Number(new Date()) + 604800000),
+            httpOnly: false,
           })
-          .catch((error) => {
-            res.json({
-              msg: "Internal Server Error",
-              status: false,
-              type: "error",
-            });
+          .cookie("refreshToken", refreshToken, {
+            expires: new Date(Number(new Date()) + 31556926000),
+            httpOnly: false,
+          })
+          .json({
+            msg: "loged in",
+            userDetails: refactoredData,
+            status: true,
+            type: "success",
           });
       } else {
         res.json({
@@ -77,19 +84,34 @@ const userLogin = async (req, res, next) => {
       });
     }
   } catch (error) {
-    console.log(error);
+    res.json({
+      msg: "Internal Server Error",
+      status: false,
+      type: "error",
+    });
   }
 };
 
 const userProfile = async (req, res, next) => {
   try {
-    if (req.cookies.token) {
-      const response = await jwtHelper.verifyAccessToken(req.cookies.token);
-      res.json({
-        userData: response,
-        msg: "Success",
-        status: true,
-      });
+    if (req.cookies.refreshToken) {
+      const response = await jwtHelper.verifyRefreshToken(
+        req.cookies.refreshToken
+      );
+      const accessToken = await jwtHelper.signAccessToken(
+        response.email,
+        response.id
+      );
+      res
+        .cookie("accessToken", accessToken, {
+          expires: new Date(Number(new Date()) + 604800000),
+          httpOnly: false,
+        })
+        .json({
+          userData: response,
+          msg: "Success",
+          status: true,
+        });
     } else {
       res.json({
         msg: "Cookies not found",
@@ -105,4 +127,20 @@ const userProfile = async (req, res, next) => {
     });
   }
 };
-export default { userRegister, userLogin, userProfile };
+
+const logout = (req, res) => {
+  try {
+    const { accessToken, refreshToken } = req.cookies;
+    console.log({ accessToken }, { refreshToken });
+    if (accessToken && refreshToken) {
+      res.cookie("accessToken", "").cookie("refreshToken", "").json({
+        msg: "User logged out",
+        type: "success",
+        status: true,
+      });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+export default { userRegister, userLogin, userProfile, logout };

@@ -1,10 +1,14 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
+
 import Button from "../../widgets/button/Button";
 import { resetUserDetails } from "../../reducers/userSlice";
 import Places from "../Places/Places";
 import Account from "./Account";
+import requests from "../../Requests";
 
 const UserDashboard = () => {
   const user = useSelector((state) => state.user);
@@ -17,6 +21,10 @@ const UserDashboard = () => {
 
   const logout = () => {
     dispatch(resetUserDetails());
+    axios.delete("http://localhost:8000/auth/logout").then((res) => {
+      console.log(res.data);
+      toast[res.data.type](res.data.msg);
+    });
     navigate("/");
   };
 
@@ -35,6 +43,7 @@ const UserDashboard = () => {
           <Button className="bg-secondary max-w-sm mt-2" onClick={logout}>
             Logout
           </Button>
+          <ToastContainer />
         </div>
       )}
       {subpage === "places" && <Places />}

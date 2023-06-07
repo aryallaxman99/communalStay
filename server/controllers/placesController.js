@@ -4,7 +4,7 @@ import jwtHelper from "../helpers/jwtHelper.js";
 export const addPlaces = async (req, res) => {
   try {
     const data = req.body;
-    const userInfo = await jwtHelper.verifyAccessToken(req.cookies.token);
+    const userInfo = await jwtHelper.verifyAccessToken(req.cookies.accessToken);
     data.owner = userInfo.id;
     const response = await Place.create(data);
     if (response) {
@@ -27,7 +27,7 @@ export const addPlaces = async (req, res) => {
 
 export const getPlaces = async (req, res) => {
   try {
-    const userInfo = await jwtHelper.verifyAccessToken(req.cookies.token);
+    const userInfo = await jwtHelper.verifyAccessToken(req.cookies.accessToken);
     const data = await Place.find({ owner: userInfo.id });
     res.json(data);
   } catch (error) {
