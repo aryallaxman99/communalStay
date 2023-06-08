@@ -21,8 +21,7 @@ const UserDashboard = () => {
 
   const logout = () => {
     dispatch(resetUserDetails());
-    axios.delete("http://localhost:8000/auth/logout").then((res) => {
-      console.log(res.data);
+    axios.delete(requests.userLogout).then((res) => {
       toast[res.data.type](res.data.msg);
     });
     navigate("/");

@@ -55,10 +55,7 @@ const userLogin = async (req, res, next) => {
         );
 
         res
-          .cookie("accessToken", accessToken, {
-            expires: new Date(Number(new Date()) + 604800000),
-            httpOnly: false,
-          })
+          .cookie("accessToken", accessToken)
           .cookie("refreshToken", refreshToken, {
             expires: new Date(Number(new Date()) + 31556926000),
             httpOnly: false,
@@ -102,16 +99,11 @@ const userProfile = async (req, res, next) => {
         response.email,
         response.id
       );
-      res
-        .cookie("accessToken", accessToken, {
-          expires: new Date(Number(new Date()) + 604800000),
-          httpOnly: false,
-        })
-        .json({
-          userData: response,
-          msg: "Success",
-          status: true,
-        });
+      res.cookie("accessToken", accessToken).json({
+        userData: response,
+        msg: "Success",
+        status: true,
+      });
     } else {
       res.json({
         msg: "Cookies not found",
@@ -131,7 +123,6 @@ const userProfile = async (req, res, next) => {
 const logout = (req, res) => {
   try {
     const { accessToken, refreshToken } = req.cookies;
-    console.log({ accessToken }, { refreshToken });
     if (accessToken && refreshToken) {
       res.cookie("accessToken", "").cookie("refreshToken", "").json({
         msg: "User logged out",
