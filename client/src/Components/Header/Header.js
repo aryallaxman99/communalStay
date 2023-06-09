@@ -86,7 +86,7 @@ const Header = () => {
           {showMenu ? (
             firstName ? (
               <div className="right-0 p-2 mt-1 rounded-md shadow lg:absolute">
-                <ul className="space-y-2 lg:w-48">
+                <ul className="space-y-2 lg:w-48 bg-white rounded-md">
                   <li>
                     <a
                       href="/account"
@@ -99,7 +99,7 @@ const Header = () => {
               </div>
             ) : (
               <div className="right-0 p-2 mt-1 rounded-md shadow lg:absolute">
-                <ul className="space-y-2 lg:w-48">
+                <ul className="space-y-2 lg:w-48 bg-white rounded-md">
                   <li>
                     <a
                       href="/register"

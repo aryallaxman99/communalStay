@@ -25,7 +25,16 @@ export const addPlaces = async (req, res) => {
   }
 };
 
-export const getPlaces = async (req, res) => {
+export const getAllPlaces = async (req, res) => {
+  try {
+    const data = await Place.find();
+    res.json(data);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getPlacesByOwnerId = async (req, res) => {
   try {
     const userInfo = await jwtHelper.verifyAccessToken(req.cookies.accessToken);
     const data = await Place.find({ owner: userInfo.id });

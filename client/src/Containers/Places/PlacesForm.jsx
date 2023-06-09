@@ -16,6 +16,7 @@ const PlacesForm = () => {
   const [title, setTitle] = useState("");
   const [address, setAddress] = useState("");
   const [photos, setPhotos] = useState([]);
+  const [price, setPrice] = useState("");
   const [descriptions, setDescriptions] = useState("");
   const [features, setFeatures] = useState([]);
   const [extraInfo, setExtraInfo] = useState("");
@@ -30,9 +31,9 @@ const PlacesForm = () => {
       title &&
       address &&
       photos &&
+      price &&
       descriptions &&
       features &&
-      extraInfo &&
       checkIn &&
       checkOut &&
       maxGuests
@@ -41,6 +42,7 @@ const PlacesForm = () => {
         title,
         address,
         photos,
+        price,
         descriptions,
         features,
         extraInfo,
@@ -75,6 +77,7 @@ const PlacesForm = () => {
         setTitle(res.data.placeInfo.title);
         setAddress(res.data.placeInfo.address);
         setPhotos(res.data.placeInfo.photos);
+        setPrice(res.data.placeInfo.price);
         setDescriptions(res.data.placeInfo.descriptions);
         setFeatures(res.data.placeInfo.features);
         setExtraInfo(res.data.placeInfo.extraInfo);
@@ -132,12 +135,22 @@ const PlacesForm = () => {
           value={extraInfo}
           onChange={(e) => setExtraInfo(e.target.value)}
         />
+        <h3 className="mt-4">Price</h3>
+        <p className="text-gray-500 text-sm">Per Night stay rate..</p>
+        <Input
+          type="Number"
+          placeholder="Price in NPR"
+          value={price}
+          onChange={(e) => setPrice(e.target.value)}
+        />
+
         <h3 className="mt-4">Check In and Check Out</h3>
         <p className="text-gray-500 text-sm">add check in and out times</p>
         <div className="grid gap-2 sm:grid-cols-3 mb-2">
           <div className="mt-2 -mb-1">
             <h5>Check In time</h5>
             <Input
+              type="text"
               placeholder="12:00"
               value={checkIn}
               onChange={(e) => setCheckIn(e.target.value)}
@@ -146,6 +159,7 @@ const PlacesForm = () => {
           <div className="mt-2 -mb-1">
             <h5>Check Out time</h5>
             <Input
+              type="text"
               placeholder="12:00"
               value={checkOut}
               onChange={(e) => setCheckOut(e.target.value)}
@@ -154,6 +168,9 @@ const PlacesForm = () => {
           <div className="mt-2 -mb-1">
             <h5>Number of guests</h5>
             <Input
+              type="number"
+              required
+              min="1"
               value={maxGuests}
               onChange={(e) => setMaxGuests(e.target.value)}
               placeholder="Guests"

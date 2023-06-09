@@ -9,6 +9,7 @@ const requests = {
   photoUpload: `${baseURL}uploads/`,
   places: `${baseURL}places/`,
   getAllPlaces: `${baseURL}places/all`,
+  getPlacesByOwnerId: `${baseURL}places/owner-places`,
   getPlacesById: `${baseURL}places/`,
   updatePlaces: `${baseURL}places/update`,
 };

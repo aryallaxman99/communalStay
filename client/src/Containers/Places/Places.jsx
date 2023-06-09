@@ -9,7 +9,7 @@ const Places = () => {
   const [placesInfo, setPlacesInfo] = useState([]);
 
   useEffect(() => {
-    axios.get(requests.getAllPlaces).then(({ data }) => {
+    axios.get(requests.getPlacesByOwnerId).then(({ data }) => {
       setPlacesInfo(data);
     });
   }, []);
