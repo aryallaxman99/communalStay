@@ -3,11 +3,15 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import requests from "../../Requests";
 import { Skeleton } from "@mui/material";
+import Input from "../../widgets/input/Input";
+import Button from "../../widgets/button/Button";
 
 const PlacePage = () => {
   const { id } = useParams();
   const [place, setPlace] = useState();
-  const [p, setPlaces] = useState();
+
+  const [allPhotos, setAllPhotos] = useState(false);
+
   useEffect(() => {
     if (id) {
       axios
@@ -15,7 +19,42 @@ const PlacePage = () => {
         .then((res) => setPlace(res.data.placeInfo));
     }
   }, [id]);
-  console.log(place);
+
+  if (allPhotos) {
+    return (
+      <div className="absolute bg-white inset-0 min-h-screen">
+        <div className="p-8 grid gap-4">
+          <div>
+            <button onClick={() => setAllPhotos(false)}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-6 h-6 bg-white"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M19.5 12h-15m0 0l6.75 6.75M4.5 12l6.75-6.75"
+                />
+              </svg>
+            </button>
+          </div>
+          {place.photos
+            ? place.photos.length > 0 &&
+              place.photos.map((items) => (
+                <div>
+                  <img src={`http://localhost:8000/uploads/${items}`} alt="" />
+                </div>
+              ))
+            : null}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="mt-4 -mx-8 px-8 py-8">
       <h1 className="text-3xl">
@@ -25,24 +64,47 @@ const PlacePage = () => {
           <Skeleton width={"60%"} height={60} animation="wave" />
         )}
       </h1>
-      <a
-        target="_blank"
-        href={place ? `https://maps.google.com/?q=${place.address}` : null}
-        className="my-2 block font-semibold underline"
-      >
-        {place ? (
-          place.address
-        ) : (
-          <Skeleton width={"30%"} height={40} animation="wave" />
-        )}
-      </a>
-      <div className="relative">
-        <div className="grid gap-2 grid-cols-[2fr_1fr]">
+      {place ? (
+        <div className="flex gap-1">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="w-6 h-6 mt-2"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"
+            />
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"
+            />
+          </svg>
+          <a
+            target="_blank"
+            href={`https://maps.google.com/?q=${place.address}`}
+            className="my-2 block font-semibold underline"
+          >
+            {place.address}
+          </a>
+        </div>
+      ) : (
+        <Skeleton width={"30%"} height={40} animation="wave" />
+      )}
+
+      <div className="relative mt-4">
+        <div className="grid gap-2 grid-cols-[2fr_1fr] rounded-2xl overflow-hidden">
           <div>
             {place ? (
               place.photos[0] && (
                 <div>
                   <img
+                    alt=""
                     className="aspect-square object-cover "
                     src={`http://localhost:8000/uploads/${place.photos[0]}`}
                   />
@@ -60,6 +122,7 @@ const PlacePage = () => {
             {place ? (
               place.photos[1] && (
                 <img
+                  alt=""
                   className="aspect-square object-cover "
                   src={`http://localhost:8000/uploads/${place.photos[1]}`}
                 />
@@ -75,6 +138,7 @@ const PlacePage = () => {
               {place ? (
                 place.photos[2] && (
                   <img
+                    alt=""
                     className="aspect-square object-cover relative top-2"
                     src={`http://localhost:8000/uploads/${place.photos[2]}`}
                   />
@@ -89,19 +153,105 @@ const PlacePage = () => {
             </div>
           </div>
         </div>
-        <button className="flex gap-2 absolute border border-black bottom-2 right-2 py-2 px-4 bg-white rounded-xl">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 16 16"
-            className="w-7 h-7"
+        {place ? (
+          <button
+            onClick={() => setAllPhotos(true)}
+            className="flex gap-2 absolute border border-black bottom-2 right-2 py-2 px-4 bg-white rounded-xl"
           >
-            <path
-              fill-rule="evenodd"
-              d="M3 11.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zm5 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zm5 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zm-10-5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zm5 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zm5 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zm-10-5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zm5 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zm5 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z"
-            ></path>
-          </svg>
-          <span className="font-semibold">Show all Photos </span>
-        </button>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 16 16"
+              className="w-7 h-7"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M3 11.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zm5 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zm5 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zm-10-5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zm5 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zm5 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zm-10-5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zm5 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zm5 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z"
+              ></path>
+            </svg>
+            <span className="font-semibold">Show all Photos </span>
+          </button>
+        ) : null}
+      </div>
+      <div className=" h-px my-6 bg-gray-300" />
+      {place ? (
+        <>
+          <h2 className="font-semibold my-4 text-2xl">Description</h2>
+          {place.descriptions}
+        </>
+      ) : (
+        <Skeleton variant="rounded" height={100} />
+      )}
+      <div className="h-px my-6 bg-gray-300" />
+
+      {/* features */}
+      <div>
+        <h2 className="font-semibold text-2xl">What this place offers</h2>
+        <div className="h-1 w-60 my-6 bg-gray-300" />
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr]">
+        <div className="mt-2">
+          {place ? (
+            `Check-in time: ${place.checkIn}`
+          ) : (
+            <Skeleton variant="rounded" height={40} width={240} />
+          )}
+          <br />
+          {place ? (
+            `Check-out time: ${place.checkOut}`
+          ) : (
+            <Skeleton variant="rounded" height={40} width={240} />
+          )}
+          <br />
+          {place ? (
+            `Maximum number of guests: ${place.maxGuests}`
+          ) : (
+            <Skeleton variant="rounded" height={40} width={240} />
+          )}
+        </div>
+        <div className="mb-4">
+          {place ? (
+            <>
+              <div className="shadow p-4 rounded-2xl ">
+                <div className="text-2xl text-center">
+                  Price :NPR. ${place.price}/ night
+                </div>
+                <div className="border px-4 rounded-2xl mt-4">
+                  <div className=" mt-2 ">
+                    <label className="font-semibold">Check In </label>
+                    <Input type="date" />
+                  </div>
+                  <div className="py-2  ">
+                    <label className="font-semibold">Check Out </label>
+                    <Input type="date" />
+                  </div>
+                  <div className="py-2">
+                    <label className="font-semibold">Number of guests</label>
+                    <Input type="number" />
+                  </div>
+                </div>
+                <Button className="mt-2 bg-secondary" value={1}>
+                  Reserve
+                </Button>
+              </div>
+            </>
+          ) : (
+            <Skeleton variant="rounded" height={350} width={300} />
+          )}
+        </div>
+      </div>
+      <div>
+        {place ? (
+          <>
+            <div className="h-px my-6 bg-gray-300" />
+            <h2 className="mt-2 font-semibold text-2xl">Extra Info</h2>
+            <div className="mt-4 text-sm text-gray-700 leading-1">
+              {place.extraInfo}
+            </div>
+          </>
+        ) : (
+          <Skeleton variant="rounded" height={150} />
+        )}
       </div>
     </div>
   );
