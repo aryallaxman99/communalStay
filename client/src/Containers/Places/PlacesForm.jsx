@@ -5,7 +5,7 @@ import axios from "axios";
 
 import Input from "../../widgets/input/Input";
 import Button from "../../widgets/button/Button";
-import Features from "../Pages/Features";
+import Features from "../Features/Features";
 import { PhotoUploader } from "../../Components/Photo/PhotoUploader";
 import requests from "../../Requests";
 import Account from "../User/Account";
@@ -124,9 +124,9 @@ const PlacesForm = () => {
         <p className="text-sm text-gray-500">
           Select all the features of your place
         </p>
-        <div className="grid mt-2 grid-cols-2 gap-2 md:grid-cols-3 lg:grid-cols-6">
-          <Features features={features} setFeatures={setFeatures} />
-        </div>
+
+        <Features features={features} setFeatures={setFeatures} />
+
         <h3 className="mt-4">Extra info</h3>
         <p className="text-gray-500 text-sm">
           Extra information about your place

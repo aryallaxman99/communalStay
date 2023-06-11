@@ -5,6 +5,7 @@ import requests from "../../Requests";
 import { Skeleton } from "@mui/material";
 import Input from "../../widgets/input/Input";
 import Button from "../../widgets/button/Button";
+import DisplayFeatures from "../Features/DisplayFeatures";
 
 const PlacePage = () => {
   const { id } = useParams();
@@ -183,11 +184,9 @@ const PlacePage = () => {
       )}
       <div className="h-px my-6 bg-gray-300" />
 
-      {/* features */}
-      <div>
-        <h2 className="font-semibold text-2xl">What this place offers</h2>
-        <div className="h-1 w-60 my-6 bg-gray-300" />
-      </div>
+      <DisplayFeatures place={place} />
+
+      <div className="h-1 w-60 my-6 bg-gray-300" />
 
       <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr]">
         <div className="mt-2">
