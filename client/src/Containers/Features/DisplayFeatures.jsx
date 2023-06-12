@@ -1,5 +1,4 @@
 const DisplayFeatures = ({ place }) => {
-  console.log(place ? place.features : "aaudai xa");
   return (
     <div>
       {place ? (

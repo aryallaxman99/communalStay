@@ -6,6 +6,7 @@ import { Skeleton } from "@mui/material";
 import Input from "../../widgets/input/Input";
 import Button from "../../widgets/button/Button";
 import DisplayFeatures from "../Features/DisplayFeatures";
+import Booking from "../../widgets/booking/Booking";
 
 const PlacePage = () => {
   const { id } = useParams();
@@ -208,36 +209,7 @@ const PlacePage = () => {
             <Skeleton variant="rounded" height={40} width={240} />
           )}
         </div>
-        <div className="mb-4">
-          {place ? (
-            <>
-              <div className="shadow p-4 rounded-2xl ">
-                <div className="text-2xl text-center">
-                  Price :NPR. ${place.price}/ night
-                </div>
-                <div className="border px-4 rounded-2xl mt-4">
-                  <div className=" mt-2 ">
-                    <label className="font-semibold">Check In </label>
-                    <Input type="date" />
-                  </div>
-                  <div className="py-2  ">
-                    <label className="font-semibold">Check Out </label>
-                    <Input type="date" />
-                  </div>
-                  <div className="py-2">
-                    <label className="font-semibold">Number of guests</label>
-                    <Input type="number" />
-                  </div>
-                </div>
-                <Button className="mt-2 bg-secondary" value={1}>
-                  Reserve
-                </Button>
-              </div>
-            </>
-          ) : (
-            <Skeleton variant="rounded" height={350} width={300} />
-          )}
-        </div>
+        <Booking place={place} />
       </div>
       <div>
         {place ? (
