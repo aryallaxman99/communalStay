@@ -10,6 +10,8 @@ import Button from "../../widgets/button/Button";
 
 const Register = () => {
   const passwordRule = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
+  const phoneRegExp =
+    /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 
   const onSubmit = async (values, actions) => {
     await axios.post(requests.userRegister, { values }).then((res) => {
@@ -27,6 +29,11 @@ const Register = () => {
     password: Yup.string().required("Required").min(6).matches(passwordRule, {
       message: "Please create a stronger password",
     }),
+    phoneNumber: Yup.string()
+      .required("Required")
+      .min(10, "too short")
+      .max(10, "too long")
+      .matches(phoneRegExp, "Phone number is not valid"),
   });
 
   const { values, errors, handleBlur, handleChange, handleSubmit, touched } =
@@ -36,6 +43,7 @@ const Register = () => {
         lastName: "",
         email: "",
         password: "",
+        phoneNumber: "",
       },
       validationSchema: registerSchema,
       onSubmit,
@@ -100,6 +108,20 @@ const Register = () => {
               {errors.password}
             </div>
           ) : null}
+          <Input
+            id="phoneNumber"
+            type="number"
+            placeholder="Phone Number"
+            value={values.phoneNumber}
+            onChange={handleChange}
+            onBlur={handleBlur}
+          />
+          {errors.phoneNumber && touched.phoneNumber ? (
+            <div className="text-red-500 text-xs px-4 py-2 sm:px-8 sm:py-3">
+              {errors.phoneNumber}
+            </div>
+          ) : null}
+
           <Button type="submit" className="mt-1 bg-secondary">
             SignUp
           </Button>
