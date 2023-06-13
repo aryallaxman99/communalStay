@@ -12,6 +12,7 @@ const requests = {
   getPlacesByOwnerId: `${baseURL}places/owner-places`,
   getPlacesById: `${baseURL}places/`,
   updatePlaces: `${baseURL}places/update`,
+  reserve: `${baseURL}reserve/`,
 };
 
 export default requests;
