@@ -5,14 +5,15 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { ToastContainer, toast } from "react-toastify";
+import { useNavigate, useParams } from "react-router-dom";
 
 import Input from "../input/Input";
 import Button from "../button/Button";
 import requests from "../../Requests";
-import { useNavigate } from "react-router-dom";
 
 const Booking = ({ place }) => {
   const navigate = useNavigate();
+  const { id } = useParams();
   const [checkIn, setCheckIn] = useState();
   const [checkOut, setCheckOut] = useState();
   const [numberOfGuests, setNumberOfGuests] = useState(1);
@@ -35,7 +36,9 @@ const Booking = ({ place }) => {
       checkOut: checkOut,
       numberOfGuests: numberOfGuests,
       totalPrice: totalPrice,
+      placeid: id,
     };
+
     if (totalPrice) {
       if (document.cookie.split(";")[0].split("=")[1]) {
         axios.post(requests.reserve, data).then((res) => {

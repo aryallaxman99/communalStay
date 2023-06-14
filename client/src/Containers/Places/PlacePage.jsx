@@ -3,8 +3,6 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import requests from "../../Requests";
 import { Skeleton } from "@mui/material";
-import Input from "../../widgets/input/Input";
-import Button from "../../widgets/button/Button";
 import DisplayFeatures from "../Features/DisplayFeatures";
 import Booking from "../../widgets/booking/Booking";
 

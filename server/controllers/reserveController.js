@@ -10,7 +10,6 @@ export const reserve = async (req, res) => {
     data.userid = id;
     data.email = email;
     data.phoneNumber = phoneNumber;
-
     const response = await Reserve.create(data);
     if (response) {
       res.json({
@@ -25,6 +24,16 @@ export const reserve = async (req, res) => {
         type: "error",
       });
     }
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const getAllReservations = async (req, res) => {
+  try {
+    const { id } = await jwtHelper.verifyAccessToken(req.cookies.accessToken);
+    const data = await Reserve.find({ userid: id }).populate("placeid");
+    res.json(data);
   } catch (error) {
     console.error(error);
   }

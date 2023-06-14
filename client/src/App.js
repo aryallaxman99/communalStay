@@ -10,8 +10,8 @@ import Register from "./Containers/Auth/Register";
 import UserDashboard from "./Containers/User/UserDashboard";
 import Places from "./Containers/Places/Places";
 import PlacesForm from "./Containers/Places/PlacesForm";
-import Account from "./Containers/User/Account";
 import PlacePage from "./Containers/Places/PlacePage";
+import BookingPage from "./Containers/Places/BookingPage";
 
 const App = () => {
   return (
@@ -23,11 +23,11 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/account" element={<UserDashboard />} />
-          <Route path="/account/bookings" element={<Account />} />
           <Route path="/account/places" element={<Places />} />
           <Route path="/account/places/new" element={<PlacesForm />} />
           <Route path="/account/places/:id" element={<PlacesForm />} />
           <Route path="/place/:id" element={<PlacePage />} />
+          <Route path="/account/bookings" element={<BookingPage />} />
         </Route>
       </Routes>
     </UserContextProvider>
