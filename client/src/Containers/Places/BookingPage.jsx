@@ -1,30 +1,56 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import axios from "axios";
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Skeleton,
+} from "@mui/material";
+import { toast, ToastContainer } from "react-toastify";
 
 import Account from "../User/Account";
 import requests from "../../Requests";
+import Button from "../../widgets/button/Button";
 
 const BookingPage = () => {
   const [bookings, setBookings] = useState();
+  const [open, setOpen] = useState(false);
+  const [reservationId, setReservationId] = useState();
 
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const CancelReservation = (id) => {
+    if (id) {
+      axios.delete(requests.cancelReservation + id).then((res) => {
+        if (res.data) {
+          toast[res.data.type](res.data.msg);
+        }
+      });
+    }
+    setOpen(false);
+    setReservationId(id);
+  };
   useEffect(() => {
     axios.get(requests.reserve).then((res) => setBookings(res.data));
-  }, []);
+  }, [reservationId]);
   return (
     <div>
       <Account />
       <div>
-        {bookings
-          ? bookings.length > 0 &&
+        {bookings ? (
+          bookings.length > 0 ? (
             bookings.map((items) => (
-              <Link
-                to={`/account/bookings/${items._id}`}
-                className="flex mt-3 gap-4 bg-gray-200 rounded-2xl overflow-hidden"
-              >
+              <div className="mt-10 flex bg-gray-200 rounded-2xl overflow-hidden grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
                 {items.placeid.photos
                   ? items.placeid.photos.length > 0 && (
-                      <div className="w-48">
+                      <div className="w-full h-full">
                         <img
                           src={`http://localhost:8000/uploads/${items.placeid.photos[0]}`}
                           alt=""
@@ -33,7 +59,7 @@ const BookingPage = () => {
                     )
                   : null}
                 <div>
-                  <h2 className="text-xl">{items.placeid.title}</h2>
+                  <h2 className="mt-4 text-xl">{items.placeid.title}</h2>
                   <div className="flex">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -54,10 +80,13 @@ const BookingPage = () => {
                         d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"
                       />
                     </svg>
-
-                    <div className="text-sm underline">
+                    <a
+                      className="text-sm underline"
+                      target="_blank"
+                      href={`https://maps.google.com/?q=${items.placeid.address}`}
+                    >
                       {items.placeid.address}
-                    </div>
+                    </a>
                   </div>
                   <div className="h-px w-400 my-2 bg-gray-300" />
 
@@ -131,13 +160,49 @@ const BookingPage = () => {
                       />
                     </svg>
                     <span className="font-semibold">
-                      {`Total price: NPR ${items.placeid.price}`}
+                      {`Total price: NPR ${items.totalPrice}`}
                     </span>
                   </div>
+                  <Button
+                    onClick={handleClickOpen}
+                    className="mt-2 bg-secondary"
+                  >
+                    Cancel reservation
+                  </Button>
+                  <Dialog open={open} onClose={handleClose}>
+                    <DialogContent>
+                      Are you sure you want to cancel this reservation?
+                    </DialogContent>
+                    <DialogActions>
+                      <Button className="bg-secondary" onClick={handleClose}>
+                        cancel
+                      </Button>
+                      <Button
+                        className="bg-secondary"
+                        autoFocus
+                        onClick={() => CancelReservation(items._id)}
+                      >
+                        Ok
+                      </Button>
+                    </DialogActions>
+                  </Dialog>
+                  <ToastContainer position="top-center" />
                 </div>
-              </Link>
+              </div>
             ))
-          : null}
+          ) : (
+            <div className="text-center py-5">
+              No any bookings found in the system
+              <br />
+              Booked any stays to display your booking list
+            </div>
+          )
+        ) : (
+          <div>
+            <Skeleton height={200} animation="pulse" />
+            <Skeleton height={200} animation="wave" />
+          </div>
+        )}
       </div>
     </div>
   );

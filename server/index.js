@@ -28,7 +28,7 @@ app.use("/uploads", express.static(__dirname + "/uploads"));
 app.use("/auth", authRoute);
 app.use("/uploads", uploadPhoto);
 app.use("/places", places);
-app.use("/reserve", reserve);
+app.use("/reservation", reserve);
 
 app.listen(process.env.PORT, async () => {
   console.log(`server started at port ${process.env.PORT}`);

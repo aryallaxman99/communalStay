@@ -1,13 +1,31 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
+
+import { resetUserDetails } from "../../reducers/userSlice";
+import requests from "../../Requests";
+import { MenuItem } from "@mui/material";
 
 const Header = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { firstName } = useSelector((state) => state.user);
   const [showMenu, setShowMenu] = useState(false);
   const toogleMenu = () => {
     setShowMenu(!showMenu);
   };
+
+  const logout = () => {
+    dispatch(resetUserDetails());
+    axios.delete(requests.userLogout).then((res) => {
+      toast[res.data.type](res.data.msg);
+    });
+    navigate("/");
+    <ToastContainer />;
+  };
+
   return (
     <div>
       <header className="flex justify-between">
@@ -85,7 +103,7 @@ const Header = () => {
           </div>
           {showMenu ? (
             firstName ? (
-              <div className="right-0 p-2 mt-1 rounded-md shadow lg:absolute">
+              <div className="right-0  mt-2 rounded-md shadow lg:absolute">
                 <ul className="space-y-2 lg:w-48 bg-white rounded-md">
                   <li>
                     <a
@@ -94,6 +112,31 @@ const Header = () => {
                     >
                       Profile
                     </a>
+                  </li>
+                  <li>
+                    <a
+                      href="/account/bookings"
+                      className="flex p-2 rounded-md  hover:bg-gray-100"
+                    >
+                      My Reservation
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="/account/places"
+                      className="flex p-2 rounded-md  hover:bg-gray-100"
+                    >
+                      My properties
+                    </a>
+                  </li>
+                  <hr />
+                  <li>
+                    <MenuItem
+                      onClick={logout}
+                      className="flex p-2 rounded-md  hover:bg-gray-100"
+                    >
+                      Logout
+                    </MenuItem>
                   </li>
                 </ul>
               </div>

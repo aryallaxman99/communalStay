@@ -65,14 +65,14 @@ const PlacePage = () => {
         )}
       </h1>
       {place ? (
-        <div className="flex gap-1">
+        <div className="flex gap-1 text-sm text-gray-600">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="w-6 h-6 mt-2"
+            className="w-4 h-4 mt-2"
           >
             <path
               strokeLinecap="round"
@@ -96,7 +96,6 @@ const PlacePage = () => {
       ) : (
         <Skeleton width={"30%"} height={40} animation="wave" />
       )}
-
       <div className="relative mt-4">
         <div className="grid gap-2 grid-cols-[2fr_1fr] rounded-2xl overflow-hidden">
           <div>
@@ -182,13 +181,16 @@ const PlacePage = () => {
         <Skeleton variant="rounded" height={100} />
       )}
       <div className="h-px my-6 bg-gray-300" />
-
       <DisplayFeatures place={place} />
-
       <div className="h-1 w-60 my-6 bg-gray-300" />
-
       <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr]">
         <div className="mt-2">
+          {place ? (
+            place.owner.firstName && `Hosted by ${place.owner.firstName}`
+          ) : (
+            <Skeleton variant="rounded" height={40} width={240} />
+          )}
+          <br />
           {place ? (
             `Check-in time: ${place.checkIn}`
           ) : (

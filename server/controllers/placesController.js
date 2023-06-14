@@ -46,7 +46,7 @@ export const getPlacesByOwnerId = async (req, res) => {
 
 export const getPlacesById = async (req, res) => {
   try {
-    const placeInfo = await Place.findById(req.params.id);
+    const placeInfo = await Place.findById(req.params.id).populate("owner");
     res.json({ placeInfo });
   } catch (error) {
     console.error(error);

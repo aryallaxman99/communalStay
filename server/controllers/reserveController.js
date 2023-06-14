@@ -38,3 +38,24 @@ export const getAllReservations = async (req, res) => {
     console.error(error);
   }
 };
+
+export const cancelReservation = async (req, res) => {
+  try {
+    const response = await Reserve.findByIdAndDelete(req.query.id);
+    if (response) {
+      res.json({
+        msg: "Reservation canceled",
+        type: "success",
+        status: true,
+      });
+    } else {
+      res.json({
+        msg: "Something went wrong",
+        status: false,
+        type: "error",
+      });
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};

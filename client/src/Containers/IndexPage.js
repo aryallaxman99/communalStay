@@ -17,7 +17,7 @@ const IndexPage = () => {
               <div className="flex bg-gray-500 rounded-2xl mb-2">
                 {items.photos?.[0] && (
                   <img
-                    className="rounded-2xl object-cover aspect-square"
+                    className="rounded-2xl object-cover w-full h-full aspect-square"
                     alt=""
                     src={`http://localhost:8000/uploads/${items.photos[0]}`}
                   />

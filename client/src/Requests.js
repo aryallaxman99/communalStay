@@ -12,7 +12,8 @@ const requests = {
   getPlacesByOwnerId: `${baseURL}places/owner-places`,
   getPlacesById: `${baseURL}places/`,
   updatePlaces: `${baseURL}places/update`,
-  reserve: `${baseURL}reserve`,
+  reserve: `${baseURL}reservation`,
+  cancelReservation: `${baseURL}reservation?id=`,
 };
 
 export default requests;
