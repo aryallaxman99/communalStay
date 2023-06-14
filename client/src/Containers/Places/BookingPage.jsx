@@ -1,12 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Skeleton,
-} from "@mui/material";
+import { Dialog, DialogActions, DialogContent, Skeleton } from "@mui/material";
 import { toast, ToastContainer } from "react-toastify";
 
 import Account from "../User/Account";
@@ -83,6 +77,7 @@ const BookingPage = () => {
                     <a
                       className="text-sm underline"
                       target="_blank"
+                      rel="noreferrer"
                       href={`https://maps.google.com/?q=${items.placeid.address}`}
                     >
                       {items.placeid.address}
@@ -192,9 +187,8 @@ const BookingPage = () => {
             ))
           ) : (
             <div className="text-center py-5">
-              No any bookings found in the system
-              <br />
-              Booked any stays to display your booking list
+              <h3 className="font-semibold">No reservation found </h3>
+              <h5>Looks like you haven't reserved any stays </h5>
             </div>
           )
         ) : (

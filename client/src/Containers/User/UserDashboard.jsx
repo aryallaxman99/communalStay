@@ -4,6 +4,7 @@ import { Navigate, useParams } from "react-router-dom";
 
 import Places from "../Places/Places";
 import Account from "./Account";
+import Profile from "./Profile";
 
 const UserDashboard = () => {
   const user = useSelector((state) => state.user);
@@ -20,13 +21,7 @@ const UserDashboard = () => {
   return (
     <div>
       <Account />
-      {subpage === "profile" && (
-        <div className="text-center max-w-lg mx-auto">
-          <h6>
-            Hello {user.firstName} {user.lastName}
-          </h6>
-        </div>
-      )}
+      {subpage === "profile" && <Profile />}
       {subpage === "places" && <Places />}
     </div>
   );
