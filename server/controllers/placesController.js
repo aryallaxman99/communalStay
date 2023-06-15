@@ -21,7 +21,11 @@ export const addPlaces = async (req, res) => {
       });
     }
   } catch (error) {
-    console.log(error);
+    res.json({
+      msg: "Something went wrong",
+      status: false,
+      type: "error",
+    });
   }
 };
 
@@ -30,7 +34,11 @@ export const getAllPlaces = async (req, res) => {
     const data = await Place.find();
     res.json(data);
   } catch (error) {
-    console.log(error);
+    res.json({
+      msg: "Something went wrong",
+      status: false,
+      type: "error",
+    });
   }
 };
 
@@ -40,7 +48,11 @@ export const getPlacesByOwnerId = async (req, res) => {
     const data = await Place.find({ owner: userInfo.id });
     res.json(data);
   } catch (error) {
-    console.log(error);
+    res.json({
+      msg: "Something went wrong",
+      status: false,
+      type: "error",
+    });
   }
 };
 
@@ -49,7 +61,11 @@ export const getPlacesById = async (req, res) => {
     const placeInfo = await Place.findById(req.params.id).populate("owner");
     res.json({ placeInfo });
   } catch (error) {
-    console.error(error);
+    res.json({
+      msg: "Something went wrong",
+      status: false,
+      type: "error",
+    });
   }
 };
 
@@ -71,6 +87,10 @@ export const updatePlace = async (req, res) => {
       });
     }
   } catch (error) {
-    console.error(error);
+    res.json({
+      msg: "Something went wrong",
+      status: false,
+      type: "error",
+    });
   }
 };

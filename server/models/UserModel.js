@@ -7,6 +7,10 @@ const userSchema = new Schema({
   email: { type: String, required: true },
   password: { type: String, required: true },
   phoneNumber: { type: Number, required: true },
+  bio: String,
+  address: String,
+  socialMediaAccountLink: String,
+  profilePicture: [String],
 });
 
 const userModel = mongoose.model("User", userSchema);

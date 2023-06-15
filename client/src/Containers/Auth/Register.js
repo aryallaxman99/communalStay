@@ -83,6 +83,19 @@ const Register = () => {
             </div>
           ) : null}
           <Input
+            id="phoneNumber"
+            type="number"
+            placeholder="Phone Number"
+            value={values.phoneNumber}
+            onChange={handleChange}
+            onBlur={handleBlur}
+          />
+          {errors.phoneNumber && touched.phoneNumber ? (
+            <div className="text-red-500 text-xs px-4 py-2 sm:px-8 sm:py-3">
+              {errors.phoneNumber}
+            </div>
+          ) : null}
+          <Input
             id="email"
             type="email"
             placeholder="Email"
@@ -106,19 +119,6 @@ const Register = () => {
           {errors.password && touched.password ? (
             <div className="text-red-500 text-xs px-4 py-2 sm:px-8 sm:py-3">
               {errors.password}
-            </div>
-          ) : null}
-          <Input
-            id="phoneNumber"
-            type="number"
-            placeholder="Phone Number"
-            value={values.phoneNumber}
-            onChange={handleChange}
-            onBlur={handleBlur}
-          />
-          {errors.phoneNumber && touched.phoneNumber ? (
-            <div className="text-red-500 text-xs px-4 py-2 sm:px-8 sm:py-3">
-              {errors.phoneNumber}
             </div>
           ) : null}
 

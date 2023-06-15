@@ -1,35 +1,80 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import Cookies from "js-cookie";
+import axios from "axios";
+
 import Button from "../../widgets/button/Button";
 import Input from "../../widgets/input/Input";
+import requests from "../../Requests";
+import { ToastContainer, toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { setUserDetails } from "../../reducers/userSlice";
 
 const Profile = () => {
-  const profilePicture =
-    "https://www.gravatar.com/avatar/2c7d99fe281ecd3bcd65ab915bac6dd5?s=250";
-  const [bio, setBio] = useState(
-    "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
-  );
-  const phoneNumber = 987883287;
+  const dispatch = useDispatch();
+
   const [isEditing, setIsEditing] = useState(false);
+  const [bio, setBio] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [address, setAddress] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState(null);
+  const [socialMediaAccountLink, setSocialMediaAccountLink] = useState("");
+  const [profilePicture, setProfilePicture] = useState([]);
+  const [booking, setBooking] = useState("");
+  const cookie = Cookies.get();
 
   const handleEditProfile = () => {
     setIsEditing(true);
   };
 
+  console.log(booking);
+
   const saveProfile = () => {
     setIsEditing(false);
+    if (cookie.accessToken) {
+      const data = {
+        bio,
+        firstName,
+        lastName,
+        address,
+        phoneNumber,
+        socialMediaAccountLink,
+      };
+      axios.put(requests.userProfile, data).then((res) => {
+        if (res.data) {
+          dispatch(setUserDetails(res.data.userName));
+          toast[res.data.type](res.data.msg);
+        }
+      });
+    }
   };
+
+  useEffect(() => {
+    axios.get(requests.userProfile).then((res) => {
+      setBio(res.data.userDetails.bio);
+      setFirstName(res.data.userDetails.firstName);
+      setLastName(res.data.userDetails.lastName);
+      setAddress(res.data.userDetails.address);
+      setPhoneNumber(res.data.userDetails.phoneNumber);
+      setSocialMediaAccountLink(res.data.userDetails.socialMediaAccountLink);
+      setProfilePicture(res.data.userDetails.profilePicture);
+    });
+    axios.get(requests.reserve).then((res) => setBooking(res.data));
+  }, []);
 
   return (
     <div className="container mx-auto py-8">
       <div className="flex items-center">
         <img
-          src={profilePicture}
+          src={profilePicture[0]}
           alt="Profile"
           className="w-16 h-16 rounded-full"
         />
         <div className="ml-4">
-          <h2 className="text-2xl font-semibold">Test Test</h2>
-          <p className="text-gray-500">Location: Butwal, Nepal</p>
+          <h2 className="text-2xl font-semibold">
+            {`${firstName} ${lastName}`}
+          </h2>
+          <p className="text-gray-500">Location: {address}</p>
         </div>
       </div>
 
@@ -54,8 +99,8 @@ const Profile = () => {
                   <Input
                     type="text"
                     placeholder="First Name"
-                    value={phoneNumber}
-                    onChange={(e) => console.log(e.target.value)}
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
                   />
                 </div>
                 <div>
@@ -63,8 +108,8 @@ const Profile = () => {
                   <Input
                     type="text"
                     placeholder="Last Name"
-                    value={phoneNumber}
-                    onChange={(e) => console.log(e.target.value)}
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
                   />
                 </div>
                 <div>
@@ -73,8 +118,8 @@ const Profile = () => {
                   <Input
                     type="text"
                     placeholder="Address"
-                    value={phoneNumber}
-                    onChange={(e) => console.log(e.target.value)}
+                    value={address}
+                    onChange={(e) => setAddress(e.target.value)}
                   />
                 </div>
                 <div>
@@ -84,7 +129,7 @@ const Profile = () => {
                     type="Number"
                     placeholder="Phone Number"
                     value={phoneNumber}
-                    onChange={(e) => console.log(e.target.value)}
+                    onChange={(e) => setPhoneNumber(e.target.value)}
                   />
                 </div>
               </div>
@@ -99,8 +144,8 @@ const Profile = () => {
                   <Input
                     type="text"
                     placeholder="Profile Link"
-                    value={phoneNumber}
-                    onChange={(e) => console.log(e.target.value)}
+                    value={socialMediaAccountLink}
+                    onChange={(e) => setSocialMediaAccountLink(e.target.value)}
                   />
                 </div>
               </div>
@@ -122,15 +167,15 @@ const Profile = () => {
               <div className="gap-10 mt-3 flex">
                 <div>
                   <h4 className="text-sm font-semibold">First Name</h4>
-                  {phoneNumber}
+                  {firstName}
                 </div>
                 <div>
                   <h4 className="text-sm font-semibold">Last Name</h4>
-                  {phoneNumber}
+                  {lastName}
                 </div>
                 <div>
                   <h4 className="text-sm font-semibold">Address</h4>
-                  {phoneNumber}
+                  {address}
                 </div>
                 <div>
                   <h4 className="text-sm font-semibold">Phone Number</h4>
@@ -146,15 +191,15 @@ const Profile = () => {
                   src="https://img.icons8.com/?size=512&id=BsoWS6BDZrHp&format=png"
                   alt=""
                 />
-                <a target="_blank" rel="noreferrer" href={phoneNumber}>
-                  {phoneNumber}
+                <a
+                  target="_blank"
+                  rel="noreferrer"
+                  href={socialMediaAccountLink}
+                >
+                  {socialMediaAccountLink}
                 </a>
               </div>
             </div>
-            <div className="mt-8">
-              <h3 className="text-lg font-semibold">Listings</h3>
-            </div>
-
             <div className="mt-8">
               <h3 className="text-lg font-semibold">Booking History</h3>
             </div>
@@ -164,6 +209,7 @@ const Profile = () => {
                 Edit Profile
               </Button>
             </div>
+            <ToastContainer position="top-center" />
           </>
         )}
       </div>

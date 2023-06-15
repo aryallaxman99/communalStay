@@ -4,6 +4,7 @@ const requests = {
   userRegister: `${baseURL}auth/register`,
   userLogin: `${baseURL}auth/login`,
   userLogout: `${baseURL}auth/logout`,
+  verifyToken: `${baseURL}auth/verify`,
   userProfile: `${baseURL}auth/profile`,
   photoUploadViaLink: `${baseURL}uploads/upload-via-link`,
   photoUpload: `${baseURL}uploads/`,

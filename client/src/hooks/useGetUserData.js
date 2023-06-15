@@ -15,7 +15,7 @@ export function useGetUserData() {
 
       if (cookies.refreshToken) {
         const { data } = await getApiResponse({
-          url: requests.userProfile,
+          url: requests.verifyToken,
           method: "get",
         });
         setUserData(data.userData);

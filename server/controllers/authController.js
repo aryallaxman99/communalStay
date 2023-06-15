@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 import user from "../models/UserModel.js";
 import jwtHelper from "../helpers/jwtHelper.js";
 
-const userRegister = async (req, res, next) => {
+export const userRegister = async (req, res, next) => {
   try {
     const data = await req.body.values;
     const doesEmailExists = await user.findOne({
@@ -27,11 +27,15 @@ const userRegister = async (req, res, next) => {
       res.json({ msg: "email already exists", response: false, type: "error" });
     }
   } catch (error) {
-    console.log(error);
+    res.json({
+      msg: "Something went wrong",
+      type: "error",
+      status: false,
+    });
   }
 };
 
-const userLogin = async (req, res, next) => {
+export const userLogin = async (req, res, next) => {
   try {
     const data = await req.body.values;
     const doesEmailExists = await user.findOne({
@@ -89,7 +93,7 @@ const userLogin = async (req, res, next) => {
   }
 };
 
-const userProfile = async (req, res, next) => {
+export const cookieVerification = async (req, res, next) => {
   try {
     if (req.cookies.refreshToken) {
       const response = await jwtHelper.verifyRefreshToken(
@@ -120,7 +124,78 @@ const userProfile = async (req, res, next) => {
   }
 };
 
-const logout = (req, res) => {
+export const updateProfile = async (req, res) => {
+  try {
+    if (req.cookies.accessToken) {
+      const { id } = await jwtHelper.verifyAccessToken(req.cookies.accessToken);
+      if (id) {
+        const response = await user.findByIdAndUpdate(id, req.body, {
+          new: true,
+        });
+        if (response) {
+          const { firstName, lastName } = response.toObject();
+          res.json({
+            userName: { firstName, lastName },
+            msg: "Profile updated",
+            type: "success",
+            status: true,
+          });
+        } else {
+          res.json({
+            msg: "Something went wrong",
+            type: "error",
+            status: false,
+          });
+        }
+      } else {
+        res.json({
+          msg: "Cookies not found",
+          type: "error",
+          status: false,
+        });
+      }
+    }
+  } catch (error) {
+    res.json({
+      msg: "Something went wrong",
+      type: "error",
+      status: false,
+    });
+  }
+};
+
+export const userInfo = async (req, res) => {
+  try {
+    if (req.cookies.accessToken) {
+      const { id } = await jwtHelper.verifyAccessToken(req.cookies.accessToken);
+      const response = await user.findById(id);
+      if (response) {
+        const { password, _id, ...refactoredData } = response.toObject();
+        res.json({ userDetails: refactoredData });
+      } else {
+        res.json({
+          msg: "Something went wrong",
+          status: false,
+          type: "error",
+        });
+      }
+    } else {
+      res.json({
+        msg: "Something went wrong 1",
+        status: false,
+        type: "error",
+      });
+    }
+  } catch (error) {
+    res.json({
+      msg: "Something went wrong 2",
+      status: false,
+      type: "error",
+    });
+  }
+};
+
+export const logout = (req, res) => {
   try {
     const { accessToken, refreshToken } = req.cookies;
     if (accessToken && refreshToken) {
@@ -131,7 +206,10 @@ const logout = (req, res) => {
       });
     }
   } catch (error) {
-    console.log(error);
+    res.json({
+      msg: "Something went wrong",
+      type: "error",
+      status: false,
+    });
   }
 };
-export default { userRegister, userLogin, userProfile, logout };

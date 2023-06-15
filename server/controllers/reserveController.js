@@ -25,7 +25,11 @@ export const reserve = async (req, res) => {
       });
     }
   } catch (error) {
-    console.error(error);
+    res.json({
+      msg: "Something went wrong",
+      status: false,
+      type: "error",
+    });
   }
 };
 
@@ -35,7 +39,11 @@ export const getAllReservations = async (req, res) => {
     const data = await Reserve.find({ userid: id }).populate("placeid");
     res.json(data);
   } catch (error) {
-    console.error(error);
+    res.json({
+      msg: "Something went wrong",
+      status: false,
+      type: "error",
+    });
   }
 };
 
@@ -56,6 +64,10 @@ export const cancelReservation = async (req, res) => {
       });
     }
   } catch (error) {
-    console.error(error);
+    res.json({
+      msg: "Something went wrong",
+      status: false,
+      type: "error",
+    });
   }
 };
