@@ -2,24 +2,35 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import requests from "../../Requests";
 import Input from "../../widgets/input/Input";
 import Button from "../../widgets/button/Button";
+import { useState } from "react";
 
 const Register = () => {
+  const [loading, setLoading] = useState(false);
   const passwordRule = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
   const phoneRegExp =
     /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 
   const onSubmit = async (values, actions) => {
-    await axios.post(requests.userRegister, { values }).then((res) => {
-      toast[res.data.type](res.data.msg);
-      if (res.data.response === true) {
-        actions.resetForm();
-      }
-    });
+    if (loading) {
+      return;
+    }
+    setLoading(true);
+    await axios
+      .post(requests.userRegister, { values })
+      .then((res) => {
+        toast[res.data.type](res.data.msg);
+        if (res.data.response === true) {
+          actions.resetForm();
+        }
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   const registerSchema = Yup.object().shape({
@@ -50,86 +61,109 @@ const Register = () => {
     });
 
   return (
-    <div className="mt-4 grow flex items-center justify-around">
-      <div className="mb-30">
-        <h2 className="text-center mb-4">Sign Up</h2>
-        <h4 className="text-center mb-4">Welcome to CommunialStay</h4>
-        <form onSubmit={handleSubmit} className="max-w-md mx-auto">
-          <Input
-            id="firstName"
-            type="text"
-            placeholder="First name"
-            value={values.firstName}
-            onChange={handleChange}
-            onBlur={handleBlur}
-          />
+    <div className="flex items-center justify-center app-height">
+      <div className="w-full max-w-md">
+        <div className="text-center space-y-1">
+          <h2 className="text-center mb-4">Sign Up</h2>
+          <h4 className="text-center mb-4">Welcome to CommunialStay</h4>
+        </div>
 
-          {errors.firstName && touched.firstName ? (
-            <div className="text-red-500 text-xs px-4 py-2 sm:px-8 sm:py-3">
-              {errors.firstName}
-            </div>
-          ) : null}
-          <Input
-            id="lastName"
-            type="text"
-            placeholder="Last name"
-            value={values.lastName}
-            onChange={handleChange}
-            onBlur={handleBlur}
-          />
-          {errors.lastName && touched.lastName ? (
-            <div className="text-red-500 text-xs px-4 py-2 sm:px-8 sm:py-3">
-              {errors.lastName}
-            </div>
-          ) : null}
-          <Input
-            id="phoneNumber"
-            type="number"
-            placeholder="Phone Number"
-            value={values.phoneNumber}
-            onChange={handleChange}
-            onBlur={handleBlur}
-          />
-          {errors.phoneNumber && touched.phoneNumber ? (
-            <div className="text-red-500 text-xs px-4 py-2 sm:px-8 sm:py-3">
-              {errors.phoneNumber}
-            </div>
-          ) : null}
-          <Input
-            id="email"
-            type="email"
-            placeholder="Email"
-            value={values.email}
-            onChange={handleChange}
-            onBlur={handleBlur}
-          />
-          {errors.email && touched.email ? (
-            <div className="text-red-500 text-xs px-4 py-2 sm:px-8 sm:py-3">
-              {errors.email}
-            </div>
-          ) : null}
-          <Input
-            id="password"
-            type="password"
-            placeholder="Password"
-            value={values.password}
-            onChange={handleChange}
-            onBlur={handleBlur}
-          />
-          {errors.password && touched.password ? (
-            <div className="text-red-500 text-xs px-4 py-2 sm:px-8 sm:py-3">
-              {errors.password}
-            </div>
-          ) : null}
+        <form
+          onSubmit={handleSubmit}
+          className="w-full mx-auto mt-10 space-y-5"
+        >
+          <div className="space-y-2">
+            <div>
+              <Input
+                id="firstName"
+                type="text"
+                placeholder="First name"
+                value={values.firstName}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
 
-          <Button type="submit" className="mt-1 bg-secondary">
+              {errors.firstName && touched.firstName ? (
+                <div className="text-red-500 text-xs px-4 py-2 sm:px-8 sm:py-3">
+                  {errors.firstName}
+                </div>
+              ) : null}
+            </div>
+
+            <div>
+              <Input
+                id="lastName"
+                type="text"
+                placeholder="Last name"
+                value={values.lastName}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
+              {errors.lastName && touched.lastName ? (
+                <div className="text-red-500 text-xs px-4 py-2 sm:px-8 sm:py-3">
+                  {errors.lastName}
+                </div>
+              ) : null}
+            </div>
+
+            <div>
+              <Input
+                id="phoneNumber"
+                type="number"
+                placeholder="Phone Number"
+                value={values.phoneNumber}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
+              {errors.phoneNumber && touched.phoneNumber ? (
+                <div className="text-red-500 text-xs px-4 py-2 sm:px-8 sm:py-3">
+                  {errors.phoneNumber}
+                </div>
+              ) : null}
+            </div>
+
+            <div>
+              <Input
+                id="email"
+                type="email"
+                placeholder="Email"
+                value={values.email}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
+
+              {errors.email && touched.email ? (
+                <div className="text-red-500 text-xs px-4 py-2 sm:px-8 sm:py-3">
+                  {errors.email}
+                </div>
+              ) : null}
+            </div>
+
+            <div>
+              <Input
+                id="password"
+                type="password"
+                placeholder="Password"
+                value={values.password}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
+              {errors.password && touched.password ? (
+                <div className="text-red-500 text-xs px-4 py-2 sm:px-8 sm:py-3">
+                  {errors.password}
+                </div>
+              ) : null}
+            </div>
+          </div>
+
+          <Button type="submit" className="bg-secondary">
             SignUp
           </Button>
-          <ToastContainer position="top-center" />
-          <div className="text-center py-2" text-gray-500>
+
+          <div className="text-center py-2">
             Already have an account?
             <Link className="underline text-black" to={"/login"}>
-              Login
+              <span className="ml-2">Login</span>
             </Link>
           </div>
         </form>

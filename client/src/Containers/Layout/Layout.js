@@ -3,9 +3,11 @@ import Header from "../../Components/Header/Header";
 
 const Layout = () => {
   return (
-    <div className="py-4 px-8 flex flex-col min-h-screen ">
+    <div>
       <Header />
-      <Outlet />
+      <div className="app-height overflow-scroll px-8">
+        <Outlet />
+      </div>
     </div>
   );
 };

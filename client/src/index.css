@@ -37,10 +37,11 @@ h6 {
   line-height: 21px;
   font-weight: 500;
 }
-input[type="text"],
-input[type="email"],
-input[type="password"],
-input[type="number"],
+
+textarea {
+  height: 150px;
+}
+
 textarea {
   @apply w-full border  my-1 py-2 px-3 rounded-2xl;
 }
@@ -54,6 +55,8 @@ button.primary {
   @apply bg-primary p-2 w-full text-white rounded-2xl;
 }
 
-textarea {
-  height: 150px;
+@layer components {
+  .app-height {
+    @apply h-[calc(100vh-75px)];
+  }
 }

@@ -36,6 +36,7 @@ const Account = () => {
         </svg>
         My Profile
       </Link>
+
       <Link className={linkClasses("bookings")} to={"/account/bookings"}>
         <svg
           xmlns="http://www.w3.org/2000/svg"

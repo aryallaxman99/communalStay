@@ -43,6 +43,7 @@ export const PhotoUploader = ({ photos, setPhotos }) => {
     event.preventDefault();
     setPhotos([imageName, ...photos.filter((photo) => photo !== imageName)]);
   };
+
   return (
     <div>
       <h3 className="mt-4">Photos</h3>

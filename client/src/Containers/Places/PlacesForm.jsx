@@ -90,7 +90,7 @@ const PlacesForm = () => {
   }, [id]);
 
   return (
-    <div>
+    <div className="py-8">
       <Account />
       <form onSubmit={savePlace}>
         <h3 className="mt-4">Title</h3>

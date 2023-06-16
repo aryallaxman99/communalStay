@@ -8,6 +8,8 @@ import { MenuItem } from "@mui/material";
 import { resetUserDetails } from "../../reducers/userSlice";
 import requests from "../../Requests";
 
+import { HomeIcon } from "@heroicons/react/24/outline";
+
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -28,24 +30,12 @@ const Header = () => {
 
   return (
     <div>
-      <header className="flex justify-between">
-        <Link to={"/"} href="" className="flex items-center gap-1">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="#FF3333"
-            className="w-8 h-9"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"
-            />
-          </svg>
+      <header className="flex justify-between py-4 px-6">
+        <Link to={"/"} className="flex items-center space-x-1">
+          <HomeIcon className="h-7 text-secondary" />
           <span className="text-secondary font-bold">CommunialStay</span>
         </Link>
+
         <div className="flex gap-2 border border-gray-300 rounded-full py-2 px-4 shadow-md -300">
           <div className="font-bold">Anywhere</div>
           <div className="border border-left border-gray-300"></div>
@@ -69,6 +59,7 @@ const Header = () => {
             </svg>
           </button>
         </div>
+
         <div className="relative" onClick={toogleMenu}>
           <div className="flex item-center gap-2 border border-gray-300 rounded-full py-2 px-4">
             <svg
