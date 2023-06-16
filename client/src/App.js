@@ -1,7 +1,7 @@
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import { UserContextProvider } from "./UserContext";
-
+import { ToastContainer } from "react-toastify";
 import { Error } from "./Containers/Pages/Error";
 import Layout from "./Containers/Layout/Layout";
 import Login from "./Containers/Auth/Login";
@@ -30,6 +30,7 @@ const App = () => {
           <Route path="/account/bookings" element={<BookingPage />} />
         </Route>
       </Routes>
+      <ToastContainer position="top-center" />
     </UserContextProvider>
   );
 };

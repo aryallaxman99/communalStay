@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { ClickAwayListener } from "@mui/material";
+import { FcImageFile, FcEditImage, FcRemoveImage } from "react-icons/fc";
+
 import Button from "../../widgets/button/Button";
 
 const ProfilePicture = ({ profilePicture, setProfilePicture }) => {
@@ -10,13 +12,11 @@ const ProfilePicture = ({ profilePicture, setProfilePicture }) => {
     <ClickAwayListener onClickAway={() => setToggleMenu(false)}>
       <div>
         <img
-          // src={profilePicture}
-          src="https://scontent.fktm17-1.fna.fbcdn.net/v/t39.30808-6/278740100_3227816557490633_5934562896153253871_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=q-rIlEbc768AX8Hdduj&_nc_ht=scontent.fktm17-1.fna&oh=00_AfBenBk_vMDojUkX8sFC9QV1QmswCqC6u_9PMRd_IjbZ9Q&oe=64922557"
+          src={profilePicture}
           alt="Profile"
           className="w-20 h-20 rounded-full"
           onClick={() => {
             setToggleMenu(true);
-            // setOpenImage(false);
           }}
         />
 
@@ -30,31 +30,19 @@ const ProfilePicture = ({ profilePicture, setProfilePicture }) => {
                     setOpenImage(true);
                   }}
                 >
-                  <img
-                    src="https://maxst.icons8.com/_nuxt/icon/c93fe3d57e7dbfbf052ea5b1ce1c89c9.svg"
-                    className="w-6 h-6"
-                    alt=""
-                  />
+                  <FcImageFile className="h-6 w-6" />
                   See profile Picture
                 </div>
               </li>
               <li>
                 <div className="flex p-2 gap-2 rounded-md hover:bg-gray-100">
-                  <img
-                    src="https://img.icons8.com/?size=512&id=7uH7N1cCI8Bt&format=png"
-                    className="w-6 h-6"
-                    alt=""
-                  />
+                  <FcEditImage className="h-6 w-6" />
                   Update profile picture
                 </div>
               </li>
               <li>
                 <div className="flex p-2 gap-2 rounded-md hover:bg-gray-100">
-                  <img
-                    src="https://img.icons8.com/?size=512&id=54218&format=png"
-                    className="w-6 h-6"
-                    alt=""
-                  />
+                  <FcRemoveImage className="h-6 w-6" />
                   Remove profile picture
                 </div>
               </li>
@@ -66,14 +54,13 @@ const ProfilePicture = ({ profilePicture, setProfilePicture }) => {
           <div className="fixed inset-0 flex items-center bg-gray-600 bg-opacity-50	justify-center">
             <div className="relative">
               <img
-                // src={profilePicture}
-                src="https://scontent.fktm17-1.fna.fbcdn.net/v/t39.30808-6/278740100_3227816557490633_5934562896153253871_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=q-rIlEbc768AX8Hdduj&_nc_ht=scontent.fktm17-1.fna&oh=00_AfBenBk_vMDojUkX8sFC9QV1QmswCqC6u_9PMRd_IjbZ9Q&oe=64922557"
+                src={profilePicture}
                 alt=""
                 className="object-contain max-h-screen max-w-90 outline-none"
               />
 
               <Button
-                className="absolute top-4 right-2 text-white bg-red-500 rounded z-10 px-4 w-fit"
+                className="absolute top-4 right-2 text-white bg-red-500 rounded z-10 px-4 w-auto"
                 onClick={() => {
                   setOpenImage(false);
                   setToggleMenu(false);

@@ -8,6 +8,7 @@ import requests from "../../Requests";
 import Input from "../../widgets/input/Input";
 import Button from "../../widgets/button/Button";
 import { useState } from "react";
+import FormError from "../../Components/formError/FormError";
 
 const Register = () => {
   const [loading, setLoading] = useState(false);
@@ -82,12 +83,10 @@ const Register = () => {
                 onChange={handleChange}
                 onBlur={handleBlur}
               />
-
-              {errors.firstName && touched.firstName ? (
-                <div className="text-red-500 text-xs px-4 py-2 sm:px-8 sm:py-3">
-                  {errors.firstName}
-                </div>
-              ) : null}
+              <FormError
+                message={errors.firstName}
+                touched={touched.firstName}
+              />
             </div>
 
             <div>
@@ -99,11 +98,7 @@ const Register = () => {
                 onChange={handleChange}
                 onBlur={handleBlur}
               />
-              {errors.lastName && touched.lastName ? (
-                <div className="text-red-500 text-xs px-4 py-2 sm:px-8 sm:py-3">
-                  {errors.lastName}
-                </div>
-              ) : null}
+              <FormError message={errors.lastName} touched={touched.lastName} />
             </div>
 
             <div>
@@ -115,11 +110,10 @@ const Register = () => {
                 onChange={handleChange}
                 onBlur={handleBlur}
               />
-              {errors.phoneNumber && touched.phoneNumber ? (
-                <div className="text-red-500 text-xs px-4 py-2 sm:px-8 sm:py-3">
-                  {errors.phoneNumber}
-                </div>
-              ) : null}
+              <FormError
+                message={errors.phoneNumber}
+                touched={touched.phoneNumber}
+              />
             </div>
 
             <div>
@@ -131,12 +125,7 @@ const Register = () => {
                 onChange={handleChange}
                 onBlur={handleBlur}
               />
-
-              {errors.email && touched.email ? (
-                <div className="text-red-500 text-xs px-4 py-2 sm:px-8 sm:py-3">
-                  {errors.email}
-                </div>
-              ) : null}
+              <FormError message={errors.email} touched={touched.email} />
             </div>
 
             <div>
@@ -148,11 +137,7 @@ const Register = () => {
                 onChange={handleChange}
                 onBlur={handleBlur}
               />
-              {errors.password && touched.password ? (
-                <div className="text-red-500 text-xs px-4 py-2 sm:px-8 sm:py-3">
-                  {errors.password}
-                </div>
-              ) : null}
+              <FormError message={errors.password} touched={touched.password} />
             </div>
           </div>
 

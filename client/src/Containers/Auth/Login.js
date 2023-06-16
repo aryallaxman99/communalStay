@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import * as Yup from "yup";
@@ -5,6 +6,7 @@ import { useFormik } from "formik";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import "react-toastify/dist/ReactToastify.css";
+
 import Input from "../../widgets/input/Input";
 import Button from "../../widgets/button/Button";
 import requests from "../../Requests";
@@ -14,24 +16,31 @@ import FormError from "../../Components/formError/FormError";
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const passwordRule = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
+  const [loading, setLoading] = useState(false);
 
   const onSubmit = async (values, actions) => {
-    axios.post(requests.userLogin, { values }).then((res) => {
-      toast[res.data.type](res.data.msg);
-      if (res.data.status === true) {
-        dispatch(setUserDetails(res.data.userDetails));
-        actions.resetForm();
-        navigate("/");
-      }
-    });
+    if (loading) {
+      return;
+    }
+    setLoading(true);
+    await axios
+      .post(requests.userLogin, { values })
+      .then((res) => {
+        toast[res.data.type](res.data.msg);
+        if (res.data.status === true) {
+          dispatch(setUserDetails(res.data.userDetails));
+          actions.resetForm();
+          navigate("/");
+        }
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   const loginSchema = Yup.object().shape({
     email: Yup.string().email("Invalid email").required("Required"),
-    password: Yup.string().required("Required").min(6).matches(passwordRule, {
-      message: "Please create a strong password",
-    }),
+    password: Yup.string().required("Required"),
   });
 
   const { values, errors, handleBlur, handleChange, handleSubmit, touched } =
