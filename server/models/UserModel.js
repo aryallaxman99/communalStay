@@ -10,7 +10,7 @@ const userSchema = new Schema({
   bio: String,
   address: String,
   socialMediaAccountLink: String,
-  profilePicture: [String],
+  profilePicture: String,
 });
 
 const userModel = mongoose.model("User", userSchema);

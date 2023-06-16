@@ -3,10 +3,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
+import { MenuItem } from "@mui/material";
 
 import { resetUserDetails } from "../../reducers/userSlice";
 import requests from "../../Requests";
-import { MenuItem } from "@mui/material";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -108,24 +108,39 @@ const Header = () => {
                   <li>
                     <a
                       href="/account"
-                      className="flex p-2 rounded-md  hover:bg-gray-100"
+                      className="flex p-2 rounded-md gap-2 hover:bg-gray-100"
                     >
+                      <img
+                        src="https://t4.ftcdn.net/jpg/05/49/98/39/240_F_549983970_bRCkYfk0P6PP5fKbMhZMIb07mCJ6esXL.jpg"
+                        className="w-6 h-6 rounded-full"
+                        alt=""
+                      />
                       Profile
                     </a>
                   </li>
                   <li>
                     <a
                       href="/account/bookings"
-                      className="flex p-2 rounded-md  hover:bg-gray-100"
+                      className="flex p-2 rounded-md gap-2 hover:bg-gray-100"
                     >
+                      <img
+                        src="https://i.shgcdn.com/6364e357-626c-4725-9151-b4c279ddab3d/-/format/auto/-/preview/3000x3000/-/quality/lighter/"
+                        className="w-5 h-5 mt-1"
+                        alt=""
+                      />
                       My Reservation
                     </a>
                   </li>
                   <li>
                     <a
                       href="/account/places"
-                      className="flex p-2 rounded-md  hover:bg-gray-100"
+                      className="flex gap-2 p-2 rounded-md  hover:bg-gray-100"
                     >
+                      <img
+                        src="https://img.uxwing.com/wp-content/themes/uxwing/download/buildings-architecture-real-estate/property-icon.svg"
+                        className="w-4 h-4 mt-1"
+                        alt=""
+                      />
                       My properties
                     </a>
                   </li>
@@ -133,8 +148,13 @@ const Header = () => {
                   <li>
                     <MenuItem
                       onClick={logout}
-                      className="flex p-2 rounded-md  hover:bg-gray-100"
+                      className="flex p-2 gap-2 rounded-md  hover:bg-gray-100"
                     >
+                      <img
+                        src="https://static-00.iconduck.com/assets.00/logout-icon-507x512-l4hzrlty.png"
+                        className="w-4 h-4"
+                        alt=""
+                      />
                       Logout
                     </MenuItem>
                   </li>
@@ -146,16 +166,26 @@ const Header = () => {
                   <li>
                     <a
                       href="/register"
-                      className="flex p-2 font-medium rounded-md  hover:bg-gray-100"
+                      className="flex p-2 font-medium rounded-md gap-2 hover:bg-gray-100"
                     >
+                      <img
+                        src="https://icon-library.com/images/sign-up-icon-png/sign-up-icon-png-1.jpg"
+                        className="w-5 h-5 mt-1"
+                        alt=""
+                      />
                       Sign up
                     </a>
                   </li>
                   <li>
                     <a
                       href="/login"
-                      className="flex p-2 rounded-md  hover:bg-gray-100"
+                      className="flex p-2 rounded-md gap-2 hover:bg-gray-100"
                     >
+                      <img
+                        src="https://cdn-icons-png.flaticon.com/512/130/130924.png"
+                        className="w-5 h-5 mt-1"
+                        alt=""
+                      />
                       Log in
                     </a>
                   </li>

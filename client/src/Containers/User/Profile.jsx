@@ -8,6 +8,7 @@ import requests from "../../Requests";
 import { ToastContainer, toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { setUserDetails } from "../../reducers/userSlice";
+import ProfilePicture from "../../Components/Photo/ProfilePicture";
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -19,15 +20,8 @@ const Profile = () => {
   const [address, setAddress] = useState("");
   const [phoneNumber, setPhoneNumber] = useState(null);
   const [socialMediaAccountLink, setSocialMediaAccountLink] = useState("");
-  const [profilePicture, setProfilePicture] = useState([]);
-  const [booking, setBooking] = useState("");
+  const [profilePicture, setProfilePicture] = useState("");
   const cookie = Cookies.get();
-
-  const handleEditProfile = () => {
-    setIsEditing(true);
-  };
-
-  console.log(booking);
 
   const saveProfile = () => {
     setIsEditing(false);
@@ -59,16 +53,14 @@ const Profile = () => {
       setSocialMediaAccountLink(res.data.userDetails.socialMediaAccountLink);
       setProfilePicture(res.data.userDetails.profilePicture);
     });
-    axios.get(requests.reserve).then((res) => setBooking(res.data));
   }, []);
 
   return (
     <div className="container mx-auto py-8">
       <div className="flex items-center">
-        <img
-          src={profilePicture[0]}
-          alt="Profile"
-          className="w-16 h-16 rounded-full"
+        <ProfilePicture
+          profilePicture={profilePicture}
+          setProfilePicture={setProfilePicture}
         />
         <div className="ml-4">
           <h2 className="text-2xl font-semibold">
@@ -200,12 +192,12 @@ const Profile = () => {
                 </a>
               </div>
             </div>
-            <div className="mt-8">
-              <h3 className="text-lg font-semibold">Booking History</h3>
-            </div>
 
             <div className="mt-8">
-              <Button className="bg-secondary" onClick={handleEditProfile}>
+              <Button
+                className="bg-secondary"
+                onClick={() => setIsEditing(true)}
+              >
                 Edit Profile
               </Button>
             </div>
