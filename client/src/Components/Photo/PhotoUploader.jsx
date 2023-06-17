@@ -7,9 +7,11 @@ import { MdFavoriteBorder, MdFavorite, MdUploadFile } from "react-icons/md";
 import requests from "../../Requests";
 import Input from "../../widgets/input/Input";
 import Button from "../../widgets/button/Button";
+import ImageViewer from "../../utils/ImageViewer";
 
-export const PhotoUploader = ({ photos, setPhotos }) => {
+export const PhotoUploader = (props) => {
   const [photoLink, setPhotoLink] = useState("");
+  const [profilePicture, setProfilePicture] = useState(props.profilePicture);
 
   const addPhotoByLink = async () => {
     if (!photoLink) {
@@ -18,7 +20,11 @@ export const PhotoUploader = ({ photos, setPhotos }) => {
       const { data } = await axios.post(requests.photoUploadViaLink, {
         photoLink,
       });
-      setPhotos([...photos, data.imageName]);
+      if (props.fromProfile) {
+        setProfilePicture(data.imageName);
+      } else {
+        props.setPhotos([...props.photos, data.imageName]);
+      }
     }
     setPhotoLink("");
   };
@@ -33,23 +39,54 @@ export const PhotoUploader = ({ photos, setPhotos }) => {
         }
       )
       .then((res) => {
-        setPhotos([...photos, res.data.imageName]);
+        props.fromProfile
+          ? setProfilePicture(res.data.imageName)
+          : props.setPhotos([...props.photos, res.data.imageName]);
+      })
+      .catch(() => {
+        toast.error("Uploading error..");
       });
   };
 
   const removePhoto = (imageName) => {
-    setPhotos([...photos.filter((photo) => photo !== imageName)]);
+    props.setPhotos([...props.photos.filter((photo) => photo !== imageName)]);
   };
 
   const displayFrontPhoto = (event, imageName) => {
     event.preventDefault();
-    setPhotos([imageName, ...photos.filter((photo) => photo !== imageName)]);
+    props.setPhotos([
+      imageName,
+      ...props.photos.filter((photo) => photo !== imageName),
+    ]);
+  };
+
+  const saveProfilePicture = () => {
+    axios
+      .put(requests.userProfile, { profilePicture })
+      .then((res) => {
+        if (res.data) {
+          toast.success("Picture uploaded");
+          props.setImageUploader(false);
+        }
+      })
+      .catch(() => {
+        toast.error("Error on Uploading");
+      });
   };
 
   return (
     <div>
-      <h3 className="mt-4">Photos</h3>
-      <p className="text-sm text-gray-500">More picture will be great</p>
+      {props.fromProfile ? (
+        <>
+          <h3 className="mt-4">Profile Picture </h3>
+          <p className="text-sm text-gray-500">Change your profile picture</p>
+        </>
+      ) : (
+        <>
+          <h3 className="mt-4">Photos</h3>
+          <p className="text-sm text-gray-500">More picture will be great</p>
+        </>
+      )}
       <div className="flex gap-2">
         <Input
           type="text"
@@ -61,48 +98,60 @@ export const PhotoUploader = ({ photos, setPhotos }) => {
           onClick={addPhotoByLink}
           className="bg-secondary grow px-4"
         >
-          Add photos
+          Add photo
         </Button>
         <ToastContainer position="top-center" />
       </div>
       <div className="grid gird-cols-3 md:grid-cols-4 lg:grid-cols-6 mt-2 gap-2">
-        {photos
-          ? photos.length > 0 &&
-            photos.map((items) => (
-              <div className="h-32 flex relative" key={items}>
-                <img
-                  alt=""
-                  className="rounded-2xl w-full object-cover"
-                  src={`http://localhost:8000/uploads/${items}`}
-                />
-                <button
-                  onClick={() => removePhoto(items)}
-                  className="absolute right-0 cursor-pointer bg-black bg-opacity-50 rounded-2xl"
-                >
-                  <RxCrossCircled className="h-6 w-6 text-white" />
-                </button>
-                <button
-                  onClick={(event) => displayFrontPhoto(event, items)}
-                  className="top-1 left-1 absolute cursor-pointer text-red bg-red bg-opacity-50 rounded-2xl"
-                >
-                  {photos
-                    ? photos[0] === items && (
-                        <>
-                          <MdFavorite className="w-6 h-6 text-red-600" />
-                        </>
-                      )
-                    : null}
-                  {photos
-                    ? photos[0] !== items && (
-                        <>
-                          <MdFavoriteBorder className="h-6 w-6 text-white" />
-                        </>
-                      )
-                    : null}
-                </button>
-              </div>
-            ))
-          : null}
+        {props.fromProfile ? (
+          <>
+            {profilePicture && (
+              <ImageViewer
+                imageName={profilePicture}
+                styling={"rounded-2xl w-full object-cover"}
+              />
+            )}
+          </>
+        ) : (
+          <>
+            {props.photos
+              ? props.photos.length > 0 &&
+                props.photos.map((items) => (
+                  <div className="h-30 flex relative" key={items}>
+                    <ImageViewer
+                      styling={"rounded-2xl w-full object-cover"}
+                      imageName={items}
+                    />
+                    <button
+                      onClick={() => removePhoto(items)}
+                      className="absolute right-0 cursor-pointer bg-black bg-opacity-50 rounded-2xl"
+                    >
+                      <RxCrossCircled className="h-6 w-6 text-white" />
+                    </button>
+                    <button
+                      onClick={(event) => displayFrontPhoto(event, items)}
+                      className="top-1 left-1 absolute cursor-pointer text-red bg-red bg-opacity-50 rounded-2xl"
+                    >
+                      {props.photos
+                        ? props.photos[0] === items && (
+                            <>
+                              <MdFavorite className="w-6 h-6 text-red-600" />
+                            </>
+                          )
+                        : null}
+                      {props.photos
+                        ? props.photos[0] !== items && (
+                            <>
+                              <MdFavoriteBorder className="h-6 w-6 text-white" />
+                            </>
+                          )
+                        : null}
+                    </button>
+                  </div>
+                ))
+              : null}
+          </>
+        )}
         <label
           type="button"
           className="h-32 border cursor-pointer justify-center flex gap-2 bg-transparent rounded-2xl p-2 items-center text-2xl text-gray-600 "
@@ -112,6 +161,16 @@ export const PhotoUploader = ({ photos, setPhotos }) => {
           Upload
         </label>
       </div>
+      {props.fromProfile ? (
+        <Button
+          className="bg-secondary mt-6"
+          onClick={() => saveProfilePicture()}
+        >
+          Save
+        </Button>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };

@@ -6,10 +6,6 @@ const router = express.Router();
 
 router.post("/upload-via-link", uploadPhotoController.uploadPhotoViaLink);
 
-router.post(
-  "/",
-  photosMiddleware.array("photo", 1),
-  uploadPhotoController.uploadPhoto
-);
+router.post("/", photosMiddleware.any(), uploadPhotoController.uploadPhoto);
 
 export default router;

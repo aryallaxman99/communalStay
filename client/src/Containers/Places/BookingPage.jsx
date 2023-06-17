@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Dialog, DialogActions, DialogContent, Skeleton } from "@mui/material";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import { HiOutlineLocationMarker, HiArrowRight } from "react-icons/hi";
 import { HiOutlineCalendarDays, HiOutlineCreditCard } from "react-icons/hi2";
 import Account from "../User/Account";
@@ -113,7 +113,6 @@ const BookingPage = () => {
                       </Button>
                     </DialogActions>
                   </Dialog>
-                  <ToastContainer position="top-center" />
                 </div>
               </div>
             ))

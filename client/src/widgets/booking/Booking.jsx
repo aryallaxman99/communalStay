@@ -4,7 +4,7 @@ import { Skeleton } from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
 
 import Input from "../input/Input";
@@ -106,7 +106,6 @@ const Booking = ({ place }) => {
             <Button className="mt-4 bg-secondary" onClick={reserve}>
               Reserve
             </Button>
-            <ToastContainer position="top-center" />
             {totalStayingPeriods !== 0 ? (
               <>
                 <div className="mt-2 text-center">

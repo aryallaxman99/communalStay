@@ -5,7 +5,7 @@ import axios from "axios";
 import Button from "../../widgets/button/Button";
 import Input from "../../widgets/input/Input";
 import requests from "../../Requests";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { setUserDetails } from "../../reducers/userSlice";
 import ProfilePicture from "../../Components/Photo/ProfilePicture";
@@ -201,7 +201,6 @@ const Profile = () => {
                 Edit Profile
               </Button>
             </div>
-            <ToastContainer position="top-center" />
           </>
         )}
       </div>
