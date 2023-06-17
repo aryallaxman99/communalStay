@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import axios from "axios";
+import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { FaFacebookSquare } from "react-icons/fa";
 
 import Button from "../../widgets/button/Button";
 import Input from "../../widgets/input/Input";
 import requests from "../../Requests";
-import { toast } from "react-toastify";
-import { useDispatch } from "react-redux";
 import { setUserDetails } from "../../reducers/userSlice";
 import ProfilePicture from "../../Components/Photo/ProfilePicture";
 
@@ -128,11 +129,8 @@ const Profile = () => {
               <div className="mt-8">
                 <h3 className="text-lg font-semibold">Social Media</h3>
                 <div className="mt-4 gap-2 flex">
-                  <img
-                    className="h-11 w-11"
-                    src="https://img.icons8.com/?size=512&id=BsoWS6BDZrHp&format=png"
-                    alt=""
-                  />
+                  <FaFacebookSquare className="h-7 w-7 text-blue-700" />
+
                   <Input
                     type="text"
                     placeholder="Profile Link"
@@ -178,11 +176,7 @@ const Profile = () => {
             <div className="mt-8">
               <h3 className="text-lg font-semibold">Social Media</h3>
               <div className="mt-4 gap-2 flex">
-                <img
-                  className="h-6 w-6"
-                  src="https://img.icons8.com/?size=512&id=BsoWS6BDZrHp&format=png"
-                  alt=""
-                />
+                <FaFacebookSquare className="h-7 w-7 text-blue-700" />
                 <a
                   target="_blank"
                   rel="noreferrer"

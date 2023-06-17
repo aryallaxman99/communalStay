@@ -5,6 +5,7 @@ import requests from "../../Requests";
 import { Skeleton } from "@mui/material";
 import DisplayFeatures from "../Features/DisplayFeatures";
 import Booking from "../../widgets/booking/Booking";
+import ImageViewer from "../../utils/ImageViewer";
 
 const PlacePage = () => {
   const { id } = useParams();
@@ -46,7 +47,7 @@ const PlacePage = () => {
             ? place.photos.length > 0 &&
               place.photos.map((items) => (
                 <div>
-                  <img src={`http://localhost:8000/uploads/${items}`} alt="" />
+                  <ImageViewer imageName={items} />
                 </div>
               ))
             : null}
@@ -102,10 +103,9 @@ const PlacePage = () => {
             {place ? (
               place.photos[0] && (
                 <div>
-                  <img
-                    alt=""
-                    className="aspect-square object-cover "
-                    src={`http://localhost:8000/uploads/${place.photos[0]}`}
+                  <ImageViewer
+                    imageName={place.photos[0]}
+                    styling={"aspect-square object-cover "}
                   />
                 </div>
               )
@@ -120,10 +120,9 @@ const PlacePage = () => {
           <div className="grid">
             {place ? (
               place.photos[1] && (
-                <img
-                  alt=""
-                  className="aspect-square object-cover "
-                  src={`http://localhost:8000/uploads/${place.photos[1]}`}
+                <ImageViewer
+                  imageName={place.photos[1]}
+                  styling={"aspect-square object-cover "}
                 />
               )
             ) : (
@@ -136,10 +135,9 @@ const PlacePage = () => {
             <div className="overflow-hidden">
               {place ? (
                 place.photos[2] && (
-                  <img
-                    alt=""
-                    className="aspect-square object-cover relative top-2"
-                    src={`http://localhost:8000/uploads/${place.photos[2]}`}
+                  <ImageViewer
+                    imageName={place.photos[2]}
+                    styling={"aspect-square object-cover relative top-2"}
                   />
                 )
               ) : (

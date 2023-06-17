@@ -16,11 +16,12 @@ import { FiLogIn, FiLogOut } from "react-icons/fi";
 import Button from "../../widgets/button/Button";
 import { resetUserDetails } from "../../reducers/userSlice";
 import requests from "../../Requests";
+import ImageViewer from "../../utils/ImageViewer";
 
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { firstName } = useSelector((state) => state.user);
+  const { firstName, profilePicture } = useSelector((state) => state.user);
   const [showMenu, setShowMenu] = useState(false);
 
   const logout = () => {
@@ -54,7 +55,14 @@ const Header = () => {
           <div className="relative" onClick={() => setShowMenu(true)}>
             <div className="flex item-center gap-2 border border-gray-300 rounded-full py-2 px-4">
               <HiOutlineBars3 className="w-6 h-6" />
-              <FaUserCircle className="h-6 w-6 text-gray-400" />
+              {profilePicture ? (
+                <ImageViewer
+                  imageName={profilePicture}
+                  styling={"h-6 w-6 rounded-full"}
+                />
+              ) : (
+                <FaUserCircle className="h-6 w-6 text-gray-400" />
+              )}
               {firstName && <div>{firstName}</div>}
             </div>
             {showMenu ? (

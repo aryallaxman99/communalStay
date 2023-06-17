@@ -7,6 +7,7 @@ import { HiOutlineCalendarDays, HiOutlineCreditCard } from "react-icons/hi2";
 import Account from "../User/Account";
 import requests from "../../Requests";
 import Button from "../../widgets/button/Button";
+import ImageViewer from "../../utils/ImageViewer";
 
 const BookingPage = () => {
   const [bookings, setBookings] = useState();
@@ -46,10 +47,7 @@ const BookingPage = () => {
                 {items.placeid.photos
                   ? items.placeid.photos.length > 0 && (
                       <div className="w-full h-full">
-                        <img
-                          src={`http://localhost:8000/uploads/${items.placeid.photos[0]}`}
-                          alt=""
-                        />
+                        <ImageViewer imageName={items.placeid.photos[0]} />
                       </div>
                     )
                   : null}
