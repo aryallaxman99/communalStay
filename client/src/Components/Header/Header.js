@@ -47,7 +47,7 @@ const Header = () => {
             <div className="font-bold">Any week</div>
             <div className="border border-left border-gray-300"></div>
             <div>Any guest</div>
-            <Button className="bg-primary w-fit rounded-full">
+            <Button className="bg-primary w-auto rounded-full">
               <HiOutlineSearch className="w-4 h-4" />
             </Button>
           </div>

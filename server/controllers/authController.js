@@ -133,9 +133,9 @@ export const updateProfile = async (req, res) => {
           new: true,
         });
         if (response) {
-          const { firstName, lastName } = response.toObject();
+          const { firstName, profilePicture } = response.toObject();
           res.json({
-            userName: { firstName, lastName },
+            userName: { firstName, profilePicture },
             msg: "Profile updated",
             type: "success",
             status: true,

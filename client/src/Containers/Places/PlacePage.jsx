@@ -1,11 +1,16 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import requests from "../../Requests";
 import { Skeleton } from "@mui/material";
+import { BsGrid1X2Fill } from "react-icons/bs";
+import { TiArrowBackOutline } from "react-icons/ti";
+
+import requests from "../../Requests";
 import DisplayFeatures from "../Features/DisplayFeatures";
 import Booking from "../../widgets/booking/Booking";
 import ImageViewer from "../../utils/ImageViewer";
+import LocationPointer from "../../utils/LocationPointer";
+import Button from "../../widgets/button/Button";
 
 const PlacePage = () => {
   const { id } = useParams();
@@ -26,22 +31,12 @@ const PlacePage = () => {
       <div className="absolute bg-white inset-0 min-h-screen">
         <div className="p-8 grid gap-4">
           <div>
-            <button onClick={() => setAllPhotos(false)}>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-6 h-6 bg-white"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M19.5 12h-15m0 0l6.75 6.75M4.5 12l6.75-6.75"
-                />
-              </svg>
-            </button>
+            <Button
+              className={"text-black w-fit bg-white"}
+              onClick={() => setAllPhotos(false)}
+            >
+              <TiArrowBackOutline className="h-6 w-6" />
+            </Button>
           </div>
           {place.photos
             ? place.photos.length > 0 &&
@@ -67,32 +62,10 @@ const PlacePage = () => {
       </h1>
       {place ? (
         <div className="flex gap-1 text-sm text-gray-600">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="w-4 h-4 mt-2"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"
-            />
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"
-            />
-          </svg>
-          <a
-            target="_blank"
-            href={`https://maps.google.com/?q=${place.address}`}
-            className="my-2 block font-semibold underline"
-          >
-            {place.address}
-          </a>
+          <LocationPointer
+            styling={"font-semibold underline"}
+            location={place.address}
+          />
         </div>
       ) : (
         <Skeleton width={"30%"} height={40} animation="wave" />
@@ -151,22 +124,14 @@ const PlacePage = () => {
           </div>
         </div>
         {place ? (
-          <button
+          <Button
             onClick={() => setAllPhotos(true)}
-            className="flex gap-2 absolute border border-black bottom-2 right-2 py-2 px-4 bg-white rounded-xl"
+            className="flex gap-2 absolute bottom-2 right-2 bg-white text-gray-700 w-fit px-4"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 16 16"
-              className="w-7 h-7"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M3 11.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zm5 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zm5 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zm-10-5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zm5 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zm5 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zm-10-5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zm5 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zm5 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z"
-              ></path>
-            </svg>
+            <BsGrid1X2Fill className="h-6 w-6 text-gray-700" />
+
             <span className="font-semibold">Show all Photos </span>
-          </button>
+          </Button>
         ) : null}
       </div>
       <div className=" h-px my-6 bg-gray-300" />

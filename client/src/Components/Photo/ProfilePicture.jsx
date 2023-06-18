@@ -96,7 +96,7 @@ const ProfilePicture = ({ profilePicture }) => {
                 imageName={profilePicture}
               />
               <Button
-                className="absolute top-4 right-2 bg-gray-500 bg-opacity-50 rounded-full w-fit"
+                className="absolute top-4 right-2 bg-gray-500 bg-opacity-50 rounded-full w-auto"
                 onClick={() => {
                   setOpenImage(false);
                   setToggleMenu(false);
@@ -120,7 +120,7 @@ const ProfilePicture = ({ profilePicture }) => {
               </div>
 
               <Button
-                className="absolute top-4 right-2 bg-gray-500 bg-opacity-50 rounded-full w-fit"
+                className="absolute top-4 right-2 bg-gray-500 bg-opacity-50 rounded-full w-auto"
                 onClick={() => {
                   setImageUploader(false);
                   setToggleMenu(false);

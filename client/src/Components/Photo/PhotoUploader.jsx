@@ -65,7 +65,7 @@ export const PhotoUploader = (props) => {
       .put(requests.userProfile, { profilePicture })
       .then((res) => {
         if (res.data) {
-          toast.success("Picture uploaded");
+          toast[res.data.type](res.data.msg);
           props.setImageUploader(false);
         }
       })
@@ -98,7 +98,7 @@ export const PhotoUploader = (props) => {
           onClick={addPhotoByLink}
           className="bg-secondary grow px-4"
         >
-          Add photo
+          Add photos
         </Button>
         <ToastContainer position="top-center" />
       </div>
@@ -122,31 +122,31 @@ export const PhotoUploader = (props) => {
                       styling={"rounded-2xl w-full object-cover"}
                       imageName={items}
                     />
-                    <button
+                    <Button
                       onClick={() => removePhoto(items)}
-                      className="absolute right-0 cursor-pointer bg-black bg-opacity-50 rounded-2xl"
+                      className="absolute right-0 bg-black bg-opacity-50 w-auto p-0"
                     >
-                      <RxCrossCircled className="h-6 w-6 text-white" />
-                    </button>
-                    <button
+                      <RxCrossCircled className="h-8 w-8" />
+                    </Button>
+                    <Button
                       onClick={(event) => displayFrontPhoto(event, items)}
-                      className="top-1 left-1 absolute cursor-pointer text-red bg-red bg-opacity-50 rounded-2xl"
+                      className="top-1 left-1 absolute bg-black bg-opacity-50 w-auto p-0"
                     >
                       {props.photos
                         ? props.photos[0] === items && (
                             <>
-                              <MdFavorite className="w-6 h-6 text-red-600" />
+                              <MdFavorite className="w-8 h-8 text-red-600" />
                             </>
                           )
                         : null}
                       {props.photos
                         ? props.photos[0] !== items && (
                             <>
-                              <MdFavoriteBorder className="h-6 w-6 text-white" />
+                              <MdFavoriteBorder className="h-8 w-8 text-white" />
                             </>
                           )
                         : null}
-                    </button>
+                    </Button>
                   </div>
                 ))
               : null}

@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import Account from "../User/Account";
+import { BsHouseAdd } from "react-icons/bs";
 import axios from "axios";
 
+import Account from "../User/Account";
 import requests from "../../Requests";
 import ImageViewer from "../../utils/ImageViewer";
 
@@ -23,20 +24,7 @@ const Places = () => {
           className="bg-secondary text-white py-2 px-6 rounded-full inline-flex gap-2"
           to={"/account/places/new"}
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="w-6 h-6"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M12 4.5v15m7.5-7.5h-15"
-            />
-          </svg>
+          <BsHouseAdd className="h-6 w-6" />
           Add new Places
         </Link>
         <div className="mt-4">

@@ -37,7 +37,7 @@ const Profile = () => {
       };
       axios.put(requests.userProfile, data).then((res) => {
         if (res.data) {
-          dispatch(setUserDetails(res.data.userName));
+          dispatch(setUserDetails(res.data.userName, res.data.profilePicture));
           toast[res.data.type](res.data.msg);
         }
       });
@@ -129,7 +129,7 @@ const Profile = () => {
               <div className="mt-8">
                 <h3 className="text-lg font-semibold">Social Media</h3>
                 <div className="mt-4 gap-2 flex">
-                  <FaFacebookSquare className="h-7 w-7 text-blue-700" />
+                  <FaFacebookSquare className="h-11 w-11 text-blue-700" />
 
                   <Input
                     type="text"
@@ -189,7 +189,7 @@ const Profile = () => {
 
             <div className="mt-8">
               <Button
-                className="bg-secondary"
+                className="bg-secondary position-fixed"
                 onClick={() => setIsEditing(true)}
               >
                 Edit Profile

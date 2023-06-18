@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Dialog, DialogActions, DialogContent, Skeleton } from "@mui/material";
 import { toast } from "react-toastify";
-import { HiOutlineLocationMarker, HiArrowRight } from "react-icons/hi";
+import { HiArrowRight } from "react-icons/hi";
 import { HiOutlineCalendarDays, HiOutlineCreditCard } from "react-icons/hi2";
 import Account from "../User/Account";
 import requests from "../../Requests";
 import Button from "../../widgets/button/Button";
 import ImageViewer from "../../utils/ImageViewer";
+import LocationPointer from "../../utils/LocationPointer";
 
 const BookingPage = () => {
   const [bookings, setBookings] = useState();
@@ -53,17 +54,10 @@ const BookingPage = () => {
                   : null}
                 <div>
                   <h2 className="mt-4 text-xl">{items.placeid.title}</h2>
-                  <div className="flex">
-                    <HiOutlineLocationMarker className="h-5 w-5" />
-                    <a
-                      className="text-sm underline"
-                      target="_blank"
-                      rel="noreferrer"
-                      href={`https://maps.google.com/?q=${items.placeid.address}`}
-                    >
-                      {items.placeid.address}
-                    </a>
-                  </div>
+                  <LocationPointer
+                    styling={"text-sm underline"}
+                    location={items.placeid.address}
+                  />
                   <div className="h-px w-400 my-2 bg-gray-300" />
 
                   <div className="text-sm gap-2 flex text-gray-700">

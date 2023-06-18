@@ -5,6 +5,7 @@ import { GiFireplace, GiButterflyFlower } from "react-icons/gi";
 import { TbAirConditioning } from "react-icons/tb";
 import { BiCctv } from "react-icons/bi";
 import { RiFridgeLine } from "react-icons/ri";
+import Input from "../../widgets/input/Input";
 
 const Features = ({ setFeatures, features }) => {
   const handleChange = (event) => {
@@ -17,9 +18,10 @@ const Features = ({ setFeatures, features }) => {
   return (
     <div className="grid grid-cols-2 gap-2 md:grid-cols-3 lg:grid-cols-4">
       <label className="mb-1 border p-4 flex rounded-2xl cursor-pointer gap-2 items-center">
-        <input
+        <Input
           name="wifi"
           type="checkbox"
+          className="w-fit"
           checked={features.includes("wifi")}
           onChange={handleChange}
         />
@@ -28,9 +30,10 @@ const Features = ({ setFeatures, features }) => {
         <span>Wifi</span>
       </label>
       <label className="mb-1 border p-4 flex rounded-2xl cursor-pointer gap-2 items-center">
-        <input
+        <Input
           name="electricity"
           type="checkbox"
+          className="w-fit"
           checked={features.includes("electricity")}
           onChange={handleChange}
         />
@@ -39,9 +42,10 @@ const Features = ({ setFeatures, features }) => {
         <span>Electricity</span>
       </label>
       <label className="mb-1 border p-4 flex rounded-2xl gap-2 cursor-pointer items-center">
-        <input
+        <Input
           name="shower"
           type="checkbox"
+          className="w-fit"
           checked={features.includes("shower")}
           onChange={handleChange}
         />
@@ -50,9 +54,10 @@ const Features = ({ setFeatures, features }) => {
         <span>Shower</span>
       </label>
       <label className="mb-1 border p-4 flex rounded-2xl gap-2 cursor-pointer items-center">
-        <input
+        <Input
           name="mountain View"
           type="checkbox"
+          className="w-fit"
           checked={features.includes("mountain View")}
           onChange={handleChange}
         />
@@ -61,9 +66,10 @@ const Features = ({ setFeatures, features }) => {
         <span>Mountain view</span>
       </label>
       <label className="mb-1 border p-4 flex rounded-2xl gap-2 cursor-pointer items-center">
-        <input
+        <Input
           name="tv"
           type="checkbox"
+          className="w-fit"
           checked={features.includes("tv")}
           onChange={handleChange}
         />
@@ -72,9 +78,10 @@ const Features = ({ setFeatures, features }) => {
         <span>Tv</span>
       </label>
       <label className="border mb-1 p-4 flex rounded-2xl gap-2 items-center cursor-pointer">
-        <input
+        <Input
           name="indoor fireplace: gas"
           type="checkbox"
+          className="w-fit"
           checked={features.includes("indoor fireplace: gas")}
           onChange={handleChange}
         />
@@ -83,9 +90,10 @@ const Features = ({ setFeatures, features }) => {
         <span>Indoor fireplace: gas</span>
       </label>
       <label className="border p-4 flex rounded-2xl gap-2 items-center cursor-pointer">
-        <input
+        <Input
           name="gardenView"
           type="checkbox"
+          className="w-fit"
           checked={features.includes("gardenView")}
           onChange={handleChange}
         />
@@ -94,9 +102,10 @@ const Features = ({ setFeatures, features }) => {
         <span>Garden View</span>
       </label>
       <label className="border p-4 flex rounded-2xl gap-2 items-center cursor-pointer">
-        <input
+        <Input
           name="lakeView"
           type="checkbox"
+          className="w-fit"
           checked={features.includes("lakeView")}
           onChange={handleChange}
         />
@@ -114,9 +123,10 @@ const Features = ({ setFeatures, features }) => {
         <span>Lake View</span>
       </label>
       <label className="border p-4 flex rounded-2xl gap-2 items-center cursor-pointer">
-        <input
+        <Input
           name="ac"
           type="checkbox"
+          className="w-fit"
           checked={features.includes("ac")}
           onChange={handleChange}
         />
@@ -125,9 +135,10 @@ const Features = ({ setFeatures, features }) => {
         <span>AC - Split-type ductless system</span>
       </label>
       <label className="border p-4 flex rounded-2xl gap-2 items-center cursor-pointer">
-        <input
+        <Input
           name="CCTV"
           type="checkbox"
+          className="w-fit"
           checked={features.includes("CCTV")}
           onChange={handleChange}
         />
@@ -136,9 +147,10 @@ const Features = ({ setFeatures, features }) => {
         <span>Security Camera</span>
       </label>
       <label className="border p-4 flex rounded-2xl gap-2 items-center cursor-pointer">
-        <input
+        <Input
           name="fireExtinguisher"
           type="checkbox"
+          className="w-fit"
           checked={features.includes("fireExtinguisher")}
           onChange={handleChange}
         />
@@ -147,9 +159,10 @@ const Features = ({ setFeatures, features }) => {
         <span>Fire extinguisher</span>
       </label>
       <label className="border p-4 flex rounded-2xl gap-2 items-center cursor-pointer">
-        <input
+        <Input
           name="Refrigerator"
           type="checkbox"
+          className="w-fit"
           checked={features.includes("Refrigerator")}
           onChange={handleChange}
         />
@@ -158,9 +171,10 @@ const Features = ({ setFeatures, features }) => {
         <span>Refrigerator</span>
       </label>
       <label className="border p-4 flex rounded-2xl gap-2 items-center cursor-pointer">
-        <input
+        <Input
           name="outdoorDiningArea"
           type="checkbox"
+          className="w-fit"
           checked={features.includes("outdoorDiningArea")}
           onChange={handleChange}
         />
@@ -177,9 +191,10 @@ const Features = ({ setFeatures, features }) => {
         <span>Outdoor dining area</span>
       </label>
       <label className="border p-4 flex rounded-2xl gap-2 items-center cursor-pointer">
-        <input
+        <Input
           name="selfCheckIn"
           type="checkbox"
+          className="w-fit"
           checked={features.includes("selfCheckIn")}
           onChange={handleChange}
         />
