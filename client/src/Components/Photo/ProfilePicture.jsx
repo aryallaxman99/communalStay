@@ -35,7 +35,7 @@ const ProfilePicture = ({ profilePicture }) => {
       <div>
         <div
           onClick={() => {
-            setToggleMenu(true);
+            setToggleMenu(!toggleMenu);
           }}
         >
           {profilePicture ? (

@@ -65,7 +65,7 @@ export const PhotoUploader = (props) => {
       .put(requests.userProfile, { profilePicture })
       .then((res) => {
         if (res.data) {
-          toast[res.data.type](res.data.msg);
+          toast.success("Image Uploaded");
           props.setImageUploader(false);
         }
       })

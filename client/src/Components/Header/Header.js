@@ -52,7 +52,7 @@ const Header = () => {
             </Button>
           </div>
 
-          <div className="relative" onClick={() => setShowMenu(true)}>
+          <div className="relative" onClick={() => setShowMenu(!showMenu)}>
             <div className="flex item-center gap-2 border border-gray-300 rounded-full py-2 px-4">
               <HiOutlineBars3 className="w-6 h-6" />
               {profilePicture ? (
@@ -67,7 +67,7 @@ const Header = () => {
             </div>
             {showMenu ? (
               firstName ? (
-                <div className="right-0  mt-2 rounded-md shadow lg:absolute">
+                <div className="right-0 fixed mt-2 rounded-md shadow lg:absolute">
                   <ul className="space-y-2 lg:w-48 bg-white rounded-md">
                     <li>
                       <a

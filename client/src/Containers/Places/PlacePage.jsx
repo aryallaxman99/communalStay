@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Skeleton } from "@mui/material";
-import { BsGrid1X2Fill } from "react-icons/bs";
+import { ImImages } from "react-icons/im";
 import { TiArrowBackOutline } from "react-icons/ti";
 
 import requests from "../../Requests";
@@ -128,7 +128,7 @@ const PlacePage = () => {
             onClick={() => setAllPhotos(true)}
             className="flex gap-2 absolute bottom-2 right-2 bg-white text-gray-700 w-fit px-4"
           >
-            <BsGrid1X2Fill className="h-6 w-6 text-gray-700" />
+            <ImImages className="h-6 w-6 text-gray-700" />
 
             <span className="font-semibold">Show all Photos </span>
           </Button>
