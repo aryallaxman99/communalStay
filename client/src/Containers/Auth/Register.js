@@ -66,7 +66,7 @@ const Register = () => {
       <div className="w-full max-w-md">
         <div className="text-center space-y-1">
           <h2 className="text-center mb-4">Sign Up</h2>
-          <h4 className="text-center mb-4">Welcome to CommunialStay</h4>
+          <h4 className="text-center mb-4">Welcome to CommunalStay</h4>
         </div>
 
         <form
