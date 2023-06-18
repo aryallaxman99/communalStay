@@ -4,14 +4,17 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
 import requests from "../../Requests";
 import Input from "../../widgets/input/Input";
 import Button from "../../widgets/button/Button";
 import { useState } from "react";
 import FormError from "../../Components/formError/FormError";
+import ShowAndHidePassword from "../../widgets/showAndHidePassword/ShowAndHidePassword";
 
 const Register = () => {
   const [loading, setLoading] = useState(false);
+
   const passwordRule = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
   const phoneRegExp =
     /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
@@ -129,13 +132,11 @@ const Register = () => {
             </div>
 
             <div>
-              <Input
-                id="password"
-                type="password"
-                placeholder="Password"
-                value={values.password}
-                onChange={handleChange}
-                onBlur={handleBlur}
+              <ShowAndHidePassword
+                placeholder={"Password"}
+                field={values.password}
+                handleChange={handleChange}
+                handleBlur={handleBlur}
               />
               <FormError message={errors.password} touched={touched.password} />
             </div>

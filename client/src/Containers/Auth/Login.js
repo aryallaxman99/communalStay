@@ -12,6 +12,7 @@ import Button from "../../widgets/button/Button";
 import requests from "../../Requests";
 import { setUserDetails } from "../../reducers/userSlice";
 import FormError from "../../Components/formError/FormError";
+import ShowAndHidePassword from "../../widgets/showAndHidePassword/ShowAndHidePassword";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -80,15 +81,12 @@ const Login = () => {
               <FormError message={errors.email} touched={touched.email} />
             </div>
 
-            <div className="w-full">
-              <Input
-                id="password"
-                type="password"
-                placeholder="Password"
-                className="w-full"
-                value={values.password}
-                onChange={handleChange}
-                onBlur={handleBlur}
+            <div>
+              <ShowAndHidePassword
+                placeholder={"Password"}
+                field={values.password}
+                handleChange={handleChange}
+                handleBlur={handleBlur}
               />
               <FormError message={errors.password} touched={touched.password} />
             </div>
