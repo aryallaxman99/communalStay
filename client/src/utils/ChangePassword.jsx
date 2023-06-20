@@ -1,15 +1,32 @@
-import React from "react";
-import Button from "../widgets/button/Button";
-import ShowAndHidePassword from "../widgets/showAndHidePassword/ShowAndHidePassword";
+import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import axios from "axios";
+import { toast } from "react-toastify";
+
+import ShowAndHidePassword from "../widgets/showAndHidePassword/ShowAndHidePassword";
 import FormError from "../Components/formError/FormError";
+import Button from "../widgets/button/Button";
+import requests from "../Requests";
 
 const ChangePassword = () => {
+  const [loading, setLoading] = useState(false);
   const passwordRule = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
 
-  const onSubmit = () => {
-    console.log(values);
+  const onSubmit = (values, actions) => {
+    if (loading) {
+      return;
+    }
+    setLoading(true);
+    axios
+      .put(requests.changePassword, values)
+      .then((res) => {
+        toast[res.data.type](res.data.msg);
+        actions.resetForm();
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   const passwordSchema = Yup.object().shape({

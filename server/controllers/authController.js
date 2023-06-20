@@ -164,6 +164,78 @@ export const updateProfile = async (req, res) => {
   }
 };
 
+export const changePassword = async (req, res) => {
+  try {
+    if (req.cookies.accessToken) {
+      const { id } = await jwtHelper.verifyAccessToken(req.cookies.accessToken);
+      if (id) {
+        const userDetails = await user.findById(id);
+        if (userDetails) {
+          const { currentPassword, newPassword } = req.body;
+          const isValidPassword = bcrypt.compareSync(
+            currentPassword,
+            userDetails.password
+          );
+          if (isValidPassword) {
+            const salt = bcrypt.genSaltSync(10);
+            const password = bcrypt.hashSync(newPassword, salt);
+            const response = await user.findByIdAndUpdate(
+              id,
+              {
+                password,
+              },
+              { new: true }
+            );
+            if (response) {
+              res.json({
+                msg: "Password updated",
+                type: "success",
+                status: true,
+              });
+            } else {
+              res.json({
+                msg: "Something went wrong",
+                type: "error",
+                status: false,
+              });
+            }
+          } else {
+            res.json({
+              msg: "Current password didn't matched",
+              type: "error",
+              status: false,
+            });
+          }
+        } else {
+          res.json({
+            msg: "Something went wrong",
+            type: "error",
+            status: false,
+          });
+        }
+      } else {
+        res.json({
+          msg: "Something went wrong",
+          type: "error",
+          status: false,
+        });
+      }
+    } else {
+      res.json({
+        msg: "Something went wrong",
+        type: "error",
+        status: false,
+      });
+    }
+  } catch (error) {
+    res.json({
+      msg: "Something went wrong",
+      type: "error",
+      status: false,
+    });
+  }
+};
+
 export const userInfo = async (req, res) => {
   try {
     if (req.cookies.accessToken) {

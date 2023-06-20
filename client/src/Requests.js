@@ -6,6 +6,7 @@ const requests = {
   userLogout: `${baseURL}auth/logout`,
   verifyToken: `${baseURL}auth/verify`,
   userProfile: `${baseURL}auth/profile`,
+  changePassword: `${baseURL}auth/changePassword`,
   photoUploadViaLink: `${baseURL}uploads/upload-via-link`,
   photoUpload: `${baseURL}uploads/`,
   places: `${baseURL}places/`,

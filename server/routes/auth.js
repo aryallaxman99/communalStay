@@ -1,5 +1,6 @@
 import express from "express";
 import {
+  changePassword,
   cookieVerification,
   logout,
   updateProfile,
@@ -19,6 +20,8 @@ router.get("/verify", cookieVerification);
 router.get("/profile", userInfo);
 
 router.put("/profile", updateProfile);
+
+router.put("/changePassword", changePassword);
 
 router.delete("/logout", logout);
 
