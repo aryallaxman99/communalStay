@@ -12,6 +12,7 @@ import {
   HiOutlinePencilSquare,
 } from "react-icons/hi2";
 import { FiLogIn, FiLogOut } from "react-icons/fi";
+import { RxUpdate } from "react-icons/rx";
 
 import Button from "../../widgets/button/Button";
 import { resetUserDetails } from "../../reducers/userSlice";
@@ -93,10 +94,19 @@ const Header = () => {
                         className="flex gap-2 p-2 rounded-md  hover:bg-gray-100"
                       >
                         <HiOutlineBuildingOffice2 className="h-6 w-6" />
-                        My properties
+                        My Properties
                       </a>
                     </li>
                     <hr />
+                    <li>
+                      <a
+                        href="/account/password"
+                        className="flex gap-2 p-2 rounded-md  hover:bg-gray-100"
+                      >
+                        <RxUpdate className="h-6 w-6" />
+                        Change Password
+                      </a>
+                    </li>
                     <li>
                       <a
                         onClick={logout}

@@ -4,19 +4,22 @@ import Button from "../button/Button";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const ShowAndHidePassword = ({
+  id,
   placeholder,
   field,
   handleChange,
   handleBlur,
+  autoComplete,
 }) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   return (
     <div className="relative">
       <Input
-        id="password"
+        id={id ? id : "password"}
         type={isPasswordVisible ? "text" : "password"}
         placeholder={placeholder}
+        autoComplete={autoComplete ? autoComplete : ""}
         className="w-full"
         value={field}
         onChange={handleChange}
