@@ -3,6 +3,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 
 import ShowAndHidePassword from "../widgets/showAndHidePassword/ShowAndHidePassword";
 import FormError from "../Components/formError/FormError";
@@ -53,41 +54,44 @@ const ChangePassword = () => {
     <div>
       <div className="flex flex-col items-center justify-center py-8">
         <h3>Change Password</h3>
+        <div className="mt-4 border dark:border-gray rounded-lg w-full sm:max-w-sm sm:p-8 space-y-5">
+          <form onSubmit={handleSubmit} className="space-y-4 md:space-y-5">
+            <ShowAndHidePassword
+              id="currentPassword"
+              placeholder="Current Password"
+              autoComplete="current-password"
+              field={values.currentPassword}
+              handleChange={handleChange}
+              handleBlur={handleBlur}
+            />
+            <FormError
+              message={errors.currentPassword}
+              touched={touched.currentPassword}
+            />
 
-        <form
-          onSubmit={handleSubmit}
-          className="w-full sm:max-w-sm sm:p-8 space-y-5"
-        >
-          <ShowAndHidePassword
-            id="currentPassword"
-            placeholder="Current Password"
-            autoComplete="current-password"
-            field={values.currentPassword}
-            handleChange={handleChange}
-            handleBlur={handleBlur}
-          />
-          <FormError
-            message={errors.currentPassword}
-            touched={touched.currentPassword}
-          />
+            <ShowAndHidePassword
+              id="newPassword"
+              placeholder="New Password"
+              autoComplete="new-password"
+              field={values.newPassword}
+              handleChange={handleChange}
+              handleBlur={handleBlur}
+            />
+            <FormError
+              message={errors.newPassword}
+              touched={touched.newPassword}
+            />
 
-          <ShowAndHidePassword
-            id="newPassword"
-            placeholder="New Password"
-            autoComplete="new-password"
-            field={values.newPassword}
-            handleChange={handleChange}
-            handleBlur={handleBlur}
-          />
-          <FormError
-            message={errors.newPassword}
-            touched={touched.newPassword}
-          />
-
-          <Button type="submit" className="bg-secondary">
-            Update Password
-          </Button>
-        </form>
+            <Button type="submit" className="bg-secondary">
+              Update Password
+            </Button>
+          </form>
+        </div>
+        <div className="mt-4">
+          <Link to={"/resetPassword"} className="font-medium text-blue-600">
+            Forgot password?
+          </Link>
+        </div>
       </div>
     </div>
   );
