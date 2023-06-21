@@ -34,6 +34,9 @@ const Login = () => {
           navigate("/");
         }
       })
+      .catch((error) => {
+        toast[error.response.data.type](error.response.data.msg);
+      })
       .finally(() => {
         setLoading(false);
       });

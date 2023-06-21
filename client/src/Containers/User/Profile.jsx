@@ -14,6 +14,7 @@ import ProfilePicture from "../../Components/Photo/ProfilePicture";
 const Profile = () => {
   const dispatch = useDispatch();
 
+  const [loading, setLoading] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [bio, setBio] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -26,6 +27,10 @@ const Profile = () => {
 
   const saveProfile = () => {
     setIsEditing(false);
+    if (loading) {
+      return;
+    }
+    setLoading(true);
     if (cookie.accessToken) {
       const data = {
         bio,
@@ -35,12 +40,22 @@ const Profile = () => {
         phoneNumber,
         socialMediaAccountLink,
       };
-      axios.put(requests.userProfile, data).then((res) => {
-        if (res.data) {
-          dispatch(setUserDetails(res.data.userName, res.data.profilePicture));
-          toast[res.data.type](res.data.msg);
-        }
-      });
+      axios
+        .put(requests.userProfile, data)
+        .then((res) => {
+          if (res.data) {
+            dispatch(
+              setUserDetails(res.data.userName, res.data.profilePicture)
+            );
+            toast[res.data.type](res.data.msg);
+          }
+        })
+        .catch((error) => {
+          toast[error.response.data.type](error.response.data.msg);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
     }
   };
 

@@ -27,10 +27,15 @@ const Header = () => {
 
   const logout = () => {
     dispatch(resetUserDetails());
-    axios.delete(requests.userLogout).then((res) => {
-      toast[res.data.type](res.data.msg);
-    });
-    navigate("/");
+    axios
+      .delete(requests.userLogout)
+      .then((res) => {
+        toast[res.data.type](res.data.msg);
+        navigate("/");
+      })
+      .catch((error) => {
+        toast[error.response.data.type](error.response.data.msg);
+      });
   };
 
   return (

@@ -24,6 +24,9 @@ const ChangePassword = () => {
         toast[res.data.type](res.data.msg);
         actions.resetForm();
       })
+      .catch((error) => {
+        toast[error.response.data.type](error.response.data.msg);
+      })
       .finally(() => {
         setLoading(false);
       });
