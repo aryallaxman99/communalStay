@@ -1,7 +1,12 @@
 import express from "express";
-import { verifyAndSendOtpCode } from "../controllers/otpController.js";
+import {
+  verifyEmailAndSendOtpCode,
+  verifyOTP,
+} from "../controllers/otpController.js";
 const router = express.Router();
 
-router.post("/identify", verifyAndSendOtpCode);
+router.post("/identify", verifyEmailAndSendOtpCode);
+
+router.post("/verifyOtp", verifyOTP);
 
 export default router;

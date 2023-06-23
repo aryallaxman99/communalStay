@@ -1,10 +1,17 @@
 import otpGenerator from "otp-generator";
 import user from "../models/UserModel.js";
 import otp from "../models/OtpModel.js";
-import { ForbiddenError, HttpError } from "../helpers/errorHandling.js";
+import {
+  ConflictError,
+  ForbiddenError,
+  HttpError,
+  NotFoundError,
+  UnauthorizedError,
+} from "../helpers/errorHandling.js";
 import axios from "axios";
+import jwtHelper from "../helpers/jwtHelper.js";
 
-export const verifyAndSendOtpCode = async (req, res, next) => {
+export const verifyEmailAndSendOtpCode = async (req, res, next) => {
   try {
     const isEmailExists = await user.findOne({ email: req.body.email });
     if (!isEmailExists) throw new HttpError("Email not found", 406);
@@ -48,15 +55,37 @@ export const verifyAndSendOtpCode = async (req, res, next) => {
           { new: true }
         );
         if (!response) throw new HttpError("Something went wrong", 500);
-
+        const otpToken = await jwtHelper.signAccessToken(isEmailExists._id);
         const lastDigitOfPhoneNumber = phoneNumber / 1000 + "";
-        res.json({
+        res.cookie("otp", otpToken).json({
           msg: `Otp sended to ***${lastDigitOfPhoneNumber.split(".")[1]}`,
           type: "success",
           status: true,
         });
       }
     }
+  } catch (error) {
+    res.status(error.statusCode).json({
+      msg: error.message,
+      type: "error",
+      status: false,
+    });
+  }
+};
+
+export const verifyOTP = async (req, res) => {
+  try {
+    if (!req.cookies.otp)
+      throw new UnauthorizedError("Something went wrong. Try later");
+    const { email } = await jwtHelper.verifyAccessToken(req.cookies.otp);
+    const { otpCode } = await otp.findOne({ userId: email });
+    if (!otpCode) throw new ForbiddenError("Something went wrong");
+    if (otpCode !== req.body.otpCode)
+      throw new ConflictError("OTP doesn't matched");
+    res.json({
+      type: "sucess",
+      status: true,
+    });
   } catch (error) {
     res.status(error.statusCode).json({
       msg: error.message,
