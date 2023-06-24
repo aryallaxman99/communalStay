@@ -13,6 +13,7 @@ import PlacesForm from "./Containers/Places/PlacesForm";
 import PlacePage from "./Containers/Places/PlacePage";
 import BookingPage from "./Containers/Places/BookingPage";
 import ChangePassword from "./utils/ChangePassword";
+import OTP from "./Containers/ResetPassword/OTP";
 
 const App = () => {
   return (
@@ -23,6 +24,8 @@ const App = () => {
           <Route index element={<IndexPage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          {/* <Route path = "/resetPassword" element={} /> */}
+          <Route path="/resetPassword/otp" element={<OTP />} />
           <Route path="/account" element={<UserDashboard />} />
           <Route path="/account/password" element={<ChangePassword />} />
           <Route path="/account/places" element={<Places />} />
@@ -32,7 +35,7 @@ const App = () => {
           <Route path="/account/bookings" element={<BookingPage />} />
         </Route>
       </Routes>
-      <ToastContainer position="top-center" />
+      <ToastContainer position="top-center" autoClose={2000} />
     </UserContextProvider>
   );
 };

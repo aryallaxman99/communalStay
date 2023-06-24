@@ -1,14 +1,13 @@
 import otpGenerator from "otp-generator";
+import axios from "axios";
 import user from "../models/UserModel.js";
 import otp from "../models/OtpModel.js";
 import {
   ConflictError,
   ForbiddenError,
   HttpError,
-  NotFoundError,
   UnauthorizedError,
 } from "../helpers/errorHandling.js";
-import axios from "axios";
 import jwtHelper from "../helpers/jwtHelper.js";
 
 export const verifyEmailAndSendOtpCode = async (req, res, next) => {
@@ -76,16 +75,34 @@ export const verifyEmailAndSendOtpCode = async (req, res, next) => {
 export const verifyOTP = async (req, res) => {
   try {
     if (!req.cookies.otp)
-      throw new UnauthorizedError("Something went wrong. Try later");
+      throw new UnauthorizedError("Token is invalid or user doesn't exist");
     const { email } = await jwtHelper.verifyAccessToken(req.cookies.otp);
     const { otpCode } = await otp.findOne({ userId: email });
     if (!otpCode) throw new ForbiddenError("Something went wrong");
     if (otpCode !== req.body.otpCode)
       throw new ConflictError("OTP doesn't matched");
     res.json({
-      type: "sucess",
+      type: "success",
       status: true,
     });
+  } catch (error) {
+    res.status(error.statusCode).json({
+      msg: error.message,
+      type: "error",
+      status: false,
+    });
+  }
+};
+
+export const verifyOTPTokenAndResetPassword = async (req, res) => {
+  try {
+    if (!req.cookies.otp)
+      throw new UnauthorizedError("Token is invalid or user doesn't exist");
+    const { email } = await jwtHelper.verifyAccessToken(req.cookies.otp);
+    const { otpCode } = await otp.findOne({ userId: email });
+    if (!otpCode) throw new ForbiddenError("Something went wrong");
+    if (otpCode !== req.body.otpCode)
+      throw new ConflictError("OTP doesn't matched");
   } catch (error) {
     res.status(error.statusCode).json({
       msg: error.message,

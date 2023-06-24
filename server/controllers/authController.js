@@ -183,7 +183,7 @@ export const logout = (req, res) => {
     const { accessToken, refreshToken } = req.cookies;
     if (!accessToken && !refreshToken)
       throw new ForbiddenError("Something went wrong");
-    res.cookie("accessToken", "").cookie("refreshToken", "").json({
+    res.clearCookie("accessToken").clearCookie("refreshToken").json({
       msg: "User logged out",
       type: "success",
       status: true,
