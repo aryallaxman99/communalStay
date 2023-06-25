@@ -101,10 +101,7 @@ const Login = () => {
         </form>
 
         <p className="text-center mt-5" text-gray-500>
-          <Link
-            to={"/login/identify"}
-            className="text-blue-600 hover:underline"
-          >
+          <Link to={"/identify"} className="text-blue-600 hover:underline">
             Forgot password?
           </Link>
           <div class="inline-flex items-center justify-center w-full">

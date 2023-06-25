@@ -14,6 +14,7 @@ import PlacePage from "./Containers/Places/PlacePage";
 import BookingPage from "./Containers/Places/BookingPage";
 import ChangePassword from "./utils/ChangePassword";
 import OTP from "./Containers/ResetPassword/OTP";
+import EmailIdentification from "./Containers/ResetPassword/EmailIdentification";
 
 const App = () => {
   return (
@@ -24,8 +25,8 @@ const App = () => {
           <Route index element={<IndexPage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          {/* <Route path = "/resetPassword" element={} /> */}
-          <Route path="/resetPassword/otp" element={<OTP />} />
+          <Route path="identify" element={<EmailIdentification />} />
+          <Route path="/identify/otp" element={<OTP />} />
           <Route path="/account" element={<UserDashboard />} />
           <Route path="/account/password" element={<ChangePassword />} />
           <Route path="/account/places" element={<Places />} />

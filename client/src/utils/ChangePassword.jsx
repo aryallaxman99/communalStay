@@ -88,7 +88,7 @@ const ChangePassword = () => {
           </form>
         </div>
         <div className="mt-4">
-          <Link to={"/resetPassword"} className="font-medium text-blue-600">
+          <Link to={"/identify/otp"} className="font-medium text-blue-600">
             Forgot password?
           </Link>
         </div>

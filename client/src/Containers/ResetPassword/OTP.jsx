@@ -56,7 +56,14 @@ const OTP = () => {
               onChange={setOtp}
               numInputs={6}
               shouldAutoFocus={true}
-              inputStyle="border-2 border-gray-200 rounded-md p-4"
+              inputStyle={{
+                border: "1px solid",
+                borderRadius: "8px",
+                width: "40px",
+                height: "40px",
+                fontSize: "20px",
+                borderColor: "gray",
+              }}
               renderSeparator={<span className="w-5" />}
               renderInput={(props) => <input {...props} />}
             />
