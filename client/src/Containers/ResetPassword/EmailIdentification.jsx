@@ -1,14 +1,40 @@
-import React from "react";
+import React, { useState } from "react";
 import { MdOutlineMail } from "react-icons/md";
 import Input from "../../widgets/input/Input";
 import Button from "../../widgets/button/Button";
 import FormError from "../../Components/formError/FormError";
 import * as Yup from "yup";
 import { useFormik } from "formik";
+import axios from "axios";
+import { toast } from "react-toastify";
+import requests from "../../Requests";
+import { useNavigate } from "react-router-dom";
 
 const EmailIdentification = () => {
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
   const submitEmail = async (values) => {
-    console.log(values);
+    if (loading) {
+      return;
+    }
+    setLoading(true);
+    await axios
+      .post(requests.verifyEmail, values)
+      .then((res) => {
+        if (res.data.status) {
+          toast[res.data.type](res.data.msg);
+          navigate("/identify/otp");
+        }
+      })
+      .catch((error) => {
+        if (!error.response.data.status) {
+          toast[error.response.data.type](error.response.data.msg);
+        }
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   const emailSchema = Yup.object().shape({

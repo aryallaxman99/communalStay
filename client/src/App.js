@@ -27,6 +27,7 @@ const App = () => {
           <Route path="/register" element={<Register />} />
           <Route path="identify" element={<EmailIdentification />} />
           <Route path="/identify/otp" element={<OTP />} />
+          <Route path="/resetPassword" element={<ChangePassword />} />
           <Route path="/account" element={<UserDashboard />} />
           <Route path="/account/password" element={<ChangePassword />} />
           <Route path="/account/places" element={<Places />} />

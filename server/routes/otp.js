@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.post("/identify", verifyEmailAndSendOtpCode);
 
-router.post("/verifyOtp", verifyOTP);
+router.post("/verifyOTP", verifyOTP);
 
 router.put("/resetPassword", verifyOTPTokenAndResetPassword);
 

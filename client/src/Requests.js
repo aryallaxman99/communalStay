@@ -16,6 +16,8 @@ const requests = {
   updatePlaces: `${baseURL}places/update`,
   reserve: `${baseURL}reservation`,
   cancelReservation: `${baseURL}reservation?id=`,
+  verifyEmail: `${baseURL}otp/identify`,
+  verifyOTP: `${baseURL}otp/verifyOTP`,
 };
 
 export default requests;

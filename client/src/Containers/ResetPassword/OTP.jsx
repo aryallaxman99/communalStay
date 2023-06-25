@@ -1,11 +1,18 @@
 import React, { useEffect, useRef, useState } from "react";
 import OtpInput from "react-otp-input";
 import Button from "../../widgets/button/Button";
+import axios from "axios";
+import requests from "../../Requests";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const OTP = () => {
   const Ref = useRef(null);
+  const navigate = useNavigate();
+
   const [otp, setOtp] = useState(null);
   const [timer, setTimer] = useState("00:00");
+  const [loading, setLoading] = useState(false);
 
   const startCountdown = (time) => {
     setTimer("00:30");
@@ -32,11 +39,35 @@ const OTP = () => {
   };
 
   const resendOTP = () => {
-    startCountdown(getDeadTime());
+    if (loading) {
+      return;
+    }
+    setLoading(true);
+    if (loading) {
+      startCountdown(getDeadTime());
+    }
   };
 
   const verifyOTP = () => {
-    console.log({ otp });
+    if (loading) {
+      return;
+    }
+    setLoading(true);
+    axios
+      .post(requests.verifyOTP, { otp })
+      .then((res) => {
+        if (res.data.status) {
+          navigate("/resetPassword");
+        }
+      })
+      .catch((error) => {
+        if (!error.response.data.status) {
+          toast[error.response.data.type](error.response.data.msg);
+        }
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   useEffect(() => {
