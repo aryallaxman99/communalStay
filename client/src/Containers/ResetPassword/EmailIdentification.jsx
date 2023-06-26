@@ -24,7 +24,7 @@ const EmailIdentification = () => {
       .then((res) => {
         if (res.data.status) {
           toast[res.data.type](res.data.msg);
-          navigate("/identify/otp");
+          navigate("/identify/otp", { state: { email: values.email } });
         }
       })
       .catch((error) => {

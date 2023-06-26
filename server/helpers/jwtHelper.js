@@ -70,9 +70,44 @@ const verifyRefreshToken = (token) => {
   });
 };
 
+const signOTPToken = (id) => {
+  return new Promise((resolve, reject) => {
+    const payload = {
+      id: id,
+    };
+    const secret = process.env.OTP_TOKEN_SECRET;
+    const options = {
+      expiresIn: "5m",
+      issuer: "local",
+    };
+
+    Jwt.sign(payload, secret, options, (err, token) => {
+      if (err !== null) {
+        reject(err);
+      } else {
+        resolve(token);
+      }
+    });
+  });
+};
+
+const verifyOTPToken = (token) => {
+  return new Promise((resolve, reject) => {
+    Jwt.verify(token, process.env.OTP_TOKEN_SECRET, (err, decoded) => {
+      if (err !== null) {
+        reject(err);
+      } else {
+        resolve(decoded);
+      }
+    });
+  });
+};
+
 export default {
   signAccessToken,
   verifyAccessToken,
   signRefreshToken,
   verifyRefreshToken,
+  signOTPToken,
+  verifyOTPToken,
 };

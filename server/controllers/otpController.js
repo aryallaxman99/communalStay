@@ -32,8 +32,8 @@ export const verifyOTP = async (req, res) => {
   try {
     if (!req.cookies.otp)
       throw new UnauthorizedError("Token is invalid or user doesn't exist");
-    const { email } = await jwtHelper.verifyAccessToken(req.cookies.otp);
-    const { otpCode } = await otp.findOne({ userId: email });
+    const { id } = await jwtHelper.verifyOTPToken(req.cookies.otp);
+    const { otpCode } = await otp.findOne({ userId: id });
     if (!otpCode) throw new ForbiddenError("Something went wrong");
     if (otpCode !== parseInt(req.body.otp))
       throw new ConflictError("OTP doesn't matched");

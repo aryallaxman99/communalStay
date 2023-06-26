@@ -46,15 +46,15 @@ export const sendOTP = (isEmailExists, req, res) => {
         { new: true }
       );
       if (!response) reject(new HttpError("Something went wrong", 500));
-      const otpToken = await jwtHelper.signAccessToken(isEmailExists._id);
-      const lastDigitOfPhoneNumber = phoneNumber / 1000 + "";
-      resolve({
-        otp: otpToken,
-        msg: `Otp sended to ***${lastDigitOfPhoneNumber.split(".")[1]}`,
-        type: "success",
-        status: true,
-      });
-      //   }
     }
+    const otpToken = await jwtHelper.signOTPToken(isEmailExists._id);
+    const lastDigitOfPhoneNumber = phoneNumber / 1000 + "";
+    resolve({
+      otp: otpToken,
+      msg: `Otp sended to ***${lastDigitOfPhoneNumber.split(".")[1]}`,
+      type: "success",
+      status: true,
+    });
+    //   }
   });
 };

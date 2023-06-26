@@ -4,12 +4,12 @@ import Button from "../../widgets/button/Button";
 import axios from "axios";
 import requests from "../../Requests";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const OTP = () => {
   const Ref = useRef(null);
   const navigate = useNavigate();
-
+  const { state } = useLocation();
   const [otp, setOtp] = useState(null);
   const [timer, setTimer] = useState("00:00");
   const [loading, setLoading] = useState(false);
@@ -38,26 +38,17 @@ const OTP = () => {
     return deadline;
   };
 
-  const resendOTP = () => {
+  const resendOTP = async () => {
+    startCountdown(getDeadTime());
     if (loading) {
       return;
     }
     setLoading(true);
-    if (loading) {
-      startCountdown(getDeadTime());
-    }
-  };
-
-  const verifyOTP = () => {
-    if (loading) {
-      return;
-    }
-    setLoading(true);
-    axios
-      .post(requests.verifyOTP, { otp })
+    await axios
+      .post(requests.verifyEmail, state)
       .then((res) => {
         if (res.data.status) {
-          navigate("/resetPassword");
+          toast[res.data.type](res.data.msg);
         }
       })
       .catch((error) => {
@@ -68,6 +59,32 @@ const OTP = () => {
       .finally(() => {
         setLoading(false);
       });
+  };
+
+  const verifyOTP = () => {
+    if (otp.length === 6) {
+      if (loading) {
+        return;
+      }
+      setLoading(true);
+      axios
+        .post(requests.verifyOTP, { otp })
+        .then((res) => {
+          if (res.data.status) {
+            navigate("/resetPassword");
+          }
+        })
+        .catch((error) => {
+          if (!error.response.data.status) {
+            toast[error.response.data.type](error.response.data.msg);
+          }
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    } else {
+      toast.error("Enter an OTP");
+    }
   };
 
   useEffect(() => {
@@ -103,14 +120,14 @@ const OTP = () => {
         <div className="mt-4">
           <p className="p3">Didn't receive the code?</p>
           <div className="flex space-x-6">
-            <a
-              href="#/"
-              className="underline text-xl cursor-pointer hover:text-red-500"
+            <Button
+              className="underline text-lg cursor-pointer hover:text-red-500 bg-transparent	text-black w-auto"
               onClick={() => resendOTP()}
+              disabled={timer !== "00:00"}
             >
               Resend
-            </a>
-            <div className="text-xl text-gray-500">{timer}</div>
+            </Button>
+            <div className="text-xl mt-2 text-gray-500">{timer}</div>
           </div>
         </div>
         <Button className="bg-secondary mt-4" onClick={() => verifyOTP()}>
