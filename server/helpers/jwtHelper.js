@@ -77,7 +77,7 @@ const signOTPToken = (id) => {
     };
     const secret = process.env.OTP_TOKEN_SECRET;
     const options = {
-      expiresIn: "5m",
+      expiresIn: "60m",
       issuer: "local",
     };
 

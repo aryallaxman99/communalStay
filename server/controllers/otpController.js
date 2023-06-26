@@ -1,20 +1,14 @@
 import user from "../models/UserModel.js";
-import otp from "../models/OtpModel.js";
-import {
-  ConflictError,
-  ForbiddenError,
-  HttpError,
-  UnauthorizedError,
-} from "../helpers/errorHandling.js";
-import jwtHelper from "../helpers/jwtHelper.js";
+import { HttpError } from "../helpers/errorHandling.js";
 import { sendOTP } from "../services/sendOTP.js";
+import { verifyOTP } from "../services/verifyOTP.js";
 
 export const verifyEmailAndSendOtpCode = async (req, res) => {
   try {
     const isEmailExists = await user.findOne({ email: req.body.email });
     if (!isEmailExists) throw new HttpError("Email not found", 406);
     const { otp, msg, type, status } = await sendOTP(isEmailExists, req, res);
-    res.cookie("otp", otp).json({
+    res.cookie("otp", otp, { maxAge: 3600000 }).json({
       msg,
       type,
       status,
@@ -28,19 +22,10 @@ export const verifyEmailAndSendOtpCode = async (req, res) => {
   }
 };
 
-export const verifyOTP = async (req, res) => {
+export const verifyOTPAndSendResponse = async (req, res) => {
   try {
-    if (!req.cookies.otp)
-      throw new UnauthorizedError("Token is invalid or user doesn't exist");
-    const { id } = await jwtHelper.verifyOTPToken(req.cookies.otp);
-    const { otpCode } = await otp.findOne({ userId: id });
-    if (!otpCode) throw new ForbiddenError("Something went wrong");
-    if (otpCode !== parseInt(req.body.otp))
-      throw new ConflictError("OTP doesn't matched");
-    res.json({
-      type: "success",
-      status: true,
-    });
+    const { type, status } = await verifyOTP(req, res);
+    res.json({ type, status });
   } catch (error) {
     res.status(error.statusCode).json({
       msg: error.message,
@@ -52,13 +37,8 @@ export const verifyOTP = async (req, res) => {
 
 export const verifyOTPTokenAndResetPassword = async (req, res) => {
   try {
-    if (!req.cookies.otp)
-      throw new UnauthorizedError("Token is invalid or user doesn't exist");
-    const { email } = await jwtHelper.verifyAccessToken(req.cookies.otp);
-    const { otpCode } = await otp.findOne({ userId: email });
-    if (!otpCode) throw new ForbiddenError("Something went wrong");
-    if (otpCode !== req.body.otpCode)
-      throw new ConflictError("OTP doesn't matched");
+    const { type, status } = await verifyOTP(req, res);
+    console.log(type, status);
   } catch (error) {
     res.status(error.statusCode).json({
       msg: error.message,
