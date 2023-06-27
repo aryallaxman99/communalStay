@@ -65,7 +65,7 @@ const EmailIdentification = () => {
             id="email"
             type="email"
             placeholder="Your email address..."
-            className=" w-full p-4 pl-10 rounded-lg border"
+            className=" w-full p-4 pl-10 pr-28 rounded-lg border"
             value={values.email}
             onChange={handleChange}
             onBlur={handleBlur}

@@ -3,7 +3,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import ShowAndHidePassword from "../widgets/showAndHidePassword/ShowAndHidePassword";
 import FormError from "../Components/formError/FormError";
@@ -16,7 +16,6 @@ const ChangePassword = () => {
   const [loading, setLoading] = useState(false);
   const passwordRule = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
 
-  console.log(state);
   const submitChangePassword = (values, actions) => {
     if (loading) {
       return;
@@ -92,6 +91,29 @@ const ChangePassword = () => {
           }
     );
 
+  const sendOTP = async () => {
+    if (loading) {
+      return;
+    }
+    setLoading(true);
+    await axios
+      .get(requests.sendOTP)
+      .then((res) => {
+        if (res.data.status) {
+          toast[res.data.type](res.data.msg);
+          navigate("/identify/otp");
+        }
+      })
+      .catch((error) => {
+        if (!error.response.data.status) {
+          toast[error.response.data.type](error.response.data.msg);
+        }
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
   return (
     <div>
       <div className="flex flex-col items-center justify-center py-8">
@@ -163,9 +185,12 @@ const ChangePassword = () => {
         </div>
         {!state && (
           <div className="mt-4">
-            <Link to={"/identify/otp"} className="font-medium text-blue-600">
+            <Button
+              className="font-medium text-blue-600 bg-transparent hover:underline"
+              onClick={() => sendOTP()}
+            >
               Forgot password?
-            </Link>
+            </Button>
           </div>
         )}
       </div>

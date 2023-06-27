@@ -62,7 +62,7 @@ const OTP = () => {
   };
 
   const verifyOTP = () => {
-    if (otp.length === 6) {
+    if (otp && otp.length === 6) {
       if (loading) {
         return;
       }

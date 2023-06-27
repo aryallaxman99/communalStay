@@ -19,6 +19,7 @@ const requests = {
   verifyEmail: `${baseURL}otp/identify`,
   verifyOTP: `${baseURL}otp/verifyOTP`,
   resetPassword: `${baseURL}otp/resetPassword`,
+  sendOTP: `${baseURL}otp/sendOTP`,
 };
 
 export default requests;

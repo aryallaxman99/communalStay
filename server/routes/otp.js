@@ -1,5 +1,6 @@
 import express from "express";
 import {
+  sendOtp,
   verifyEmailAndSendOtpCode,
   verifyOTPAndSendResponse,
   verifyOTPTokenAndResetPassword,
@@ -7,6 +8,8 @@ import {
 const router = express.Router();
 
 router.post("/identify", verifyEmailAndSendOtpCode);
+
+router.get("/sendOTP", sendOtp);
 
 router.post("/verifyOTP", verifyOTPAndSendResponse);
 
