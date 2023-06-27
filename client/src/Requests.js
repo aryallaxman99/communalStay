@@ -18,6 +18,7 @@ const requests = {
   cancelReservation: `${baseURL}reservation?id=`,
   verifyEmail: `${baseURL}otp/identify`,
   verifyOTP: `${baseURL}otp/verifyOTP`,
+  resetPassword: `${baseURL}otp/resetPassword`,
 };
 
 export default requests;
