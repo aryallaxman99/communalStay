@@ -178,9 +178,11 @@ const PlacePage = () => {
         {place ? (
           <>
             <div className="h-px my-6 bg-gray-300" />
-            <h2 className="mt-2 font-semibold text-2xl">Extra Info</h2>
-            <div className="mt-4 text-sm text-gray-700 leading-1">
-              {place.extraInfo}
+            <div className="bg-gray-100 w-full rounded-md">
+              <h2 className="mt-2 font-semibold text-2xl">Extra Info</h2>
+              <div className="mt-4 text-sm text-gray-700 leading-1">
+                {place.extraInfo}
+              </div>
             </div>
           </>
         ) : (

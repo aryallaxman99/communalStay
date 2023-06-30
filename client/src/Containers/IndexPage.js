@@ -36,21 +36,26 @@ const IndexPage = () => {
     <div className="mt-8 gap-x-6 gap-y-8 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
       {places && places.length > 0 ? (
         places.map((items) => (
-          <Link to={`/place/${items._id}`}>
-            <div className="flex bg-gray-500 rounded-2xl mb-2">
+          <Link
+            to={`/place/${items._id}`}
+            className="border rounded-2xl shadow-md hover:scale-110"
+          >
+            <div className="flex mb-2">
               {items.photos?.[0] && (
                 <ImageViewer
                   imageName={items.photos[0]}
                   styling={
-                    "rounded-2xl object-cover w-full h-full aspect-square"
+                    "rounded-t-2xl object-cover w-full h-full aspect-square "
                   }
                 />
               )}
             </div>
-            <h5 className="truncate">{items.title}</h5>
-            <h6 className="text-sm text-gray-600">{items.address}</h6>
-            <div className="mt-1">
-              <b>NPR {items.price} </b> night
+            <div className="p-2">
+              <h5 className="truncate">{items.title}</h5>
+              <h6 className="text-sm text-gray-600">{items.address}</h6>
+              <div className="mt-1">
+                <b>NPR {items.price} </b> night
+              </div>
             </div>
           </Link>
         ))

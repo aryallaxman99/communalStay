@@ -41,7 +41,7 @@ const Header = () => {
   return (
     <ClickAwayListener onClickAway={() => setShowMenu(false)}>
       <div>
-        <header className="flex justify-between py-4 px-6">
+        <header className="flex justify-between py-4 px-6 shadow-xl">
           <Link to={"/"} className="flex items-center space-x-1">
             <FaHome className="h-7 w-7 text-secondary" />
             <span className="text-secondary mt-1 font-bold">CommunalStay</span>
