@@ -38,6 +38,90 @@ const Header = () => {
       });
   };
 
+  const HeaderMenu = ({ showMenu, firstName, logout }) => {
+    return (
+      <div>
+        {showMenu ? (
+          firstName ? (
+            <div className="right-0 fixed mt-2 rounded-md shadow lg:absolute">
+              <ul className="space-y-2 lg:w-48 bg-white rounded-md">
+                <li>
+                  <a
+                    href="/account"
+                    className="flex p-2 rounded-md gap-2 hover:bg-gray-100"
+                  >
+                    <FaUserCircle className="h-6 w-6 text-gray-700" />
+                    Profile
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="/account/bookings"
+                    className="flex p-2 rounded-md gap-2 hover:bg-gray-100"
+                  >
+                    <FaCalendarCheck className="h-6 w-6 text-gray-700" />
+                    My Reservation
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="/account/places"
+                    className="flex gap-2 p-2 rounded-md  hover:bg-gray-100"
+                  >
+                    <HiOutlineBuildingOffice2 className="h-6 w-6" />
+                    My Properties
+                  </a>
+                </li>
+                <hr />
+                <li>
+                  <a
+                    href="/account/password"
+                    className="flex gap-2 p-2 rounded-md  hover:bg-gray-100"
+                  >
+                    <RxUpdate className="h-6 w-6" />
+                    Change Password
+                  </a>
+                </li>
+                <li>
+                  <a
+                    onClick={logout}
+                    className="flex p-2 gap-2 rounded-md cursor-pointer hover:bg-gray-100"
+                  >
+                    <FiLogOut className="h-6 w-6" />
+                    Logout
+                  </a>
+                </li>
+              </ul>
+            </div>
+          ) : (
+            <div className="right-0 p-2 mt-1 rounded-md shadow lg:absolute">
+              <ul className="space-y-2 lg:w-48 bg-white rounded-md">
+                <li>
+                  <a
+                    href="/register"
+                    className="flex p-2 font-medium rounded-md gap-2 hover:bg-gray-100"
+                  >
+                    <HiOutlinePencilSquare className="h-6 w-6" />
+                    Sign up
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="/login"
+                    className="flex p-2 rounded-md gap-2 hover:bg-gray-100"
+                  >
+                    <FiLogIn className="h-6 w-6" />
+                    Log in
+                  </a>
+                </li>
+              </ul>
+            </div>
+          )
+        ) : null}
+      </div>
+    );
+  };
+
   return (
     <ClickAwayListener onClickAway={() => setShowMenu(false)}>
       <div>
@@ -71,83 +155,11 @@ const Header = () => {
               )}
               {firstName && <div>{firstName}</div>}
             </div>
-            {showMenu ? (
-              firstName ? (
-                <div className="right-0 fixed mt-2 rounded-md shadow lg:absolute">
-                  <ul className="space-y-2 lg:w-48 bg-white rounded-md">
-                    <li>
-                      <a
-                        href="/account"
-                        className="flex p-2 rounded-md gap-2 hover:bg-gray-100"
-                      >
-                        <FaUserCircle className="h-6 w-6 text-gray-700" />
-                        Profile
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="/account/bookings"
-                        className="flex p-2 rounded-md gap-2 hover:bg-gray-100"
-                      >
-                        <FaCalendarCheck className="h-6 w-6 text-gray-700" />
-                        My Reservation
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="/account/places"
-                        className="flex gap-2 p-2 rounded-md  hover:bg-gray-100"
-                      >
-                        <HiOutlineBuildingOffice2 className="h-6 w-6" />
-                        My Properties
-                      </a>
-                    </li>
-                    <hr />
-                    <li>
-                      <a
-                        href="/account/password"
-                        className="flex gap-2 p-2 rounded-md  hover:bg-gray-100"
-                      >
-                        <RxUpdate className="h-6 w-6" />
-                        Change Password
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        onClick={logout}
-                        className="flex p-2 gap-2 rounded-md cursor-pointer hover:bg-gray-100"
-                      >
-                        <FiLogOut className="h-6 w-6" />
-                        Logout
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              ) : (
-                <div className="right-0 p-2 mt-1 rounded-md shadow lg:absolute">
-                  <ul className="space-y-2 lg:w-48 bg-white rounded-md">
-                    <li>
-                      <a
-                        href="/register"
-                        className="flex p-2 font-medium rounded-md gap-2 hover:bg-gray-100"
-                      >
-                        <HiOutlinePencilSquare className="h-6 w-6" />
-                        Sign up
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="/login"
-                        className="flex p-2 rounded-md gap-2 hover:bg-gray-100"
-                      >
-                        <FiLogIn className="h-6 w-6" />
-                        Log in
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              )
-            ) : null}
+            <HeaderMenu
+              showMenu={showMenu}
+              firstName={firstName}
+              logout={logout}
+            />
           </div>
         </header>
       </div>
