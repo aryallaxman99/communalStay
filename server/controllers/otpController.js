@@ -14,8 +14,13 @@ export const verifyEmailAndSendOtpCode = async (req, res) => {
     if (typeof req.body == "object" && req.body.hasOwnProperty("email")) {
       const isEmailExists = await user.findOne({ email: req.body.email });
       if (!isEmailExists) throw new HttpError("Email not found", 406);
-      const { otp, msg, type, status } = await sendOTP(isEmailExists, req, res);
-      res.cookie("otp", otp, { maxAge: 3600000 }).json({
+      const { otpToken, hash, msg, type, status } = await sendOTP(
+        isEmailExists,
+        req,
+        res
+      );
+      res.cookie("otpToken", otpToken).json({
+        value: hash,
         msg,
         type,
         status,
@@ -29,8 +34,13 @@ export const verifyEmailAndSendOtpCode = async (req, res) => {
       const { email } = await user.findById(id);
       const isEmailExists = await user.findOne({ email });
       if (!isEmailExists) throw new HttpError("Email not found", 406);
-      const { otp, msg, type, status } = await sendOTP(isEmailExists, req, res);
-      res.cookie("otp", otp, { maxAge: 3600000 }).json({
+      const { otpToken, hash, msg, type, status } = await sendOTP(
+        isEmailExists,
+        req,
+        res
+      );
+      res.cookie("otp", otpToken).json({
+        value: hash,
         msg,
         type,
         status,
@@ -96,8 +106,13 @@ export const sendOtp = async (req, res) => {
     const { id } = await jwtHelper.verifyRefreshToken(req.cookies.refreshToken);
     const userDetails = await user.findById(id);
     req.body.email = userDetails.email;
-    const { otp, msg, type, status } = await sendOTP(userDetails, req, res);
-    res.cookie("otp", otp, { maxAge: 3600000 }).json({
+    const { otpToken, hash, msg, type, status } = await sendOTP(
+      userDetails,
+      req,
+      res
+    );
+    res.cookie("otp", otpToken).json({
+      value: hash,
       msg,
       type,
       status,

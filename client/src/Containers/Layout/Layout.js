@@ -5,7 +5,7 @@ const Layout = () => {
   return (
     <div>
       <Header />
-      <div className="app-height overflow-scroll px-8">
+      <div className="app-height overflow-scroll px-24">
         <Outlet />
       </div>
     </div>

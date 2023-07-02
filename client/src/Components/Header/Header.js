@@ -125,16 +125,16 @@ const Header = () => {
   return (
     <ClickAwayListener onClickAway={() => setShowMenu(false)}>
       <div>
-        <header className="flex justify-between py-4 px-6 shadow-xl">
+        <header className="flex justify-between py-4 px-6">
           <Link to={"/"} className="flex items-center space-x-1">
             <FaHome className="h-7 w-7 text-secondary" />
             <span className="text-secondary mt-1 font-bold">CommunalStay</span>
           </Link>
 
           <div className="flex gap-2 border border-gray-300 rounded-full py-2 px-4 shadow-md -300">
-            <div className="font-bold">Anywhere</div>
+            <div className="font-bold text-gray-700">Anywhere</div>
             <div className="border border-left border-gray-300"></div>
-            <div className="font-bold">Any week</div>
+            <div className="font-bold text-gray-700">Any week</div>
             <div className="border border-left border-gray-300"></div>
             <div>Any guest</div>
             <Button className="bg-primary w-auto rounded-full">
