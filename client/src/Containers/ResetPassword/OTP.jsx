@@ -71,7 +71,13 @@ const OTP = () => {
         .post(requests.verifyOTP, { otp })
         .then((res) => {
           if (res.data.status) {
-            navigate("/resetPassword", { state: { fromOTP: true, otp: otp } });
+            navigate("/resetPassword", {
+              state: {
+                fromOTP: true,
+                otp: otp,
+                randomValue: res.data.randomValue,
+              },
+            });
           }
         })
         .catch((error) => {

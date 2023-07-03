@@ -37,6 +37,7 @@ const ChangePassword = () => {
 
   const submitResetPassword = (values, actions) => {
     values.otp = state.otp;
+    values.randomValue = state.randomValue;
     if (loading) {
       return;
     }

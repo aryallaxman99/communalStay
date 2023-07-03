@@ -1,6 +1,7 @@
 import otpGenerator from "otp-generator";
 import axios from "axios";
 import bcrypt from "bcrypt";
+import { customRandom, urlAlphabet, random } from "nanoid";
 import otp from "../models/OtpModel.js";
 import { ForbiddenError, HttpError } from "../helpers/errorHandling.js";
 import jwtHelper from "../helpers/jwtHelper.js";
@@ -12,6 +13,7 @@ export const sendOTP = (isEmailExists, req, res) => {
       lowerCaseAlphabets: false,
       specialChars: false,
     });
+    const nanoid = customRandom(urlAlphabet, 58, random);
     console.log({ otpCode });
     const phoneNumber = isEmailExists.phoneNumber;
     if (!phoneNumber)
@@ -38,24 +40,28 @@ export const sendOTP = (isEmailExists, req, res) => {
     if (!isOtpCodeAlreadyExists) {
       const response = await otp.create({
         otpHashValue: otpHashValue,
+        nanoid: nanoid(),
         userId: isEmailExists._id,
         email: req.body.email,
       });
       if (!response) return reject(new HttpError("Something went wrong", 500));
     } else {
-      const response = await otp.findOneAndUpdate(
-        { email: req.body.email },
-        { otpHashValue: otpHashValue },
+      const data = {
+        nanoid: nanoid(),
+        otpHashValue: otpHashValue,
+      };
+      const response = await otp.findByIdAndUpdate(
+        isOtpCodeAlreadyExists._id,
+        data,
         { new: true }
       );
       if (!response) return reject(new HttpError("Something went wrong", 500));
     }
 
-    const otpToken = await jwtHelper.signOTPToken(isEmailExists._id);
+    const authToken = await jwtHelper.signOTPToken(isEmailExists._id);
     const lastDigitOfPhoneNumber = phoneNumber / 1000 + "";
     resolve({
-      otpToken: otpToken,
-      hash: otpHashValue,
+      authToken: authToken,
       msg: `Otp sended to ***${lastDigitOfPhoneNumber.split(".")[1]}`,
       type: "success",
       status: true,
