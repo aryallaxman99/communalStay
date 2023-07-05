@@ -15,6 +15,7 @@ import BookingPage from "./Containers/Places/BookingPage";
 import ChangePassword from "./utils/ChangePassword";
 import OTP from "./Containers/ResetPassword/OTP";
 import EmailIdentification from "./Containers/ResetPassword/EmailIdentification";
+import PlaceAddressPlot from "./Components/maps/PlaceAddressPlot";
 
 const App = () => {
   return (
@@ -35,6 +36,7 @@ const App = () => {
           <Route path="/account/places/:id" element={<PlacesForm />} />
           <Route path="/place/:id" element={<PlacePage />} />
           <Route path="/account/bookings" element={<BookingPage />} />
+          <Route path="/place/map" element={<PlaceAddressPlot />} />
         </Route>
       </Routes>
       <ToastContainer position="top-center" autoClose={2000} />

@@ -1,19 +1,13 @@
 import { HiOutlineSearch } from "react-icons/hi";
+import { Link } from "react-router-dom";
 import Button from "../../widgets/button/Button";
 
 const HeaderSearch = () => {
-  const displayMap = () => {
-    console.log("display map");
-  };
-
   return (
     <div className="flex gap-2 border border-gray-300 rounded-full py-2 px-4 shadow-md -300">
-      <div
-        onClick={() => displayMap()}
-        className="font-bold text-gray-700 cursor-pointer"
-      >
+      <Link to="/place/map" className="font-bold text-gray-700 cursor-pointer">
         Anywhere
-      </div>
+      </Link>
       <div className="border border-left border-gray-300"></div>
       <div className="font-bold text-gray-700">Any week</div>
       <div className="border border-left border-gray-300"></div>

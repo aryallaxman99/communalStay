@@ -2,11 +2,6 @@ import React, { useState } from "react";
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 import { toast } from "react-toastify";
 
-const containerStyle = {
-  width: "800px",
-  height: "600px",
-};
-
 const Map = ({ address, setAddress, setOpenMap }) => {
   const googleMapsApiKey = "AIzaSyA0O_MV5VjO7FMAl6kZFok35pyI1x6YMl4";
   const [loading, setLoading] = useState(true);
@@ -29,8 +24,7 @@ const Map = ({ address, setAddress, setOpenMap }) => {
         }
         setLoading(false);
       })
-      .catch((error) => {
-        console.log(error);
+      .catch(() => {
         setLoading(false);
       });
   }
@@ -47,21 +41,23 @@ const Map = ({ address, setAddress, setOpenMap }) => {
         setAddress(jsonData.results[0].formatted_address);
         setOpenMap(false);
       })
-      .catch((error) => {
+      .catch(() => {
         toast.error("can't set address. Try later");
       });
   };
 
   return (
     <LoadScript googleMapsApiKey={googleMapsApiKey}>
-      <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={15}>
+      <GoogleMap
+        mapContainerStyle={{ height: "600px", width: "800px" }}
+        center={center}
+        zoom={15}
+      >
         <Marker
           position={center}
           draggable={true}
           onDragEnd={(event) => onMarkerDragEnd(event)}
         />
-        {/* Child components, such as markers, info windows, etc. */}
-        <></>
       </GoogleMap>
     </LoadScript>
   );
