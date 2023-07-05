@@ -8,7 +8,7 @@ import Account from "../User/Account";
 import requests from "../../Requests";
 import Button from "../../widgets/button/Button";
 import ImageViewer from "../../utils/ImageViewer";
-import LocationPointer from "../../utils/LocationPointer";
+import LocationFinder from "../../Components/maps/LocationFinder";
 
 const BookingPage = () => {
   const [bookings, setBookings] = useState();
@@ -54,7 +54,7 @@ const BookingPage = () => {
                   : null}
                 <div>
                   <h2 className="mt-4 text-xl">{items.placeid.title}</h2>
-                  <LocationPointer
+                  <LocationFinder
                     styling={"text-sm underline"}
                     location={items.placeid.address}
                   />

@@ -2,6 +2,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { IoCloseSharp } from "react-icons/io5";
 
 import Input from "../../widgets/input/Input";
 import Button from "../../widgets/button/Button";
@@ -9,6 +10,7 @@ import Features from "../Features/Features";
 import { PhotoUploader } from "../../Components/Photo/PhotoUploader";
 import requests from "../../Requests";
 import Account from "../User/Account";
+import Map from "../../Components/maps/Map";
 
 const PlacesForm = () => {
   const { id } = useParams();
@@ -24,6 +26,7 @@ const PlacesForm = () => {
   const [checkOut, setCheckOut] = useState("");
   const [maxGuests, setMaxGuests] = useState("1");
   const [placeId, setPlaceId] = useState();
+  const [openMap, setOpenMap] = useState(false);
 
   const savePlace = (event) => {
     event.preventDefault();
@@ -104,12 +107,22 @@ const PlacesForm = () => {
 
         <h3 className="mt-4">Address</h3>
         <p className="text-gray-500 text-sm">Address to your place</p>
-        <Input
-          type="text"
-          placeholder="Address"
-          value={address}
-          onChange={(e) => setAddress(e.target.value)}
-        />
+        <div className="flex gap-2">
+          <Input
+            type="text"
+            placeholder="Address"
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
+          />
+
+          <Button
+            type="button"
+            onClick={() => setOpenMap(true)}
+            className="bg-secondary"
+          >
+            Find on map
+          </Button>
+        </div>
 
         <PhotoUploader photos={photos} setPhotos={setPhotos} />
         <h3 className="mt-4">Description</h3>
@@ -181,6 +194,21 @@ const PlacesForm = () => {
           Save
         </Button>
       </form>
+      <div>
+        {openMap && (
+          <div className="fixed inset-0 flex items-center bg-gray-600 bg-opacity-50	justify-center">
+            <div className="border border-hidden px-8 relative">
+              <Map />
+              <Button
+                className="absolute -top-2 right-0 bg-opacity-0 w-auto"
+                onClick={() => setOpenMap(false)}
+              >
+                <IoCloseSharp className="h-6 w-6" />
+              </Button>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

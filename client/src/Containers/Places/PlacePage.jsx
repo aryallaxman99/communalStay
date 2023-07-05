@@ -9,8 +9,8 @@ import requests from "../../Requests";
 import DisplayFeatures from "../Features/DisplayFeatures";
 import Booking from "../../widgets/booking/Booking";
 import ImageViewer from "../../utils/ImageViewer";
-import LocationPointer from "../../utils/LocationPointer";
 import Button from "../../widgets/button/Button";
+import LocationFinder from "../../Components/maps/LocationFinder";
 
 const PlacePage = () => {
   const { id } = useParams();
@@ -62,7 +62,7 @@ const PlacePage = () => {
       </h1>
       {place ? (
         <div className="flex gap-1 text-sm text-gray-600">
-          <LocationPointer
+          <LocationFinder
             styling={"font-semibold underline"}
             location={place.address}
           />

@@ -1,7 +1,6 @@
-import React from "react";
 import { HiOutlineLocationMarker } from "react-icons/hi";
 
-const LocationPointer = ({ location, styling }) => {
+const LocationFinder = ({ location, styling }) => {
   return (
     <div className="flex">
       <HiOutlineLocationMarker className="h-5 w-5" />
@@ -17,4 +16,4 @@ const LocationPointer = ({ location, styling }) => {
   );
 };
 
-export default LocationPointer;
+export default LocationFinder;

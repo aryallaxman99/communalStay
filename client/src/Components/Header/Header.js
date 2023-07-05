@@ -5,7 +5,6 @@ import { ClickAwayListener } from "@mui/material";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { FaUserCircle, FaHome, FaCalendarCheck } from "react-icons/fa";
-import { HiOutlineSearch } from "react-icons/hi";
 import {
   HiOutlineBuildingOffice2,
   HiOutlineBars3,
@@ -14,10 +13,10 @@ import {
 import { FiLogIn, FiLogOut } from "react-icons/fi";
 import { RxUpdate } from "react-icons/rx";
 
-import Button from "../../widgets/button/Button";
 import { resetUserDetails } from "../../reducers/userSlice";
 import requests from "../../Requests";
 import ImageViewer from "../../utils/ImageViewer";
+import HeaderSearch from "./HeaderSearch";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -131,16 +130,7 @@ const Header = () => {
             <span className="text-secondary mt-1 font-bold">CommunalStay</span>
           </Link>
 
-          <div className="flex gap-2 border border-gray-300 rounded-full py-2 px-4 shadow-md -300">
-            <div className="font-bold text-gray-700">Anywhere</div>
-            <div className="border border-left border-gray-300"></div>
-            <div className="font-bold text-gray-700">Any week</div>
-            <div className="border border-left border-gray-300"></div>
-            <div>Any guest</div>
-            <Button className="bg-primary w-auto rounded-full">
-              <HiOutlineSearch className="w-4 h-4" />
-            </Button>
-          </div>
+          <HeaderSearch />
 
           <div className="relative" onClick={() => setShowMenu(!showMenu)}>
             <div className="flex item-center gap-2 border border-gray-300 rounded-full py-2 px-4">
