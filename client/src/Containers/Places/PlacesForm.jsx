@@ -198,7 +198,11 @@ const PlacesForm = () => {
         {openMap && (
           <div className="fixed inset-0 flex items-center bg-gray-600 bg-opacity-50	justify-center">
             <div className="border border-hidden px-8 relative">
-              <Map />
+              <Map
+                address={address}
+                setAddress={setAddress}
+                setOpenMap={setOpenMap}
+              />
               <Button
                 className="absolute -top-2 right-0 bg-opacity-0 w-auto"
                 onClick={() => setOpenMap(false)}
