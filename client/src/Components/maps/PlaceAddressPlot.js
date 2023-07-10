@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
+  DirectionsRenderer,
   GoogleMap,
   InfoWindow,
   LoadScript,
@@ -21,6 +22,7 @@ const PlaceAddressPlot = () => {
   const [loading, setLoading] = useState(true);
   const [markers, setMarkers] = useState(null);
   const [activeMarker, setActiveMarker] = useState(null);
+  const [directionsResponse, setDirectionsResponse] = useState(null);
   const arr = [];
 
   const getCurrentLocation = () => {
@@ -74,8 +76,21 @@ const PlaceAddressPlot = () => {
     setActiveMarker(marker);
   };
 
-  const getDirection = () => {
-    console.log("directions");
+  const calculateRoute = async (position) => {
+    await new window.google.maps.DirectionsService().route(
+      {
+        origin: center,
+        destination: position,
+        travelMode: window.google.maps.TravelMode.DRIVING,
+      },
+      (result, status) => {
+        if (status === window.google.maps.DirectionsStatus.OK) {
+          setDirectionsResponse(result);
+        } else {
+          toast.error("Error on fetching directions");
+        }
+      }
+    );
   };
 
   useEffect(() => {
@@ -102,11 +117,20 @@ const PlaceAddressPlot = () => {
                   >
                     {activeMarker === id ? (
                       <InfoWindow onCloseClick={() => setActiveMarker(null)}>
-                        <div onClick={() => getDirection()}>{name}</div>
+                        <div
+                          className="cursor-pointer hover:underline"
+                          onClick={() => calculateRoute(position)}
+                        >
+                          {name}
+                        </div>
                       </InfoWindow>
                     ) : null}
                   </Marker>
                 ))}
+
+              {directionsResponse && (
+                <DirectionsRenderer directions={directionsResponse} />
+              )}
             </GoogleMap>
             <Button
               type="button"
