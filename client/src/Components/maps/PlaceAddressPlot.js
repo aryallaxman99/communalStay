@@ -11,12 +11,14 @@ import axios from "axios";
 import requests from "../../Requests";
 import { BiCurrentLocation } from "react-icons/bi";
 import Button from "../../widgets/button/Button";
+import BookingPage from "../../Containers/Places/BookingPage";
+import PlaceIntro from "../../Containers/Places/PlaceIntro";
 
 const PlaceAddressPlot = () => {
   const googleMapsApiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
   const [center, setCenter] = useState({
-    lat: 27.700001,
-    lng: 85.333336,
+    lat: 27.700604,
+    lng: 85.356384,
   });
   const [place, setPlace] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -144,6 +146,7 @@ const PlaceAddressPlot = () => {
           </div>
         </LoadScript>
       </div>
+      <PlaceIntro placeId={activeMarker} />
     </div>
   );
 };
