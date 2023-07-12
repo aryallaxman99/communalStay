@@ -4,7 +4,6 @@ import requests from "../../Requests";
 import LocationFinder from "../../Components/maps/LocationFinder";
 import ImageViewer from "../../utils/ImageViewer";
 import { Skeleton } from "@mui/material";
-import Button from "../../widgets/button/Button";
 import { Link } from "react-router-dom";
 
 const PlaceIntro = ({ placeId }) => {
@@ -19,7 +18,7 @@ const PlaceIntro = ({ placeId }) => {
   }, [placeId]);
 
   return (
-    <div className="p-3">
+    <div>
       {place && place.length > 0 ? (
         place.map((items) => (
           <div>
@@ -39,10 +38,12 @@ const PlaceIntro = ({ placeId }) => {
               >
                 {items.title}
               </Link>
-              <LocationFinder
-                styling={"text-sm underline"}
-                location={items.address}
-              />
+              <div className="text-gray-600">
+                <LocationFinder
+                  styling={"text-sm underline"}
+                  location={items.address}
+                />
+              </div>
               {items.price && <h5>NPR. {items.price} / night</h5>}
             </div>
           </div>

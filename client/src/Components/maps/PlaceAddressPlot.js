@@ -10,8 +10,8 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import requests from "../../Requests";
 import { BiCurrentLocation } from "react-icons/bi";
+import { MdNearMe, MdNearMeDisabled } from "react-icons/md";
 import Button from "../../widgets/button/Button";
-import BookingPage from "../../Containers/Places/BookingPage";
 import PlaceIntro from "../../Containers/Places/PlaceIntro";
 
 const PlaceAddressPlot = () => {
@@ -25,6 +25,7 @@ const PlaceAddressPlot = () => {
   const [markers, setMarkers] = useState(null);
   const [activeMarker, setActiveMarker] = useState(null);
   const [directionsResponse, setDirectionsResponse] = useState(null);
+  const [isUserFlexible, setIsUserFlexible] = useState(true);
   const arr = [];
 
   const getCurrentLocation = () => {
@@ -46,30 +47,47 @@ const PlaceAddressPlot = () => {
     });
   };
 
-  if (place && loading) {
-    place.map(async (items) => {
-      await fetch(
-        `https://maps.googleapis.com/maps/api/geocode/json?address=${items.address}&key=${googleMapsApiKey}`
-      )
-        .then((response) => {
-          return response.json();
-        })
-        .then((jsonData) => {
-          if (jsonData.results[0].geometry.location) {
-            arr.push({
-              id: items._id,
-              name: items.title,
-              position: jsonData.results[0].geometry.location,
-            });
-          }
-          setMarkers(arr);
-          setLoading(false);
-        })
-        .catch(() => {
-          setLoading(false);
-        });
-    });
-  }
+  const flexible = () => {
+    setIsUserFlexible(true);
+    if (place && loading) {
+      place.map(async (items) => {
+        await fetch(
+          `https://maps.googleapis.com/maps/api/geocode/json?address=${items.address}&key=${googleMapsApiKey}`
+        )
+          .then((response) => {
+            return response.json();
+          })
+          .then((jsonData) => {
+            if (jsonData.results[0].geometry.location) {
+              arr.push({
+                id: items._id,
+                name: items.title,
+                position: jsonData.results[0].geometry.location,
+              });
+            }
+            setMarkers(arr);
+            setLoading(false);
+          })
+          .catch(() => {
+            setLoading(false);
+          });
+      });
+    }
+  };
+
+  const nearByPlaces = () => {
+    let radius = 5000;
+    setIsUserFlexible(false);
+    let km = radius / 1000;
+    let kx = Math.cos((Math.PI * center.lat) / 180) * 111;
+    let dx = Math.abs(center.lng - markers[4].position.lng) * kx;
+    let dy = Math.abs(center.lat - markers[4].position.lat) * 111;
+    console.log(markers[4].name);
+    console.log({ km, kx, dx, dy });
+    console.log(Math.sqrt(dx * dx + dy * dy));
+
+    console.log(Math.sqrt(dx * dx + dy * dy) <= km);
+  };
 
   const handleActiveMarker = (marker) => {
     if (marker === activeMarker) {
@@ -106,6 +124,7 @@ const PlaceAddressPlot = () => {
           <div className="relative">
             <GoogleMap
               onClick={() => setActiveMarker(null)}
+              onLoad={() => flexible()}
               mapContainerStyle={{ height: "600px", width: "800px" }}
               center={center}
               zoom={10}
@@ -113,12 +132,21 @@ const PlaceAddressPlot = () => {
               {markers &&
                 markers.map(({ id, name, position }) => (
                   <Marker
+                    icon={{
+                      url: "https://cdn-icons-png.flaticon.com/512/3295/3295110.png",
+                      scaledSize: new window.google.maps.Size(35, 35),
+                    }}
                     key={id}
                     position={position}
                     onClick={() => handleActiveMarker(id)}
                   >
                     {activeMarker === id ? (
-                      <InfoWindow onCloseClick={() => setActiveMarker(null)}>
+                      <InfoWindow
+                        onCloseClick={() => {
+                          setActiveMarker(null);
+                          setDirectionsResponse(null);
+                        }}
+                      >
                         <div
                           className="cursor-pointer hover:underline"
                           onClick={() => calculateRoute(position)}
@@ -146,7 +174,33 @@ const PlaceAddressPlot = () => {
           </div>
         </LoadScript>
       </div>
-      <PlaceIntro placeId={activeMarker} />
+      <div className="p-3">
+        <div>
+          <Button
+            onClick={() => {
+              isUserFlexible ? nearByPlaces() : flexible();
+            }}
+            className="bg-secondary w-auto rounded-xl"
+          >
+            <div className="flex p-1 gap-2">
+              {isUserFlexible ? (
+                <>
+                  <MdNearMe className="h-6 w-6" />
+                  Near Me
+                </>
+              ) : (
+                <>
+                  <MdNearMeDisabled className="h-6 w-6" />
+                  I’m Flexible
+                </>
+              )}
+            </div>
+          </Button>
+        </div>
+        <div className="mt-3">
+          <PlaceIntro placeId={activeMarker} />
+        </div>
+      </div>
     </div>
   );
 };
