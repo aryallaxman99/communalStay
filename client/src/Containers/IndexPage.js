@@ -37,7 +37,7 @@ const IndexPage = () => {
       {places && places.length > 0 ? (
         places.map((items) => (
           <Link
-            to={`/place/${items._id}`}
+            to={`/listings/${items._id}`}
             className="border rounded-2xl shadow-md hover:scale-110"
           >
             <div className="flex mb-2">

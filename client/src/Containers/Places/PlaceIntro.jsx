@@ -32,7 +32,7 @@ const PlaceIntro = ({ placeId }) => {
             )}
             <div className="mt-3 space-y-1.5">
               <Link
-                to={`/place/${placeId}`}
+                to={`/listings/${placeId}`}
                 target="_blank"
                 className="text-xl font-semibold hover:underline"
               >

@@ -16,6 +16,7 @@ import ChangePassword from "./utils/ChangePassword";
 import OTP from "./Containers/ResetPassword/OTP";
 import EmailIdentification from "./Containers/ResetPassword/EmailIdentification";
 import PlaceAddressPlot from "./Components/maps/PlaceAddressPlot";
+import AnyWeekPlaces from "./Containers/Places/AnyWeekPlaces";
 
 const App = () => {
   return (
@@ -34,9 +35,10 @@ const App = () => {
           <Route path="/account/places" element={<Places />} />
           <Route path="/account/places/new" element={<PlacesForm />} />
           <Route path="/account/places/:id" element={<PlacesForm />} />
-          <Route path="/place/:id" element={<PlacePage />} />
+          <Route path="/listings/:id" element={<PlacePage />} />
           <Route path="/account/bookings" element={<BookingPage />} />
-          <Route path="/place/map" element={<PlaceAddressPlot />} />
+          <Route path="/places/map" element={<PlaceAddressPlot />} />
+          <Route path="/place/anyweek" element={<AnyWeekPlaces />} />
         </Route>
       </Routes>
       <ToastContainer position="top-center" autoClose={2000} />

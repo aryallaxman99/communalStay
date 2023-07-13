@@ -234,6 +234,9 @@ const PlaceAddressPlot = () => {
           </Button>
         </div>
         <div className="mt-3">
+          {!isUserFlexible && nearMePlaces.length <= 0 && (
+            <p>No any places found.</p>
+          )}
           <PlaceIntro placeId={activeMarker} />
         </div>
       </div>
