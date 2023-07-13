@@ -27,7 +27,7 @@ const PlaceAddressPlot = () => {
   const [activeMarker, setActiveMarker] = useState(null);
   const [directionsResponse, setDirectionsResponse] = useState(null);
   const [isUserFlexible, setIsUserFlexible] = useState(true);
-  const [radius, setRadius] = useState(5000);
+  const radius = 5000;
   const arr = [];
 
   const getCurrentLocation = () => {
@@ -130,6 +130,7 @@ const PlaceAddressPlot = () => {
               center={center}
               zoom={10}
             >
+              <Marker position={center} />
               {isUserFlexible ? (
                 <>
                   {flexiblePlaces &&
@@ -137,7 +138,7 @@ const PlaceAddressPlot = () => {
                       <Marker
                         icon={{
                           url: "https://cdn-icons-png.flaticon.com/512/3295/3295110.png",
-                          scaledSize: new window.google.maps.Size(35, 35),
+                          scaledSize: new window.google.maps.Size(40, 40),
                         }}
                         key={id}
                         position={position}
@@ -168,7 +169,7 @@ const PlaceAddressPlot = () => {
                       <Marker
                         icon={{
                           url: "https://cdn-icons-png.flaticon.com/512/3295/3295110.png",
-                          scaledSize: new window.google.maps.Size(35, 35),
+                          scaledSize: new window.google.maps.Size(40, 40),
                         }}
                         key={id}
                         position={position}
