@@ -22,10 +22,12 @@ const PlaceAddressPlot = () => {
   });
   const [place, setPlace] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [markers, setMarkers] = useState(null);
+  const [flexiblePlaces, setflexiblePlaces] = useState([]);
+  const [nearMePlaces, setnearMePlaces] = useState([]);
   const [activeMarker, setActiveMarker] = useState(null);
   const [directionsResponse, setDirectionsResponse] = useState(null);
   const [isUserFlexible, setIsUserFlexible] = useState(true);
+  const [radius, setRadius] = useState(5000);
   const arr = [];
 
   const getCurrentLocation = () => {
@@ -65,7 +67,7 @@ const PlaceAddressPlot = () => {
                 position: jsonData.results[0].geometry.location,
               });
             }
-            setMarkers(arr);
+            setflexiblePlaces(arr);
             setLoading(false);
           })
           .catch(() => {
@@ -76,17 +78,16 @@ const PlaceAddressPlot = () => {
   };
 
   const nearByPlaces = () => {
-    let radius = 5000;
     setIsUserFlexible(false);
     let km = radius / 1000;
     let kx = Math.cos((Math.PI * center.lat) / 180) * 111;
-    let dx = Math.abs(center.lng - markers[4].position.lng) * kx;
-    let dy = Math.abs(center.lat - markers[4].position.lat) * 111;
-    console.log(markers[4].name);
-    console.log({ km, kx, dx, dy });
-    console.log(Math.sqrt(dx * dx + dy * dy));
-
-    console.log(Math.sqrt(dx * dx + dy * dy) <= km);
+    setnearMePlaces([
+      ...flexiblePlaces.filter((items) => {
+        let dx = Math.abs(center.lng - items.position.lng) * kx;
+        let dy = Math.abs(center.lat - items.position.lat) * 111;
+        return Math.sqrt(dx * dx + dy * dy) <= km;
+      }),
+    ]);
   };
 
   const handleActiveMarker = (marker) => {
@@ -129,35 +130,69 @@ const PlaceAddressPlot = () => {
               center={center}
               zoom={10}
             >
-              {markers &&
-                markers.map(({ id, name, position }) => (
-                  <Marker
-                    icon={{
-                      url: "https://cdn-icons-png.flaticon.com/512/3295/3295110.png",
-                      scaledSize: new window.google.maps.Size(35, 35),
-                    }}
-                    key={id}
-                    position={position}
-                    onClick={() => handleActiveMarker(id)}
-                  >
-                    {activeMarker === id ? (
-                      <InfoWindow
-                        onCloseClick={() => {
-                          setActiveMarker(null);
-                          setDirectionsResponse(null);
+              {isUserFlexible ? (
+                <>
+                  {flexiblePlaces &&
+                    flexiblePlaces.map(({ id, name, position }) => (
+                      <Marker
+                        icon={{
+                          url: "https://cdn-icons-png.flaticon.com/512/3295/3295110.png",
+                          scaledSize: new window.google.maps.Size(35, 35),
                         }}
+                        key={id}
+                        position={position}
+                        onClick={() => handleActiveMarker(id)}
                       >
-                        <div
-                          className="cursor-pointer hover:underline"
-                          onClick={() => calculateRoute(position)}
-                        >
-                          {name}
-                        </div>
-                      </InfoWindow>
-                    ) : null}
-                  </Marker>
-                ))}
-
+                        {activeMarker === id ? (
+                          <InfoWindow
+                            onCloseClick={() => {
+                              setActiveMarker(null);
+                              setDirectionsResponse(null);
+                            }}
+                          >
+                            <div
+                              className="cursor-pointer hover:underline"
+                              onClick={() => calculateRoute(position)}
+                            >
+                              {name}
+                            </div>
+                          </InfoWindow>
+                        ) : null}
+                      </Marker>
+                    ))}
+                </>
+              ) : (
+                <>
+                  {nearMePlaces &&
+                    nearMePlaces.map(({ id, name, position }) => (
+                      <Marker
+                        icon={{
+                          url: "https://cdn-icons-png.flaticon.com/512/3295/3295110.png",
+                          scaledSize: new window.google.maps.Size(35, 35),
+                        }}
+                        key={id}
+                        position={position}
+                        onClick={() => handleActiveMarker(id)}
+                      >
+                        {activeMarker === id ? (
+                          <InfoWindow
+                            onCloseClick={() => {
+                              setActiveMarker(null);
+                              setDirectionsResponse(null);
+                            }}
+                          >
+                            <div
+                              className="cursor-pointer hover:underline"
+                              onClick={() => calculateRoute(position)}
+                            >
+                              {name}
+                            </div>
+                          </InfoWindow>
+                        ) : null}
+                      </Marker>
+                    ))}
+                </>
+              )}
               {directionsResponse && (
                 <DirectionsRenderer directions={directionsResponse} />
               )}

@@ -14,7 +14,6 @@ export const sendOTP = (isEmailExists, req, res) => {
       specialChars: false,
     });
     const nanoid = customRandom(urlAlphabet, 58, random);
-    console.log({ otpCode });
     const phoneNumber = isEmailExists.phoneNumber;
     if (!phoneNumber)
       return reject(new ForbiddenError("Please add phoneNumber first"));
