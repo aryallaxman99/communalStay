@@ -4,6 +4,8 @@ import { Dialog, DialogActions, DialogContent, Skeleton } from "@mui/material";
 import { toast } from "react-toastify";
 import { HiArrowRight } from "react-icons/hi";
 import { HiOutlineCalendarDays, HiOutlineCreditCard } from "react-icons/hi2";
+import { TbCurrencyRupeeNepalese } from "react-icons/tb";
+
 import Account from "../User/Account";
 import requests from "../../Requests";
 import Button from "../../widgets/button/Button";
@@ -78,9 +80,11 @@ const BookingPage = () => {
                   <div className="mt-2 flex">
                     <HiOutlineCreditCard className="h-6 w-6" />
 
-                    <span className="font-semibold">
-                      {`Total price: NPR ${items.totalPrice}`}
-                    </span>
+                    <div className="font-semibold flex gap-2">
+                      Total price:
+                      <TbCurrencyRupeeNepalese className="h-5 w-5 mt-1" />
+                      {items.totalPrice}
+                    </div>
                   </div>
                   <Button
                     onClick={handleClickOpen}

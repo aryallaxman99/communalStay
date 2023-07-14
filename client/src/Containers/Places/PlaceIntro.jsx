@@ -5,6 +5,7 @@ import LocationFinder from "../../Components/maps/LocationFinder";
 import ImageViewer from "../../utils/ImageViewer";
 import { Skeleton } from "@mui/material";
 import { Link } from "react-router-dom";
+import { TbCurrencyRupeeNepalese } from "react-icons/tb";
 
 const PlaceIntro = ({ placeId }) => {
   const [place, setPlace] = useState(null);
@@ -44,7 +45,12 @@ const PlaceIntro = ({ placeId }) => {
                   location={items.address}
                 />
               </div>
-              {items.price && <h5>NPR. {items.price} / night</h5>}
+              {items.price && (
+                <h5 className="flex gap-1">
+                  <TbCurrencyRupeeNepalese className="mt-1 h-5 w-5" />{" "}
+                  {items.price} / night
+                </h5>
+              )}
             </div>
           </div>
         ))

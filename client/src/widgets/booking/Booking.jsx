@@ -6,6 +6,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
+import { TbCurrencyRupeeNepalese } from "react-icons/tb";
 
 import Input from "../input/Input";
 import Button from "../button/Button";
@@ -62,8 +63,9 @@ const Booking = ({ place }) => {
       {place ? (
         <>
           <div className="shadow p-4 rounded-2xl ">
-            <div className="text-2xl text-center">
-              Price :NPR. {place.price}/ night
+            <div className="text-2xl place-content-center flex gap-1">
+              Price :<TbCurrencyRupeeNepalese className="h-6 w-6 mt-1.5" />
+              {place.price}/ night
             </div>
             <div className="border px-4 rounded-2xl mt-4">
               <div className=" mt-2 ">
@@ -112,15 +114,19 @@ const Booking = ({ place }) => {
                   <div className="font-light">
                     You won't be charged yet. Price shown is the total price
                     <br />
-                    <div className="underline underline-offset-auto	">
-                      {`NPR ${place.price} X ${totalStayingPeriods} nights`}
+                    <div className="place-content-center underline underline-offset-auto flex	gap-1">
+                      <TbCurrencyRupeeNepalese className="mt-1.5" />
+                      {`${place.price} X ${totalStayingPeriods} nights`}
                     </div>
                   </div>
                 </div>
                 <div className="h-px  my-3 bg-gray-300" />
                 <div className="font-semibold grid grid-cols-[1fr_1fr]">
                   <div className="text-start"> Total </div>
-                  <div className="text-end">NPR {totalPrice}</div>
+                  <div className="place-content-end flex gap-1">
+                    <TbCurrencyRupeeNepalese className="mt-1" />
+                    {totalPrice}
+                  </div>
                 </div>
               </>
             ) : null}

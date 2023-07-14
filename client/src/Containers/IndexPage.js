@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { Skeleton, Box } from "@mui/material";
+import { TbCurrencyRupeeNepalese } from "react-icons/tb";
 
 import requests from "../Requests";
 import ImageViewer from "../utils/ImageViewer";
@@ -53,8 +54,9 @@ const IndexPage = () => {
             <div className="p-2">
               <h5 className="truncate">{items.title}</h5>
               <h6 className="text-sm text-gray-600">{items.address}</h6>
-              <div className="mt-1">
-                <b>NPR {items.price} </b> night
+              <div className="mt-1 flex gap-1">
+                <TbCurrencyRupeeNepalese className="h-5 w-5 mt-1" />
+                <b>{items.price} </b> night
               </div>
             </div>
           </Link>
