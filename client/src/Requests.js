@@ -20,6 +20,7 @@ const requests = {
   verifyOTP: `${baseURL}otp/verifyOTP`,
   resetPassword: `${baseURL}otp/resetPassword`,
   sendOTP: `${baseURL}otp/sendOTP`,
+  search: `${baseURL}places/search?q=`,
 };
 
 export default requests;

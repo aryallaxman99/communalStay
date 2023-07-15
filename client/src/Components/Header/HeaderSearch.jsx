@@ -1,15 +1,39 @@
-import { HiOutlineSearch } from "react-icons/hi";
-import { Link } from "react-router-dom";
-import Input from "../../widgets/input/Input";
+import axios from "axios";
 import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { HiOutlineSearch } from "react-icons/hi";
+
+import Input from "../../widgets/input/Input";
+import requests from "../../Requests";
 
 const HeaderSearch = () => {
-  const [searchText, setSearchText] = useState("");
+  const navigate = useNavigate();
 
-  const search = (event) => {
+  const [searchText, setSearchText] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const search = async (event) => {
     setSearchText(event.target.value);
-    if (event.keyCode === 13) {
-      alert("you press enter");
+
+    if (event.keyCode === 13 && searchText.length > 0) {
+      if (loading) {
+        return;
+      }
+      setLoading(true);
+      await axios
+        .get(requests.search + searchText)
+        .then((res) => {
+          navigate(`/search?q=${searchText}`, {
+            state: { places: res.data.data },
+          });
+        })
+        .catch(() => {
+          toast.error("Something went wrong");
+        })
+        .finally(() => {
+          setLoading(false);
+        });
     }
   };
 
@@ -27,7 +51,7 @@ const HeaderSearch = () => {
       <div className="flex">
         <Input
           type="search"
-          className="z-10 w-24 h-5 rounded-full border-hidden text-gray-500 focus:w-full focus:h-7"
+          className="z-10 w-24 h-5 rounded-full border-hidden text-gray-500 focus:w-full focus:h-6"
           placeholder="Search..."
           onKeyUp={(event) => search(event)}
         />

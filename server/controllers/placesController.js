@@ -60,6 +60,8 @@ export const getPlacesByOwnerId = async (req, res) => {
 
 export const getPlacesById = async (req, res) => {
   try {
+    if (req.params.id === undefined)
+      throw new ForbiddenError("No any id found");
     const placeInfo = await Place.findById(req.params.id).populate("owner");
     if (!placeInfo) throw new NotFoundError("No any Records Found");
     res.json({ placeInfo });
@@ -115,8 +117,6 @@ export const searchPlaces = async (req, res) => {
           weight: 1,
         },
       ],
-
-      // keys: [["title", "address", "descriptions"]],
     };
     const result = new Fuse(data, options).search(req.query.q);
     res.json({ data: result });
