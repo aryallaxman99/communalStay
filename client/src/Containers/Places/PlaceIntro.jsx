@@ -15,6 +15,8 @@ const PlaceIntro = ({ placeId }) => {
       axios
         .get(requests.getPlacesById + placeId)
         .then((res) => setPlace([res.data.placeInfo]));
+    } else {
+      setPlace(null);
     }
   }, [placeId]);
 

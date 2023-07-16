@@ -42,14 +42,19 @@ const Booking = ({ place }) => {
 
     if (totalPrice) {
       if (document.cookie.split(";")[0].split("=")[1]) {
-        axios.post(requests.reserve, data).then((res) => {
-          if (res.data.status) {
-            toast[res.data.type](res.data.msg);
-            navigate("/account/bookings");
-          } else {
-            toast[res.data.type](res.data.msg);
-          }
-        });
+        axios
+          .post(requests.reserve, data)
+          .then((res) => {
+            if (res.data.status) {
+              toast[res.data.type](res.data.msg);
+              navigate("/account/bookings");
+            } else {
+              toast[res.data.type](res.data.msg);
+            }
+          })
+          .catch((error) => {
+            toast[error.response.data.type](error.response.data.msg);
+          });
       } else {
         navigate("/login");
       }

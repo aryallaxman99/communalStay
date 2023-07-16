@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import { HiArrowRight } from "react-icons/hi";
 import { HiOutlineCalendarDays, HiOutlineCreditCard } from "react-icons/hi2";
 import { TbCurrencyRupeeNepalese } from "react-icons/tb";
-import { LuCalendarHeart, LuCalendarClock, LuCalendarX2 } from "react-icons/lu";
+import { LuCalendarX2 } from "react-icons/lu";
 
 import Account from "../User/Account";
 import requests from "../../Requests";
