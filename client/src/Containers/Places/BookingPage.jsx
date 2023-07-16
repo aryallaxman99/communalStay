@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { HiArrowRight } from "react-icons/hi";
 import { HiOutlineCalendarDays, HiOutlineCreditCard } from "react-icons/hi2";
 import { TbCurrencyRupeeNepalese } from "react-icons/tb";
+import { LuCalendarHeart, LuCalendarClock, LuCalendarX2 } from "react-icons/lu";
 
 import Account from "../User/Account";
 import requests from "../../Requests";
@@ -16,14 +17,6 @@ const BookingPage = () => {
   const [bookings, setBookings] = useState();
   const [open, setOpen] = useState(false);
   const [reservationId, setReservationId] = useState();
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   const CancelReservation = (id) => {
     if (id) {
@@ -86,29 +79,38 @@ const BookingPage = () => {
                       {items.totalPrice}
                     </div>
                   </div>
-                  <Button
-                    onClick={handleClickOpen}
-                    className="mt-2 bg-secondary"
-                  >
-                    Cancel reservation
-                  </Button>
-                  <Dialog open={open} onClose={handleClose}>
-                    <DialogContent>
-                      Are you sure you want to cancel this reservation?
-                    </DialogContent>
-                    <DialogActions>
-                      <Button className="bg-secondary" onClick={handleClose}>
-                        cancel
-                      </Button>
+                  {items.checkOut.split("T")[0] >=
+                  new Date().toISOString().split("T")[0] ? (
+                    <div>
                       <Button
-                        className="bg-secondary"
-                        autoFocus
-                        onClick={() => CancelReservation(items._id)}
+                        onClick={() => setOpen(true)}
+                        className="bg-secondary inline-flex gap-1 py-2 px-6 mt-3 w-auto"
                       >
-                        Ok
+                        <LuCalendarX2 className="h-6 w-6" />
+                        Cancel reservation
                       </Button>
-                    </DialogActions>
-                  </Dialog>
+                      <Dialog open={open} onClose={() => setOpen(false)}>
+                        <DialogContent>
+                          Are you sure you want to cancel this reservation?
+                        </DialogContent>
+                        <DialogActions>
+                          <Button
+                            className="bg-secondary"
+                            onClick={() => setOpen(false)}
+                          >
+                            cancel
+                          </Button>
+                          <Button
+                            className="bg-secondary"
+                            autoFocus
+                            onClick={() => CancelReservation(items._id)}
+                          >
+                            Ok
+                          </Button>
+                        </DialogActions>
+                      </Dialog>
+                    </div>
+                  ) : null}
                 </div>
               </div>
             ))

@@ -142,7 +142,10 @@ const PlaceAddressPlot = () => {
                         }}
                         key={id}
                         position={position}
-                        onClick={() => handleActiveMarker(id)}
+                        onClick={() => {
+                          handleActiveMarker(id);
+                          calculateRoute(position);
+                        }}
                       >
                         {activeMarker === id ? (
                           <InfoWindow
@@ -151,12 +154,7 @@ const PlaceAddressPlot = () => {
                               setDirectionsResponse(null);
                             }}
                           >
-                            <div
-                              className="cursor-pointer hover:underline"
-                              onClick={() => calculateRoute(position)}
-                            >
-                              {name}
-                            </div>
+                            <div>{name}</div>
                           </InfoWindow>
                         ) : null}
                       </Marker>
@@ -173,7 +171,10 @@ const PlaceAddressPlot = () => {
                         }}
                         key={id}
                         position={position}
-                        onClick={() => handleActiveMarker(id)}
+                        onClick={() => {
+                          handleActiveMarker(id);
+                          calculateRoute(position);
+                        }}
                       >
                         {activeMarker === id ? (
                           <InfoWindow
@@ -182,12 +183,7 @@ const PlaceAddressPlot = () => {
                               setDirectionsResponse(null);
                             }}
                           >
-                            <div
-                              className="cursor-pointer hover:underline"
-                              onClick={() => calculateRoute(position)}
-                            >
-                              {name}
-                            </div>
+                            <div>{name}</div>
                           </InfoWindow>
                         ) : null}
                       </Marker>

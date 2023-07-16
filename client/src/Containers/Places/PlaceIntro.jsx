@@ -23,14 +23,14 @@ const PlaceIntro = ({ placeId }) => {
       {place && place.length > 0 ? (
         place.map((items) => (
           <div>
-            {items.photos.length > 0 && (
-              <div className="rounded-xl shadow-lg hover:shadow-slate-950 hover:opacity-90">
+            <div className="overflow-hidden rounded-xl shadow-lg hover:shadow-slate-950">
+              {items.photos.length > 0 && (
                 <ImageViewer
-                  styling={"rounded-xl w-full max-h-72"}
+                  styling={"rounded-xl w-full max-h-72 hover:scale-110"}
                   imageName={items.photos[0]}
                 />
-              </div>
-            )}
+              )}
+            </div>
             <div className="mt-3 space-y-1.5">
               <Link
                 to={`/listings/${placeId}`}
