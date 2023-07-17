@@ -98,20 +98,22 @@ const PlaceAddressPlot = () => {
   };
 
   const calculateRoute = async (position) => {
-    await new window.google.maps.DirectionsService().route(
-      {
-        origin: center,
-        destination: position,
-        travelMode: window.google.maps.TravelMode.DRIVING,
-      },
-      (result, status) => {
-        if (status === window.google.maps.DirectionsStatus.OK) {
-          setDirectionsResponse(result);
-        } else {
-          toast.error("Error on fetching directions");
+    try {
+      await new window.google.maps.DirectionsService().route(
+        {
+          origin: center,
+          destination: position,
+          travelMode: window.google.maps.TravelMode.DRIVING,
+        },
+        (result, status) => {
+          if (status === window.google.maps.DirectionsStatus.OK) {
+            setDirectionsResponse(result);
+          }
         }
-      }
-    );
+      );
+    } catch (error) {
+      toast.error("No route could be found");
+    }
   };
 
   useEffect(() => {
@@ -228,6 +230,17 @@ const PlaceAddressPlot = () => {
               )}
             </div>
           </Button>
+        </div>
+        <div className="mt-2">
+          {directionsResponse ? (
+            <div>
+              <p>{directionsResponse.routes[0].legs[0].distance.text}</p>
+              <p>
+                {directionsResponse.routes[0].legs[0].duration.text} drive from
+                here
+              </p>
+            </div>
+          ) : null}
         </div>
         <div className="mt-3">
           {!isUserFlexible && nearMePlaces.length <= 0 && (

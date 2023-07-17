@@ -79,7 +79,7 @@ const BookingPage = () => {
                       {items.totalPrice}
                     </div>
                   </div>
-                  {items.checkOut.split("T")[0] >=
+                  {items.checkOut.split("T")[0] >
                   new Date().toISOString().split("T")[0] ? (
                     <div>
                       <Button
