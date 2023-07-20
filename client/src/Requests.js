@@ -11,6 +11,7 @@ const requests = {
   photoUpload: `${baseURL}uploads/`,
   places: `${baseURL}places/`,
   getAllPlaces: `${baseURL}places/all`,
+  placeByUserReq: `${baseURL}places?`,
   getPlacesByOwnerId: `${baseURL}places/owner-places`,
   getPlacesById: `${baseURL}places/`,
   updatePlaces: `${baseURL}places/update`,

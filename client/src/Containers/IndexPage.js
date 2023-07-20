@@ -11,8 +11,14 @@ const IndexPage = () => {
   const [places, setPlaces] = useState([]);
   let skeleton = [];
 
+  const getPlaceData = async () => {
+    await axios
+      .get(`${requests.placeByUserReq}limit=${8}&page=${1}`)
+      .then((res) => setPlaces([...places, ...res.data.data]));
+  };
+
   useEffect(() => {
-    axios.get(requests.getAllPlaces).then((res) => setPlaces(res.data));
+    getPlaceData();
   }, []);
 
   for (let i = 0; i < 3; i++) {

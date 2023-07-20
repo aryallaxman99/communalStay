@@ -27,7 +27,7 @@ const PlaceAddressPlot = () => {
   const [activeMarker, setActiveMarker] = useState(null);
   const [directionsResponse, setDirectionsResponse] = useState(null);
   const [isUserFlexible, setIsUserFlexible] = useState(true);
-  const radius = 5000;
+  const radius = 10000;
   const arr = [];
 
   const getCurrentLocation = () => {

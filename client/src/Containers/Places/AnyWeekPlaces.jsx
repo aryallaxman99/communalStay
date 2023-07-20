@@ -10,12 +10,13 @@ import LocationFinder from "../../Components/maps/LocationFinder";
 
 const AnyWeekPlaces = () => {
   const [place, setPlace] = useState([]);
+
   useEffect(() => {
     axios.get(requests.getAllPlaces).then((res) => setPlace(res.data));
   }, []);
 
   return (
-    <div>
+    <div id="top">
       {place && place.length > 0
         ? place.map((items) => (
             <Link
@@ -48,6 +49,9 @@ const AnyWeekPlaces = () => {
             </Link>
           ))
         : null}
+      <p className="text-end hover:underline text-red-500 mb-3">
+        <a href="#top">Back to Top</a>
+      </p>
     </div>
   );
 };

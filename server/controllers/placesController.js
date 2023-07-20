@@ -42,6 +42,26 @@ export const getAllPlaces = async (req, res) => {
   }
 };
 
+export const placesByUserReq = async (req, res) => {
+  try {
+    const limit = req.query.limit || 8;
+    const page = req.query.page;
+    const skipCount = limit * page - limit;
+
+    const data = await Place.find().skip(skipCount).limit(limit);
+    const totalDataLength = await Place.find().count();
+
+    if (!data) throw new HttpError("Something went wrong", 500);
+    res.json({ data: data, total: totalDataLength });
+  } catch (error) {
+    res.status(error.statusCode).json({
+      msg: error.message,
+      type: "error",
+      status: false,
+    });
+  }
+};
+
 export const getPlacesByOwnerId = async (req, res) => {
   try {
     const userInfo = await jwtHelper.verifyAccessToken(req.cookies.accessToken);
@@ -103,20 +123,7 @@ export const searchPlaces = async (req, res) => {
       includeMatches: true,
       findAllMatches: true,
       minMatchCharLength: 3,
-      keys: [
-        {
-          name: "title",
-          weight: 0.3,
-        },
-        {
-          name: "address",
-          weight: 0.7,
-        },
-        {
-          name: "descriptions",
-          weight: 1,
-        },
-      ],
+      keys: ["title"],
     };
     const result = new Fuse(data, options).search(req.query.q);
     res.json({ data: result });

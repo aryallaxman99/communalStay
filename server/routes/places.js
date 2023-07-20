@@ -4,6 +4,7 @@ import {
   getAllPlaces,
   getPlacesById,
   getPlacesByOwnerId,
+  placesByUserReq,
   searchPlaces,
   updatePlace,
 } from "../controllers/placesController.js";
@@ -13,6 +14,8 @@ const router = express.Router();
 router.post("/", addPlaces);
 
 router.get("/all", getAllPlaces);
+
+router.get("/", placesByUserReq);
 
 router.get("/search", searchPlaces);
 
