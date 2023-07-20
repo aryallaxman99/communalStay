@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { MdOutlineReadMore } from "react-icons/md";
 import { TbCurrencyRupeeNepalese } from "react-icons/tb";
+import { toast } from "react-toastify";
 
 import requests from "../../Requests";
 import ImageViewer from "../../utils/ImageViewer";
@@ -10,9 +11,39 @@ import LocationFinder from "../../Components/maps/LocationFinder";
 
 const AnyWeekPlaces = () => {
   const [place, setPlace] = useState([]);
+  const [totalDataInDB, setTotalDataInDB] = useState(null);
+  const [page, setPage] = useState(1);
+
+  const getPlaceData = async () => {
+    if (place.length !== totalDataInDB) {
+      await axios
+        .get(`${requests.placeByUserReq}limit=8&page=${page}`)
+        .then((res) => {
+          setPlace([...place, ...res.data.data]);
+          setTotalDataInDB(res.data.total);
+        });
+    }
+  };
+
+  const handleScroll = async () => {
+    try {
+      if (
+        document.scrollingElement.scrollHeight + window.innerHeight + 1 >=
+        document.scrollingElement.scrollTop
+      ) {
+        setPage((previous) => previous + 1);
+      }
+    } catch (error) {
+      toast.error("Something went wrong");
+    }
+  };
 
   useEffect(() => {
-    axios.get(requests.getAllPlaces).then((res) => setPlace(res.data));
+    getPlaceData();
+  }, [page]);
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
   }, []);
 
   return (

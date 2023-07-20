@@ -3,22 +3,47 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { Skeleton, Box } from "@mui/material";
 import { TbCurrencyRupeeNepalese } from "react-icons/tb";
+import { toast } from "react-toastify";
 
 import requests from "../Requests";
 import ImageViewer from "../utils/ImageViewer";
 
 const IndexPage = () => {
   const [places, setPlaces] = useState([]);
+  const [totalDataInDB, setTotalDataInDB] = useState(null);
+  const [page, setPage] = useState(1);
   let skeleton = [];
 
   const getPlaceData = async () => {
-    await axios
-      .get(`${requests.placeByUserReq}limit=${8}&page=${1}`)
-      .then((res) => setPlaces([...places, ...res.data.data]));
+    if (places.length !== totalDataInDB) {
+      await axios
+        .get(`${requests.placeByUserReq}limit=8&page=${page}`)
+        .then((res) => {
+          setPlaces([...places, ...res.data.data]);
+          setTotalDataInDB(res.data.total);
+        });
+    }
   };
 
   useEffect(() => {
     getPlaceData();
+  }, [page]);
+
+  const handleScroll = async () => {
+    try {
+      if (
+        document.scrollingElement.scrollHeight + window.innerHeight + 1 >=
+        document.scrollingElement.scrollTop
+      ) {
+        setPage((previous) => previous + 1);
+      }
+    } catch (error) {
+      toast.error("Something went wrong. Try again...");
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
   }, []);
 
   for (let i = 0; i < 3; i++) {
