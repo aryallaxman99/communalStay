@@ -54,9 +54,3 @@ button.primary {
   background-color: "#86C232";
   @apply bg-primary p-2 w-full text-white rounded-2xl;
 }
-
-@layer components {
-  .app-height {
-    @apply h-[calc(100vh-75px)];
-  }
-}

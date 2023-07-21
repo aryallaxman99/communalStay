@@ -32,8 +32,8 @@ const IndexPage = () => {
   const handleScroll = async () => {
     try {
       if (
-        document.scrollingElement.scrollHeight + window.innerHeight + 1 >=
-        document.scrollingElement.scrollTop
+        document.scrollingElement.scrollHeight <=
+        window.innerHeight + document.scrollingElement.scrollTop
       ) {
         setPage((previous) => previous + 1);
       }
