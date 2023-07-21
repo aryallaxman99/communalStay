@@ -12,6 +12,7 @@ import {
 } from "react-icons/hi2";
 import { FiLogIn, FiLogOut } from "react-icons/fi";
 import { RxUpdate } from "react-icons/rx";
+import { BsCalendar2WeekFill } from "react-icons/bs";
 
 import { resetUserDetails } from "../../reducers/userSlice";
 import requests from "../../Requests";
@@ -72,6 +73,15 @@ const Header = () => {
                   </a>
                 </li>
                 <hr />
+                <li>
+                  <a
+                    href="/account/request"
+                    className="flex gap-2 p-2 rounded-md  hover:bg-gray-100"
+                  >
+                    <BsCalendar2WeekFill className="h-6 w-6 text-gray-700" />
+                    Booking Requests
+                  </a>
+                </li>
                 <li>
                   <a
                     href="/account/password"
