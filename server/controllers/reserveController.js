@@ -7,7 +7,6 @@ import {
   HttpError,
   UnauthorizedError,
 } from "../helpers/errorHandling.js";
-import Place from "../models/PlaceModel.js";
 
 export const reserve = async (req, res) => {
   try {
