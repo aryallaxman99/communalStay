@@ -7,6 +7,7 @@ import {
   HttpError,
   UnauthorizedError,
 } from "../helpers/errorHandling.js";
+import Place from "../models/PlaceModel.js";
 
 export const reserve = async (req, res) => {
   try {
@@ -45,6 +46,24 @@ export const getAllReservations = async (req, res) => {
     const { id } = await jwtHelper.verifyAccessToken(req.cookies.accessToken);
     const data = await Reserve.find({ userid: id }).populate("placeid");
     res.json(data);
+  } catch (error) {
+    res.status(error.statusCode).json({
+      msg: error.message,
+      type: "error",
+      status: false,
+    });
+  }
+};
+
+export const getAllReservationsRequests = async (req, res) => {
+  try {
+    if (!req.cookies.accessToken)
+      throw new UnauthorizedError("Cookies not found");
+    const { id } = await jwtHelper.verifyAccessToken(req.cookies.accessToken);
+    const data = await Reserve.find().populate("placeid");
+    if (!data) throw new HttpError("something went wrong", 500);
+    const booking = data.filter((items) => items.placeid.owner == id);
+    res.json(booking);
   } catch (error) {
     res.status(error.statusCode).json({
       msg: error.message,

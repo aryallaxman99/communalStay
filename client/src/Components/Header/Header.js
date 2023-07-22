@@ -75,7 +75,7 @@ const Header = () => {
                 <hr />
                 <li>
                   <a
-                    href="/account/request"
+                    href="/account/places/request"
                     className="flex gap-2 p-2 rounded-md  hover:bg-gray-100"
                   >
                     <BsCalendar2WeekFill className="h-6 w-6 text-gray-700" />

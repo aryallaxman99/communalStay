@@ -22,6 +22,7 @@ const requests = {
   resetPassword: `${baseURL}otp/resetPassword`,
   sendOTP: `${baseURL}otp/sendOTP`,
   search: `${baseURL}places/search?q=`,
+  reservedPlaces: `${baseURL}reservation/booking`,
 };
 
 export default requests;

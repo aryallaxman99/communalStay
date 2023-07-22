@@ -15,6 +15,7 @@ import BookingPage from "../Places/BookingPage";
 import PlaceAddressPlot from "../../Components/maps/PlaceAddressPlot";
 import AnyWeekPlaces from "../Places/AnyWeekPlaces";
 import SearchResultPage from "../Places/SearchResultPage";
+import ReservedPlaces from "../Pages/ReservedPlaces";
 
 const Layout = () => {
   return (
@@ -49,6 +50,7 @@ export const UserRoutes = () => {
       <Route path="/places/map" element={<PlaceAddressPlot />} />
       <Route path="/place/anyweek" element={<AnyWeekPlaces />} />
       <Route path="/search" element={<SearchResultPage />} />
+      <Route path="/account/places/request" element={<ReservedPlaces />} />
     </Routes>
   );
 };
