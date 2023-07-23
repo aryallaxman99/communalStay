@@ -50,7 +50,7 @@ export const UserRoutes = () => {
       <Route path="/places/map" element={<PlaceAddressPlot />} />
       <Route path="/place/anyweek" element={<AnyWeekPlaces />} />
       <Route path="/search" element={<SearchResultPage />} />
-      <Route path="/account/places/request" element={<ReservedPlaces />} />
+      <Route path="/account/request" element={<ReservedPlaces />} />
     </Routes>
   );
 };

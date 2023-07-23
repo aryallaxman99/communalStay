@@ -14,6 +14,7 @@ import { TbCurrencyRupeeNepalese } from "react-icons/tb";
 import requests from "../../Requests";
 import ImageViewer from "../../utils/ImageViewer";
 import LocationFinder from "../../Components/maps/LocationFinder";
+import Account from "../User/Account";
 
 const ReservedPlaces = () => {
   const [bookingPlaces, setBookingPlaces] = useState(null);
@@ -33,6 +34,7 @@ const ReservedPlaces = () => {
 
   return (
     <div>
+      <Account />
       {bookingPlaces ? (
         bookingPlaces.length > 0 ? (
           bookingPlaces.map((items) => (
