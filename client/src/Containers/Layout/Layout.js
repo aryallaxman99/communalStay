@@ -32,25 +32,27 @@ export default Layout;
 
 export const UserRoutes = () => {
   return (
-    <Routes>
-      <Route path="*" element={<Error />} />
-      <Route index element={<IndexPage />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
-      <Route path="identify" element={<EmailIdentification />} />
-      <Route path="/identify/otp" element={<OTP />} />
-      <Route path="/resetPassword" element={<ChangePassword />} />
-      <Route path="/account" element={<UserDashboard />} />
-      <Route path="/account/password" element={<ChangePassword />} />
-      <Route path="/account/places" element={<Places />} />
-      <Route path="/account/places/new" element={<PlacesForm />} />
-      <Route path="/account/places/:id" element={<PlacesForm />} />
-      <Route path="/listings/:id" element={<PlacePage />} />
-      <Route path="/account/bookings" element={<BookingPage />} />
-      <Route path="/places/map" element={<PlaceAddressPlot />} />
-      <Route path="/place/anyweek" element={<AnyWeekPlaces />} />
-      <Route path="/search" element={<SearchResultPage />} />
-      <Route path="/account/request" element={<ReservedPlaces />} />
-    </Routes>
+    <div className="overflow-x-hidden">
+      <Routes>
+        <Route path="*" element={<Error />} />
+        <Route index element={<IndexPage />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="identify" element={<EmailIdentification />} />
+        <Route path="/identify/otp" element={<OTP />} />
+        <Route path="/resetPassword" element={<ChangePassword />} />
+        <Route path="/account" element={<UserDashboard />} />
+        <Route path="/account/password" element={<ChangePassword />} />
+        <Route path="/account/places" element={<Places />} />
+        <Route path="/account/places/new" element={<PlacesForm />} />
+        <Route path="/account/places/:id" element={<PlacesForm />} />
+        <Route path="/listings/:id" element={<PlacePage />} />
+        <Route path="/account/bookings" element={<BookingPage />} />
+        <Route path="/places/map" element={<PlaceAddressPlot />} />
+        <Route path="/place/anyweek" element={<AnyWeekPlaces />} />
+        <Route path="/search" element={<SearchResultPage />} />
+        <Route path="/account/request" element={<ReservedPlaces />} />
+      </Routes>
+    </div>
   );
 };

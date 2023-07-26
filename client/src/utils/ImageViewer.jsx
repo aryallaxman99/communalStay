@@ -2,7 +2,7 @@ const ImageViewer = ({ styling, imageName }) => {
   return (
     <div>
       <img
-        alt=""
+        alt={imageName}
         className={styling}
         src={`http://localhost:8000/uploads/${imageName}`}
       />

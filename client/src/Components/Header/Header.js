@@ -43,7 +43,7 @@ const Header = () => {
       <div>
         {showMenu ? (
           firstName ? (
-            <div className="right-0 fixed mt-2 rounded-md shadow lg:absolute">
+            <div className="right-0 fixed mt-2 rounded-md shadow lg:absolute z-20">
               <ul className="space-y-2 lg:w-48 bg-white rounded-md">
                 <li>
                   <a
