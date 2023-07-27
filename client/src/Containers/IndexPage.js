@@ -47,6 +47,7 @@ const IndexPage = () => {
     <div className="mt-8 gap-x-6 gap-y-8 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mb-10">
       {places.map((items) => (
         <Link
+          key={items._id}
           to={`/listings/${items._id}`}
           className="border rounded-2xl shadow-md hover:scale-110 transition translate ease-in-out"
         >
