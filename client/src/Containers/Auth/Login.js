@@ -1,61 +1,33 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
-import * as Yup from "yup";
-import { useFormik } from "formik";
-import { toast } from "react-toastify";
+import { Link, Navigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import "react-toastify/dist/ReactToastify.css";
-
 import Input from "../../widgets/input/Input";
 import Button from "../../widgets/button/Button";
-import requests from "../../Requests";
 import { setUserDetails } from "../../reducers/userSlice";
 import FormError from "../../Components/formError/FormError";
 import ShowAndHidePassword from "../../widgets/showAndHidePassword/ShowAndHidePassword";
+import useUserLogin from "../../hooks/useUserLogin";
 
 const Login = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [loading, setLoading] = useState(false);
+  const {
+    error,
+    userResponse,
+    values,
+    errors,
+    handleBlur,
+    handleChange,
+    handleSubmit,
+    touched,
+  } = useUserLogin();
 
-  const onSubmit = async (values, actions) => {
-    if (loading) {
-      return;
-    }
-    setLoading(true);
-    await axios
-      .post(requests.userLogin, { values })
-      .then((res) => {
-        toast[res.data.type](res.data.msg);
-        if (res.data.status === true) {
-          dispatch(setUserDetails(res.data.userDetails));
-          actions.resetForm();
-          navigate("/");
-        }
-      })
-      .catch((error) => {
-        toast[error.response.data.type](error.response.data.msg);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  };
+  if (userResponse && userResponse.status === true) {
+    dispatch(setUserDetails(userResponse.userDetails));
+    return <Navigate to={"/"} />;
+  }
 
-  const loginSchema = Yup.object().shape({
-    email: Yup.string().email("Invalid email").required("Required"),
-    password: Yup.string().required("Required"),
-  });
-
-  const { values, errors, handleBlur, handleChange, handleSubmit, touched } =
-    useFormik({
-      initialValues: {
-        email: "",
-        password: "",
-      },
-      validationSchema: loginSchema,
-      onSubmit,
-    });
+  if (error) {
+    return <p className="text-red-500">{error.data.msg}</p>;
+  }
 
   return (
     <div className="flex items-center justify-center app-height">
