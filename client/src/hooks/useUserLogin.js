@@ -28,23 +28,6 @@ export default function useUserLOgin() {
     } finally {
       setLoading(false);
     }
-
-    // await axios
-    //   .post(requests.userLogin, { values })
-    //   .then((res) => {
-    //     toast[res.data.type](res.data.msg);
-    //     if (res.data.status === true) {
-    //       dispatch(setUserDetails(res.data.userDetails));
-    //       actions.resetForm();
-    //       navigate("/");
-    //     }
-    //   })
-    //   .catch((error) => {
-    //     toast[error.response.data.type](error.response.data.msg);
-    //   })
-    //   .finally(() => {
-    //     setLoading(false);
-    //   });
   };
 
   const loginSchema = Yup.object().shape({
