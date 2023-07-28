@@ -83,7 +83,6 @@ const Login = () => {
 
               <FormError message={errors.email} touched={touched.email} />
             </div>
-
             <div>
               <ShowAndHidePassword
                 placeholder={"Password"}
@@ -100,13 +99,13 @@ const Login = () => {
           </Button>
         </form>
 
-        <p className="text-center mt-5" text-gray-500>
+        <div className="text-center mt-5">
           <Link to={"/identify"} className="text-blue-600 hover:underline">
             Forgot password?
           </Link>
-          <div class="inline-flex items-center justify-center w-full">
-            <hr class="w-full h-px my-8 bg-gray-200 border-0 " />
-            <span class="absolute px-3 -translate-x-1/2 bg-white left-1/2">
+          <div className="inline-flex items-center justify-center w-full">
+            <div className="w-full h-px my-8 bg-gray-200 border-0 " />
+            <span className="absolute px-3 -translate-x-1/2 bg-white left-1/2  text-gray-500">
               or
             </span>
           </div>
@@ -114,7 +113,7 @@ const Login = () => {
           <Link className="underline text-black" to={"/register"}>
             <span className="ml-2">Register</span>
           </Link>
-        </p>
+        </div>
       </div>
     </div>
   );
