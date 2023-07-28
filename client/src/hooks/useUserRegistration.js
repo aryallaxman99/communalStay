@@ -4,7 +4,7 @@ import * as Yup from "yup";
 import getApiResponse from "../apiCall";
 import requests from "../Requests";
 
-export function usePostUserData() {
+export function useUserRegistration() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [userResponse, setUserResponse] = useState(null);

@@ -1,13 +1,11 @@
-import { Link, useNavigate } from "react-router-dom";
-
+import { Link, Navigate } from "react-router-dom";
 import Input from "../../widgets/input/Input";
 import Button from "../../widgets/button/Button";
 import FormError from "../../Components/formError/FormError";
 import ShowAndHidePassword from "../../widgets/showAndHidePassword/ShowAndHidePassword";
-import { usePostUserData } from "../../hooks/usePostUserData";
+import { useUserRegistration } from "../../hooks/useUserRegistration";
 
 const Register = () => {
-  const navigate = useNavigate();
   const {
     error,
     userResponse,
@@ -17,10 +15,10 @@ const Register = () => {
     handleChange,
     handleSubmit,
     touched,
-  } = usePostUserData();
+  } = useUserRegistration();
 
   if (userResponse && userResponse.response === true) {
-    navigate("/login");
+    return <Navigate to={"/login"} />;
   }
 
   if (error) {
