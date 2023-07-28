@@ -12,7 +12,7 @@ import {
 
 export const userRegister = async (req, res, next) => {
   try {
-    const data = await req.body.values;
+    const data = await req.body;
     const doesEmailExists = await user.findOne({
       email: data.email,
     });

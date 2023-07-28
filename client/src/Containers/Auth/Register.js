@@ -1,71 +1,31 @@
-import axios from "axios";
-import { Link } from "react-router-dom";
-import * as Yup from "yup";
-import { useFormik } from "formik";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { Link, useNavigate } from "react-router-dom";
 
-import requests from "../../Requests";
 import Input from "../../widgets/input/Input";
 import Button from "../../widgets/button/Button";
-import { useState } from "react";
 import FormError from "../../Components/formError/FormError";
 import ShowAndHidePassword from "../../widgets/showAndHidePassword/ShowAndHidePassword";
+import { usePostUserData } from "../../hooks/usePostUserData";
 
 const Register = () => {
-  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const {
+    error,
+    userResponse,
+    values,
+    errors,
+    handleBlur,
+    handleChange,
+    handleSubmit,
+    touched,
+  } = usePostUserData();
 
-  const passwordRule = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
-  const phoneRegExp =
-    /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
+  if (userResponse && userResponse.response === true) {
+    navigate("/login");
+  }
 
-  const onSubmit = async (values, actions) => {
-    if (loading) {
-      return;
-    }
-    setLoading(true);
-    await axios
-      .post(requests.userRegister, { values })
-      .then((res) => {
-        toast[res.data.type](res.data.msg);
-        if (res.data.response === true) {
-          actions.resetForm();
-        }
-      })
-      .catch((error) => {
-        toast[error.response.data.type](error.response.data.msg);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  };
-
-  const registerSchema = Yup.object().shape({
-    firstName: Yup.string().required("Required"),
-    lastName: Yup.string().required("Required"),
-    email: Yup.string().email("Invalid email").required("Required"),
-    password: Yup.string().required("Required").min(6).matches(passwordRule, {
-      message: "Please create a stronger password",
-    }),
-    phoneNumber: Yup.string()
-      .required("Required")
-      .min(10, "too short")
-      .max(10, "too long")
-      .matches(phoneRegExp, "Phone number is not valid"),
-  });
-
-  const { values, errors, handleBlur, handleChange, handleSubmit, touched } =
-    useFormik({
-      initialValues: {
-        firstName: "",
-        lastName: "",
-        email: "",
-        password: "",
-        phoneNumber: "",
-      },
-      validationSchema: registerSchema,
-      onSubmit,
-    });
+  if (error) {
+    return <p className="text-red-500">{error.data.msg}</p>;
+  }
 
   return (
     <div className="flex items-center justify-center app-height">

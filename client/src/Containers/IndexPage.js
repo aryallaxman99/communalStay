@@ -38,7 +38,7 @@ const IndexPage = () => {
   if (!places || !places.length) {
     return (
       <p className="text-yellow-500">
-        Currently we donnot have any places in our listing.
+        Currently we don't have any places in our listing.
       </p>
     );
   }

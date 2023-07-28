@@ -24,7 +24,7 @@ const PlaceIntro = ({ placeId }) => {
     <div>
       {place && place.length > 0 ? (
         place.map((items) => (
-          <div>
+          <div key={items._id}>
             <div className="overflow-hidden rounded-xl shadow-lg hover:shadow-slate-950">
               {items.photos.length > 0 && (
                 <ImageViewer

@@ -36,7 +36,7 @@ export function useGetPlaceData() {
     try {
       if (
         document.scrollingElement.scrollHeight <=
-        window.innerHeight + document.scrollingElement.scrollTop
+        window.innerHeight + document.scrollingElement.scrollTop + 1
       ) {
         setPage((previous) => previous + 1);
       }
