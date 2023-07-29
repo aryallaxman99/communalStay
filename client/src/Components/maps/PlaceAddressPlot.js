@@ -117,6 +117,7 @@ const PlaceAddressPlot = () => {
   };
 
   useEffect(() => {
+    getCurrentLocation();
     axios.get(requests.getAllPlaces).then((res) => setPlace(res.data));
   }, []);
 
