@@ -1,17 +1,17 @@
 import { HiOutlineLocationMarker } from "react-icons/hi";
+import { NavLink } from "react-router-dom";
 
 const LocationFinder = ({ location, styling }) => {
   return (
     <div className="flex">
       <HiOutlineLocationMarker className="h-5 w-5" />
-      <a
+      <NavLink
         className={styling}
         target="_blank"
-        rel="noreferrer"
-        href={`https://maps.google.com/?q=${location}`}
+        to={`https://maps.google.com/?q=${location}`}
       >
         {location}
-      </a>
+      </NavLink>
     </div>
   );
 };

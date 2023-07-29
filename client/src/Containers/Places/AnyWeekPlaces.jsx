@@ -29,7 +29,7 @@ const AnyWeekPlaces = () => {
     try {
       if (
         document.scrollingElement.scrollHeight <=
-        window.innerHeight + document.scrollingElement.scrollTop
+        window.innerHeight + document.scrollingElement.scrollTop + 1
       ) {
         setPage((previous) => previous + 1);
       }
@@ -51,6 +51,7 @@ const AnyWeekPlaces = () => {
       {place && place.length > 0
         ? place.map((items) => (
             <Link
+              key={items._id}
               to={`/listings/${items._id}`}
               className="flex m-5 p-5 gap-5 bg-gray-100 rounded-xl"
             >
@@ -80,9 +81,9 @@ const AnyWeekPlaces = () => {
             </Link>
           ))
         : null}
-      <p className="text-end hover:underline text-red-500 mb-3">
+      <div className="text-end hover:underline text-red-500 mb-3">
         <a href="#top">Back to Top</a>
-      </p>
+      </div>
     </div>
   );
 };
