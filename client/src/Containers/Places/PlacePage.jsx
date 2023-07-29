@@ -28,11 +28,11 @@ const PlacePage = () => {
 
   if (allPhotos) {
     return (
-      <div className="absolute bg-white inset-0 min-h-screen">
+      <div key={id} className="absolute bg-white inset-0 min-h-screen">
         <div className="p-8 grid gap-4">
           <div>
             <Button
-              className={"text-black w-fit bg-white"}
+              className="text-black w-fit bg-white"
               onClick={() => setAllPhotos(false)}
             >
               <TiArrowBackOutline className="h-6 w-6" />
@@ -41,7 +41,7 @@ const PlacePage = () => {
           {place.photos
             ? place.photos.length > 0 &&
               place.photos.map((items) => (
-                <div>
+                <div key={items}>
                   <ImageViewer imageName={items} />
                 </div>
               ))
@@ -52,7 +52,7 @@ const PlacePage = () => {
   }
 
   return (
-    <div className="mt-4 -mx-8 px-8 py-8">
+    <div key={id} className="mt-4 -mx-8 px-8 py-8">
       <h1 className="text-3xl">
         {place ? (
           place.title

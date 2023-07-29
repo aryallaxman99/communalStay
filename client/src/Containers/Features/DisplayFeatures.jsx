@@ -14,7 +14,7 @@ const DisplayFeatures = ({ place }) => {
           <h2 className="font-semibold text-2xl">What this place offers</h2>
           <div className="grid mt-2 grid-cols-2 gap-2 md:grid-cols-3 lg:grid-cols-6">
             {place.features.map((item) => (
-              <div className="flex gap-2 mt-4">
+              <div key={item} className="flex gap-2 mt-4">
                 {item === "wifi" && (
                   <>
                     <HiOutlineWifi className="h-6 w-6" />
