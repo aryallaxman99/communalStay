@@ -17,13 +17,19 @@ import LocationFinder from "../../Components/maps/LocationFinder";
 import Account from "../User/Account";
 
 const ReservedPlaces = () => {
-  const [bookingPlaces, setBookingPlaces] = useState(null);
+  const [bookingPlaces, setBookingPlaces] = useState([]);
 
   useEffect(() => {
     axios
       .get(requests.reservedPlaces)
       .then((res) => {
-        setBookingPlaces(res.data);
+        setBookingPlaces([
+          ...res.data.filter(
+            (items) =>
+              items.checkOut.split("T")[0] >=
+              new Date().toISOString().split("T")[0]
+          ),
+        ]);
       })
       .catch((error) => {
         if (!error.response.data.status) {
@@ -38,17 +44,13 @@ const ReservedPlaces = () => {
       {bookingPlaces ? (
         bookingPlaces.length > 0 ? (
           bookingPlaces.map((items) => (
-            <div>
+            <div key={items._id}>
               {items.checkOut.split("T")[0] >
                 new Date().toISOString().split("T")[0] && (
-                <div className="mt-10 flex bg-gray-200 rounded-2xl overflow-hidden grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-                  {items.placeid.photos
-                    ? items.placeid.photos.length > 0 && (
-                        <div className="w-full h-full">
-                          <ImageViewer imageName={items.placeid.photos[0]} />
-                        </div>
-                      )
-                    : null}
+                <div className="mt-10 bg-gray-200 rounded-2xl overflow-hidden grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+                  <div className="w-full h-full">
+                    <ImageViewer imageName={items.placeid.photos[0]} />
+                  </div>
                   <div>
                     <h2 className="mt-4 text-xl">{items.placeid.title}</h2>
                     <LocationFinder

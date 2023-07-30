@@ -32,7 +32,7 @@ export default Layout;
 
 export const UserRoutes = () => {
   return (
-    <div className="overflow-x-hidden">
+    <div>
       <Routes>
         <Route path="*" element={<Error />} />
         <Route index element={<IndexPage />} />

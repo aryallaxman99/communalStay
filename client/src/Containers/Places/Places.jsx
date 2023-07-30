@@ -31,6 +31,7 @@ const Places = () => {
           {placesInfo.length > 0
             ? placesInfo.map((items) => (
                 <Link
+                  key={items._id}
                   to={`/account/places/${items._id}`}
                   className="flex mb-4 gap-4 bg-gray-200 p-2 rounded-2xl"
                 >

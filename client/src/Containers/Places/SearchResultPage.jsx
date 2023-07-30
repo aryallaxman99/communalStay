@@ -11,6 +11,7 @@ const SearchResultPage = () => {
       {state.places && state.places.length > 0 ? (
         state.places.map((items) => (
           <Link
+            key={items.item._id}
             to={`/listings/${items.item._id}`}
             className="border rounded-2xl shadow-md hover:scale-110"
           >
