@@ -28,6 +28,7 @@
 * MongoDB 
 
 #### Algorithms
+* Bcrypt Algorithm
 * Dijkstra’s Algorithm
 * A* Algorithm
 * Naive Algorithm
