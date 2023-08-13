@@ -7,7 +7,7 @@ import { useGetPlaceData } from "../hooks/useGetPlaceData";
 const IndexPage = () => {
   const { error, loading, places } = useGetPlaceData();
 
-  if (loading) {
+  if (loading && places.length === 0) {
     return (
       <div className="flex space-x-5">
         {new Array(3).fill(1).map((_, index) => {

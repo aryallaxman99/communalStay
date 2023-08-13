@@ -12,16 +12,17 @@ export function useGetPlaceData() {
 
   const getPlaceData = async () => {
     try {
+      if (loading) {
+        return;
+      }
+      setLoading(true);
+
       if (places.length !== totalDataInDB) {
-        setLoading(true);
         setError(null);
-
         const url = `${requests.placeByUserReq}limit=8&page=${page}`;
-
         const placesResponse = await getApiResponse({
           url,
         });
-
         setPlaces([...places, ...placesResponse.data.data]);
         setTotalDataInDB(placesResponse.data.total);
       }
