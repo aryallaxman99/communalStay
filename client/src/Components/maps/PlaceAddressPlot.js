@@ -28,7 +28,6 @@ const PlaceAddressPlot = () => {
   const [directionsResponse, setDirectionsResponse] = useState(null);
   const [isUserFlexible, setIsUserFlexible] = useState(true);
   const radius = 10000;
-  const arr = [];
 
   const getCurrentLocation = () => {
     const success = (position) => {
@@ -52,27 +51,28 @@ const PlaceAddressPlot = () => {
   const flexible = () => {
     setIsUserFlexible(true);
     if (place && loading) {
-      place.map(async (items) => {
-        await fetch(
-          `https://maps.googleapis.com/maps/api/geocode/json?address=${items.address}&key=${googleMapsApiKey}`
-        )
-          .then((response) => {
-            return response.json();
-          })
-          .then((jsonData) => {
-            if (jsonData.results[0].geometry.location) {
-              arr.push({
-                id: items._id,
-                name: items.title,
-                position: jsonData.results[0].geometry.location,
-              });
-            }
-            setflexiblePlaces(arr);
-            setLoading(false);
-          })
-          .catch(() => {
-            setLoading(false);
-          });
+      let arr = [];
+      place.forEach((items) => {
+        try {
+          fetch(
+            `https://maps.googleapis.com/maps/api/geocode/json?address=${items.address}&key=${googleMapsApiKey}`
+          )
+            .then((data) => data.json())
+            .then((jsonData) => {
+              if (jsonData.results[0].geometry.location) {
+                arr.push({
+                  id: items._id,
+                  name: items.title,
+                  position: jsonData.results[0].geometry.location,
+                });
+              }
+              setflexiblePlaces([...flexiblePlaces, ...arr]);
+            });
+        } catch (error) {
+          console.log(error);
+        } finally {
+          setLoading(false);
+        }
       });
     }
   };
@@ -116,10 +116,23 @@ const PlaceAddressPlot = () => {
     }
   };
 
+  const fetchPlaces = async () => {
+    try {
+      const response = await axios.get(requests.getAllPlaces);
+      setPlace(response.data);
+    } catch (error) {
+      console.log(error.msg);
+    }
+  };
+
   useEffect(() => {
     getCurrentLocation();
-    axios.get(requests.getAllPlaces).then((res) => setPlace(res.data));
+    fetchPlaces();
   }, []);
+
+  useEffect(() => {
+    flexible();
+  }, [place]);
 
   return (
     <div className="flex gap-2">
