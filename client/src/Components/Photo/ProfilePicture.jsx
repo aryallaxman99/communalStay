@@ -109,7 +109,7 @@ const ProfilePicture = ({ profilePicture }) => {
         )}
 
         {imageUploader && (
-          <div className="fixed inset-0 flex items-center justify-center">
+          <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center">
             <div className="relative">
               <div className="bg-white border-4 border-red-400 p-10">
                 <PhotoUploader

@@ -35,19 +35,19 @@ const Places = () => {
                   to={`/account/places/${items._id}`}
                   className="flex mb-4 gap-4 bg-gray-200 p-2 rounded-2xl"
                 >
-                  <div className="content-between">
+                  <div>
                     {items.photos.length > 0 ? (
                       <div className="flex gap-4 w-32 h-32 bg-gray-300 shrink-0">
                         <ImageViewer
                           imageName={items.photos[0]}
-                          styling={"object-cover"}
+                          styling={"object-cover rounded-md"}
                         />
                       </div>
                     ) : null}
                   </div>
-                  <div className="grow-0 shrink">
+                  <div className="text-left">
                     <h2>{items.title}</h2>
-                    <p className="mt-2">{items.descriptions}</p>
+                    <p className="mt-1">{items.descriptions}</p>
                   </div>
                 </Link>
               ))

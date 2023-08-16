@@ -32,7 +32,7 @@ const IndexPage = () => {
   }
 
   if (error) {
-    return <p className="text-red-500">{error.data.msg}</p>;
+    return <p className="text-red-500">{error.msg}</p>;
   }
 
   if (!places || !places.length) {

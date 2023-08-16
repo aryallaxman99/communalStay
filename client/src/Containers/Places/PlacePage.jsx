@@ -46,6 +46,9 @@ const PlacePage = () => {
                 </div>
               ))
             : null}
+          <div className="text-end hover:underline text-red-500 mb-3">
+            <a href="#top">Back to Top</a>
+          </div>
         </div>
       </div>
     );
