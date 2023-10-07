@@ -11,6 +11,7 @@ const userSchema = new Schema({
   address: String,
   socialMediaAccountLink: String,
   profilePicture: String,
+  userRole: String,
 });
 
 const userModel = mongoose.model("User", userSchema);

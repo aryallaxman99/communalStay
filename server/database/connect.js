@@ -3,8 +3,8 @@ import config from "../config/dbConfig.json" assert { type: "json" };
 
 const Connection = async () => {
   try {
-    // await mongoose.connect(config.uri);
-    await mongoose.connect(process.env.MONGODB_URI);
+    await mongoose.connect(config.uri);
+    // await mongoose.connect(process.env.MONGODB_URI);
     console.log("connected to mongoose");
   } catch (error) {
     console.error(error);

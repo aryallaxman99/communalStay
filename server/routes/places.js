@@ -1,6 +1,7 @@
 import express from "express";
 import {
   addPlaces,
+  deletePlaceById,
   getAllPlaces,
   getPlacesById,
   getPlacesByOwnerId,
@@ -24,5 +25,7 @@ router.get("/owner-places", getPlacesByOwnerId);
 router.get("/:id", getPlacesById);
 
 router.put("/update", updatePlace);
+
+router.delete("/", deletePlaceById);
 
 export default router;

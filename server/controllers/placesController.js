@@ -135,3 +135,22 @@ export const searchPlaces = async (req, res) => {
     });
   }
 };
+
+export const deletePlaceById = async (req, res) => {
+  try {
+    const response = await Place.findByIdAndDelete(req.query.id);
+    if (!response) throw new HttpError("Something went wrong", 500);
+    res.json({
+      msg: "HomeStay Deleted",
+      type: "success",
+      status: true,
+    });
+  } catch (error) {
+    res.status(error.statusCode).json({
+      msg: error.message,
+      type: "error",
+      status: false,
+    });
+    console.log(error);
+  }
+};

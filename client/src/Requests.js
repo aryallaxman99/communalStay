@@ -23,6 +23,7 @@ const requests = {
   sendOTP: `${baseURL}otp/sendOTP`,
   search: `${baseURL}places/search?q=`,
   reservedPlaces: `${baseURL}reservation/booking`,
+  deletePlaceById: `${baseURL}places?id=`,
 };
 
 export default requests;

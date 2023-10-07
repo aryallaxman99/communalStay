@@ -16,16 +16,29 @@ import PlaceAddressPlot from "../../Components/maps/PlaceAddressPlot";
 import AnyWeekPlaces from "../Places/AnyWeekPlaces";
 import SearchResultPage from "../Places/SearchResultPage";
 import ReservedPlaces from "../Pages/ReservedPlaces";
+import { useSelector } from "react-redux";
+import Dashboard from "../Admin/Dashboard";
+import AdminHeader from "../Admin/Header/AdminHeader";
 
 const Layout = () => {
-  return (
-    <div>
-      <Header />
-      <div className="app-height px-24">
-        <UserRoutes />
+  const { userRole } = useSelector((state) => state.user);
+  if (userRole === "Admin") {
+    return (
+      <div>
+        <AdminHeader />
+        <AdminRoutes />
       </div>
-    </div>
-  );
+    );
+  } else {
+    return (
+      <div>
+        <Header />
+        <div className="app-height px-24">
+          <UserRoutes />
+        </div>
+      </div>
+    );
+  }
 };
 
 export default Layout;
@@ -52,6 +65,17 @@ export const UserRoutes = () => {
         <Route path="/place/anyweek" element={<AnyWeekPlaces />} />
         <Route path="/search" element={<SearchResultPage />} />
         <Route path="/account/request" element={<ReservedPlaces />} />
+      </Routes>
+    </div>
+  );
+};
+
+export const AdminRoutes = () => {
+  return (
+    <div>
+      <Routes>
+        <Route path="/" element={<Dashboard />} />
+        <Route path="/account/password" element={<ChangePassword />} />
       </Routes>
     </div>
   );
