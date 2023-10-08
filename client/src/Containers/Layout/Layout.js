@@ -26,7 +26,9 @@ const Layout = () => {
     return (
       <div>
         <AdminHeader />
-        <AdminRoutes />
+        <div className="app-height px-24">
+          <AdminRoutes />
+        </div>
       </div>
     );
   } else {
@@ -76,6 +78,7 @@ export const AdminRoutes = () => {
       <Routes>
         <Route path="/" element={<Dashboard />} />
         <Route path="/account/password" element={<ChangePassword />} />
+        <Route path="/listings/:id" element={<PlacePage />} />
       </Routes>
     </div>
   );

@@ -2,7 +2,12 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import requests from "../../Requests";
 import { toast } from "react-toastify";
-import { MdDeleteSweep, MdOutlineCheck } from "react-icons/md";
+import {
+  MdOutlineRemoveRedEye,
+  MdDeleteSweep,
+  MdOutlineCheck,
+} from "react-icons/md";
+import { Link } from "react-router-dom";
 
 const Dashboard = () => {
   const [data, setData] = useState(null);
@@ -75,6 +80,11 @@ const Dashboard = () => {
                     <td>{item.title}</td>
                     <td>{item.address}</td>
                     <td>NPR. {item.price}</td>
+                    <td>
+                      <Link to={`/listings/${item._id}`} target="_blank">
+                        <MdOutlineRemoveRedEye className="h-6 w-6 text-gray-700" />
+                      </Link>
+                    </td>
                     <td>
                       <button
                         className="bg-inherit"

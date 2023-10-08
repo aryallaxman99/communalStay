@@ -11,9 +11,12 @@ import Booking from "../../widgets/booking/Booking";
 import ImageViewer from "../../utils/ImageViewer";
 import Button from "../../widgets/button/Button";
 import LocationFinder from "../../Components/maps/LocationFinder";
+import { useSelector } from "react-redux";
 
 const PlacePage = () => {
+  const { userRole } = useSelector((state) => state.user);
   const { id } = useParams();
+
   const [place, setPlace] = useState();
 
   const [allPhotos, setAllPhotos] = useState(false);
@@ -175,7 +178,7 @@ const PlacePage = () => {
             <Skeleton variant="rounded" height={40} width={240} />
           )}
         </div>
-        <Booking place={place} />
+        {!userRole ? <Booking place={place} /> : null}
       </div>
       <div>
         {place ? (
