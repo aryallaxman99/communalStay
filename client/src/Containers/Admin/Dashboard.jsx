@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import requests from "../../Requests";
 import { toast } from "react-toastify";
-import { MdDeleteSweep } from "react-icons/md";
+import { MdDeleteSweep, MdOutlineCheck } from "react-icons/md";
 
 const Dashboard = () => {
   const [data, setData] = useState(null);
@@ -28,6 +28,23 @@ const Dashboard = () => {
       })
       .catch((error) => {
         toast.error("something went wrong");
+      });
+  };
+
+  const changeStatus = (id) => {
+    const values = {
+      status: "accepted",
+      _id: id,
+    };
+    axios
+      .put(requests.updatePlaces, values)
+      .then((res) => {
+        if (res.data.status === true) {
+          toast.success("accepted");
+        }
+      })
+      .catch((error) => {
+        toast.error("Something went wrong");
       });
   };
 
@@ -60,11 +77,21 @@ const Dashboard = () => {
                     <td>NPR. {item.price}</td>
                     <td>
                       <button
-                        className="bg-white"
+                        className="bg-inherit"
                         onClick={() => Delete(item._id)}
                       >
-                        <MdDeleteSweep className="h-6 w-6" />
+                        <MdDeleteSweep className="h-6 w-6 text-gray-700" />
                       </button>
+                    </td>
+                    <td>
+                      {item.status === "pending" ? (
+                        <button
+                          className="bg-inherit"
+                          onClick={() => changeStatus(item._id)}
+                        >
+                          <MdOutlineCheck className="h-6 w-6 text-gray-700" />
+                        </button>
+                      ) : null}
                     </td>
                   </tr>
                 );

@@ -13,6 +13,7 @@ const placeSchema = new Schema({
   checkIn: String,
   checkOut: String,
   maxGuests: String,
+  status: { type: String, default: "pending" },
 });
 
 const PlaceModel = mongoose.model("Place", placeSchema);

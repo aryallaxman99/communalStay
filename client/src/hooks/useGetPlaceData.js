@@ -23,7 +23,12 @@ export function useGetPlaceData() {
         const placesResponse = await getApiResponse({
           url,
         });
-        setPlaces([...places, ...placesResponse.data.data]);
+        setPlaces([
+          ...places,
+          ...placesResponse.data.data.filter(
+            (items) => items.status === "accepted"
+          ),
+        ]);
         setTotalDataInDB(placesResponse.data.total);
       }
     } catch (err) {

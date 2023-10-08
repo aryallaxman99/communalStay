@@ -151,6 +151,5 @@ export const deletePlaceById = async (req, res) => {
       type: "error",
       status: false,
     });
-    console.log(error);
   }
 };
