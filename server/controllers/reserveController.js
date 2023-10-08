@@ -13,12 +13,14 @@ export const reserve = async (req, res) => {
     const data = await req.body;
     const { id } = await jwtHelper.verifyAccessToken(req.cookies.accessToken);
     const { email, phoneNumber } = await user.findById(id);
-    const { owner } = await place.findById(data.placeid);
+    const { owner, maxGuests } = await place.findById(data.placeid);
 
     data.userid = id;
     data.email = email;
     data.phoneNumber = phoneNumber;
 
+    if (maxGuests < data.numberOfGuests)
+      throw new ConflictError("Cannot reserve more than maximum number guests");
     if (id == owner) throw new ConflictError("Cannot reserve your own place.");
 
     const response = await Reserve.create(data);

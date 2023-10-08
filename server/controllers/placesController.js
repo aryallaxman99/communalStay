@@ -2,6 +2,7 @@ import Fuse from "fuse.js";
 import Place from "../models/PlaceModel.js";
 import jwtHelper from "../helpers/jwtHelper.js";
 import {
+  ConflictError,
   ForbiddenError,
   HttpError,
   NotFoundError,
@@ -12,6 +13,12 @@ export const addPlaces = async (req, res) => {
     const data = req.body;
     const userInfo = await jwtHelper.verifyAccessToken(req.cookies.accessToken);
     data.owner = userInfo.id;
+    const totalNumberOfPlaces = await Place.find({
+      owner: userInfo.id,
+    }).count();
+
+    if (totalNumberOfPlaces >= 3)
+      throw new ConflictError("User cannot add more than three homeStay.");
     const response = await Place.create(data);
     if (!response) throw new HttpError("Something went wrong", 500);
     res.json({

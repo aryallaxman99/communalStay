@@ -26,7 +26,7 @@ const Layout = () => {
     return (
       <div>
         <AdminHeader />
-        <div className="app-height px-24">
+        <div className="app-height px-16">
           <AdminRoutes />
         </div>
       </div>

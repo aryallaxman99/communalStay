@@ -54,20 +54,30 @@ const PlacesForm = () => {
         maxGuests,
       };
       if (!id) {
-        axios.post(requests.places, values).then((res) => {
-          if (res.data.status === true) {
-            navigate("/account/places");
-          }
-          toast[res.data.type](res.data.msg);
-        });
+        axios
+          .post(requests.places, values)
+          .then((res) => {
+            if (res.data.status === true) {
+              navigate("/account/places");
+            }
+            toast[res.data.type](res.data.msg);
+          })
+          .catch((error) => {
+            toast[error.response.data.type](error.response.data.msg);
+          });
       } else {
         values._id = placeId;
-        axios.put(requests.updatePlaces, values).then((res) => {
-          if (res.data.status === true) {
-            navigate("/account/places");
-          }
-          toast[res.data.type](res.data.msg);
-        });
+        axios
+          .put(requests.updatePlaces, values)
+          .then((res) => {
+            if (res.data.status === true) {
+              navigate("/account/places");
+            }
+            toast[res.data.type](res.data.msg);
+          })
+          .catch((error) => {
+            toast[error.response.data.type](error.response.data.msg);
+          });
       }
     } else {
       toast.warn("Fill all the froms");
