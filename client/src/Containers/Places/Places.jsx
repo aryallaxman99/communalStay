@@ -48,6 +48,7 @@ const Places = () => {
                   <div className="text-left">
                     <h2>{items.title}</h2>
                     <p className="mt-1">{items.descriptions}</p>
+                    <p className="mt-1 font-bold">Status: {items.status}</p>
                   </div>
                 </Link>
               ))
